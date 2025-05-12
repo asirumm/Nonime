@@ -3,8 +3,10 @@ package io.asirum.Util;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.WidgetGroup;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import io.asirum.Service.ApplicationContext;
+import io.asirum.Service.Log;
 
 public class StageHelper {
     /**
@@ -26,4 +28,15 @@ public class StageHelper {
     }
 
 
+    public static void debugStage(boolean on, WidgetGroup... widget){
+        if(on){
+            for (WidgetGroup w: widget){
+                w.setDebug(true);
+            }
+        }else {
+            for (WidgetGroup w: widget){
+                w.setDebug(false);
+            }
+        }
+    }
 }
