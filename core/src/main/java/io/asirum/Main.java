@@ -22,6 +22,11 @@ public class Main extends ManagedGame<ManagedScreen, ScreenTransition> {
         Log.clear();
         Log.configure(false,true, Log.LogLevel.DEBUG);
 
+        // auto dispose screen yang sudah tidak digunakan
+        // dari screen x ke screen y, maka auto dispose screen x
+        // https://github.com/crykn/libgdx-screenmanager/wiki/Config-Options#automatic-disposal-of-screens--transitions
+        getScreenManager().setAutoDispose(true,true);
+
         // set screen manager untuk switch screen
         ApplicationContext
             .getInstance()
