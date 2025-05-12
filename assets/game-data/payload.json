@@ -1,0 +1,11 @@
+{
+  "tema": "savana",
+  "map": "savana.tmx",
+  "cost": 3,
+  "level": [
+    {
+      "id": "savana-1",
+      "level": 1
+    }
+  ]
+}
