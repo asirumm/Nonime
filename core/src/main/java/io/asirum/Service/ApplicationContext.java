@@ -7,6 +7,7 @@ import de.eskalon.commons.screen.ManagedScreen;
 import de.eskalon.commons.screen.ScreenManager;
 import de.eskalon.commons.screen.transition.ScreenTransition;
 import io.asirum.SchemaObject.Payload;
+import io.asirum.SchemaObject.UserData;
 import io.asirum.Util.CameraHelper;
 
 public class ApplicationContext {
@@ -19,6 +20,7 @@ public class ApplicationContext {
     private AssetLoader assetLoader;
     private ScreenManager<ManagedScreen, ScreenTransition> screenManager;
     private Payload payload;
+    private UserData userData;
 
     private ApplicationContext(){
         camera = new OrthographicCamera();
@@ -66,6 +68,15 @@ public class ApplicationContext {
     public void setScreenManager(ScreenManager<ManagedScreen, ScreenTransition> screenManager) {
         Log.info(getClass().getName(),">>>>> success add screen manager");
         this.screenManager = screenManager;
+    }
+
+    public UserData getUserData() {
+        return userData;
+    }
+
+    public void setUserData(UserData userData) {
+        Log.info(getClass().getName(),">>>>> success add user data");
+        this.userData = userData;
     }
 
     public Viewport getViewport() {

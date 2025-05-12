@@ -20,4 +20,5 @@ public class Constant {
     public static String ASSET_FONT_IMAGE = "manifest/font/font.png";
 
     public static final String GAME_DATA_JSON = "game-data/payload.json";
+    public static final String USER_DATA_PREFERENCES = "user";
 }
