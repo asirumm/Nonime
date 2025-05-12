@@ -33,6 +33,10 @@ public class ApplicationContext {
         }
     }
 
+    public AssetLoader getAssetLoader() {
+        return assetLoader;
+    }
+
     public GameAssets getGameAssets() {
         return gameAssets;
     }
