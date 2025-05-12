@@ -2,14 +2,21 @@ package io.asirum.Service;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import de.eskalon.commons.screen.ManagedScreen;
 import de.eskalon.commons.screen.ScreenManager;
 import de.eskalon.commons.screen.transition.ScreenTransition;
+import io.asirum.Util.CameraHelper;
+
+import static io.asirum.Constant.VIRTUAL_HEIGHT;
+import static io.asirum.Constant.VIRTUAL_WIDTH;
 
 public class ApplicationContext {
     private static ApplicationContext instance;
 
     private OrthographicCamera camera;
+    private Viewport viewport;
     private SpriteBatch batch;
     private GameAssets gameAssets;
     private AssetLoader assetLoader;
@@ -18,8 +25,12 @@ public class ApplicationContext {
     private ApplicationContext(){
         camera = new OrthographicCamera();
         batch  = new SpriteBatch();
-        assetLoader = new AssetLoader();// butuh di dispose
+        assetLoader = new AssetLoader();
         gameAssets = new GameAssets(assetLoader);
+
+        CameraHelper.toOrtho(camera);
+
+        viewport = CameraHelper.fitViewport(camera);
     }
 
     public void dispose(){
@@ -49,6 +60,9 @@ public class ApplicationContext {
         this.screenManager = screenManager;
     }
 
+    public Viewport getViewport() {
+        return viewport;
+    }
 
     public AssetLoader getAssetLoader() {
         return assetLoader;
