@@ -46,7 +46,7 @@ public class HomeScreen extends ManagedScreen {
 
 
         play = ButtonHelper
-            .build(skin,baseHandler.onPush(new MenuScreen(),null));
+            .build(skin, baseHandler.onPush(MenuScreen::new, null));
 
         about = ButtonHelper
             .build(skin, StyleVars.ABOUT_BTN,()->window.setVisible(true));
