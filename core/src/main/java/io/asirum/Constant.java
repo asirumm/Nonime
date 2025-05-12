@@ -12,8 +12,8 @@ public class Constant {
     public static String ASSET_WIDGET_SKIN = "manifest/widget/widget.json";
 
     // music
-    public static String ASSET_SOUND_CONTROL_ON_CLICK = "manifest/music/control-level.ogg";
-    public static String ASSET_SOUND = "manifest/music/a-big-world.ogg";
+    public static String ASSET_SOUND_CONTROL_ON_CLICK = "manifest/audio/control-level.ogg";
+    public static String ASSET_SOUND = "manifest/audio/a-big-world.ogg";
 
     // font
     public static String ASSET_FONT_FNT = "manifest/font/m5x7-16.fnt";

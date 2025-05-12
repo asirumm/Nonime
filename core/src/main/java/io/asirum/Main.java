@@ -4,10 +4,13 @@ import de.eskalon.commons.core.ManagedGame;
 import de.eskalon.commons.screen.ManagedScreen;
 import de.eskalon.commons.screen.transition.ScreenTransition;
 import io.asirum.Service.ApplicationContext;
+import io.asirum.Service.AssetLoader;
 import io.asirum.Service.Log;
 
 /** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
 public class Main extends ManagedGame<ManagedScreen, ScreenTransition> {
+    private  AssetLoader assetLoader;
+
     @Override
     public void create() {
         super.create();
@@ -17,11 +20,25 @@ public class Main extends ManagedGame<ManagedScreen, ScreenTransition> {
         Log.clear();
         Log.configure(false,true, Log.LogLevel.DEBUG);
 
+        // load assets
+        assetLoader =
+            ApplicationContext
+                .getInstance()
+                .getAssetLoader();
+
+        assetLoader.loadAssets();
+    }
+
+    @Override
+    public void render() {
+        if(assetLoader.update()){
+            System.out.println("asset berhasil diload");
+        }
     }
 
     @Override
     public void dispose() {
-        ApplicationContext.instance.dispose();
+        ApplicationContext.getInstance().dispose();
 
         Log.debug(getClass().getName(),"[dispose]");
     }

@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class ApplicationContext {
-    public static ApplicationContext instance;
+    private static ApplicationContext instance;
 
     private OrthographicCamera camera;
     private SpriteBatch batch;
@@ -21,6 +21,10 @@ public class ApplicationContext {
     public void dispose(){
         assetLoader.dispose();
         batch.dispose();
+    }
+
+    public static ApplicationContext getInstance() {
+        return instance;
     }
 
     // static block initialization for exception handling
