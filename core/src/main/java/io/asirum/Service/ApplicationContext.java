@@ -2,6 +2,9 @@ package io.asirum.Service;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import de.eskalon.commons.screen.ManagedScreen;
+import de.eskalon.commons.screen.ScreenManager;
+import de.eskalon.commons.screen.transition.ScreenTransition;
 
 public class ApplicationContext {
     private static ApplicationContext instance;
@@ -10,6 +13,7 @@ public class ApplicationContext {
     private SpriteBatch batch;
     private GameAssets gameAssets;
     private AssetLoader assetLoader;
+    private ScreenManager<ManagedScreen, ScreenTransition> screenManager;
 
     private ApplicationContext(){
         camera = new OrthographicCamera();
@@ -36,6 +40,15 @@ public class ApplicationContext {
             throw new RuntimeException("Instance ApplicationContext kosong");
         }
     }
+
+    public void pushScreen(ManagedScreen managedScreen,ScreenTransition screenTransition) {
+        screenManager.pushScreen(managedScreen,screenTransition);
+    }
+
+    public void setScreenManager(ScreenManager<ManagedScreen, ScreenTransition> screenManager) {
+        this.screenManager = screenManager;
+    }
+
 
     public AssetLoader getAssetLoader() {
         return assetLoader;

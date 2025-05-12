@@ -3,6 +3,8 @@ package io.asirum;
 import de.eskalon.commons.core.ManagedGame;
 import de.eskalon.commons.screen.ManagedScreen;
 import de.eskalon.commons.screen.transition.ScreenTransition;
+import io.asirum.Screen.HomeScreen;
+import io.asirum.Screen.SplashScreen;
 import io.asirum.Service.ApplicationContext;
 import io.asirum.Service.AssetLoader;
 import io.asirum.Service.Log;
@@ -20,20 +22,13 @@ public class Main extends ManagedGame<ManagedScreen, ScreenTransition> {
         Log.clear();
         Log.configure(false,true, Log.LogLevel.DEBUG);
 
-        // load assets
-        assetLoader =
-            ApplicationContext
-                .getInstance()
-                .getAssetLoader();
+        // set screen manager untuk switch screen
+        ApplicationContext
+            .getInstance()
+            .setScreenManager(getScreenManager());
 
-        assetLoader.loadAssets();
-    }
 
-    @Override
-    public void render() {
-        if(assetLoader.update()){
-            System.out.println("asset berhasil diload");
-        }
+        getScreenManager().pushScreen(new SplashScreen(),null);
     }
 
     @Override
