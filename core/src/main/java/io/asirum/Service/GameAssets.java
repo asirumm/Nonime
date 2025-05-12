@@ -1,10 +1,13 @@
 package io.asirum.Service;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.utils.GdxRuntimeException;
+import io.asirum.Constant;
 
 /**
  * kelas ini untuk menahan data assets
@@ -21,6 +24,23 @@ public class GameAssets {
 
     public GameAssets(AssetLoader assetLoader){
         this.assetManager = assetLoader.getAssetManager();
+    }
+
+    // panggil ini ketika asset manager telah selesai load
+    public void build(){
+        Log.info(getClass().getName(),"memulai build variable asset");
+
+        try{
+            widgetAtlas     = assetManager.get(Constant.ASSET_WIDGET_ATLAS);
+            widgetSkin      = assetManager.get(Constant.ASSET_WIDGET_SKIN);
+            soundLevelControl = assetManager.get(Constant.ASSET_SOUND_CONTROL_ON_CLICK);
+            soundMusic      = assetManager.get(Constant.ASSET_SOUND);
+
+        }catch (GdxRuntimeException exception){
+            Log.error(getClass().getName(), exception);
+
+            Gdx.app.exit();
+        }
     }
 
     public TextureAtlas getWidgetAtlas() {

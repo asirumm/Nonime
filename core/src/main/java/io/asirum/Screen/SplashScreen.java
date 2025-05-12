@@ -19,6 +19,9 @@ public class SplashScreen extends ManagedScreen {
     @Override
     public void render(float delta) {
         if(context.getAssetLoader().update()){
+
+            context.getGameAssets().build();
+
             context.pushScreen(new HomeScreen(),null);
         }
     }
