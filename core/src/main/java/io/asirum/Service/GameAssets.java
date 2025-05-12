@@ -28,7 +28,7 @@ public class GameAssets {
 
     // panggil ini ketika asset manager telah selesai load
     public void build(){
-        Log.info(getClass().getName(),"memulai build variable asset");
+        Log.info(getClass().getName(),"# memulai build variable asset");
 
         try{
             widgetAtlas     = assetManager.get(Constant.ASSET_WIDGET_ATLAS);
