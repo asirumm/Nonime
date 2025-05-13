@@ -1,6 +1,9 @@
 package io.asirum.Util;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import io.asirum.Constant;
@@ -53,5 +56,35 @@ public class CameraHelper {
 
         toOrtho(context.getCamera());
         fitViewport(context.getCamera());
+    }
+
+    /**
+     * membuat batas kamera untuk melihat, sehingga
+     * tidak melihat ruang kosong di ujung map
+     */
+    public static void boundaryCamera(OrthographicCamera camera, float widthMap, float heightMap) {
+        // Hitung batas dengan mempertimbangkan zoom camera
+        float effectiveViewportWidth = camera.viewportWidth * camera.zoom;
+        float effectiveViewportHeight = camera.viewportHeight * camera.zoom;
+
+        // Batas minimum (kiri dan bawah)
+        float minX = effectiveViewportWidth / 2;
+        float minY = effectiveViewportHeight / 2;
+
+        // Batas maximum (kanan dan atas)
+        float maxX = widthMap - (effectiveViewportWidth / 2);
+        float maxY = heightMap - (effectiveViewportHeight / 2);
+
+        // Terapkan batas
+        Vector3 position = camera.position;
+
+        // Batas horizontal
+        position.x = MathUtils.clamp(position.x, minX, maxX);
+
+        // Batas vertical
+        position.y = MathUtils.clamp(position.y, minY, maxY);
+
+        camera.position.set(position);
+        camera.update();
     }
 }
