@@ -5,6 +5,8 @@ public class Constant {
     public static int VIRTUAL_WIDTH = 240;
     public static int VIRTUAL_HEIGHT = 135;
 
+    public static float UNIT_SCALE = 16f;
+
     // atlas
     public static String ASSET_WIDGET_ATLAS = "manifest/widget/widget.atlas";
 
