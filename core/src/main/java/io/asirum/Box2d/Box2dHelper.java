@@ -5,6 +5,12 @@ import com.badlogic.gdx.math.Vector2;
 import io.asirum.Constant;
 
 public class Box2dHelper {
+
+    public static final String PLATFORM_LAYER = "platform";
+    public static final String ENTITIES_LAYER = "objects";
+    public static final String PLAYER_NAME = "player";
+    public static final String PLAYER_SENSOR_NAME = "foot-sensor";
+
     /**
      */
     public static Vector2 positionBox2d(Rectangle rect){
