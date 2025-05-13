@@ -1,9 +1,11 @@
 package io.asirum.Util;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import io.asirum.Constant;
@@ -85,6 +87,17 @@ public class CameraHelper {
         position.y = MathUtils.clamp(position.y, minY, maxY);
 
         camera.position.set(position);
+        camera.update();
+    }
+
+    // TODO lerp camera
+    public static void lerpCamera(OrthographicCamera camera, Body playerBody){
+        Vector2 cameraPos = new Vector2(camera.position.x,camera.position.y);
+        Vector2 targetPos = new Vector2(playerBody.getPosition().x,playerBody.getPosition().y);
+
+        cameraPos.lerp(targetPos, Interpolation.sine.apply(0.1f));
+
+        camera.position.set(cameraPos.x, cameraPos.y, 0);
         camera.update();
     }
 }
