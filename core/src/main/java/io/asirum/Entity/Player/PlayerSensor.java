@@ -1,14 +1,15 @@
-package io.asirum.Entity;
+package io.asirum.Entity.Player;
 
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import io.asirum.Box2d.*;
 import io.asirum.TmxMap.TmxHelper;
+
+import static io.asirum.Box2d.Box2dHelper.PLAYER_SENSOR_FIXTURE_NAME;
 
 public class PlayerSensor extends BaseBox2d {
     private Player player;
@@ -41,7 +42,7 @@ public class PlayerSensor extends BaseBox2d {
                 .getBody()
                 .createFixture(fixtureBuilder.build());
 
-        fixture.setUserData("foot");
+        fixture.setUserData(PLAYER_SENSOR_FIXTURE_NAME);
 
         shape.dispose();
     }

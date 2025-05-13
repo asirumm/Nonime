@@ -11,6 +11,10 @@ public class Box2dHelper {
     public static final String PLAYER_NAME = "player";
     public static final String PLAYER_SENSOR_NAME = "foot-sensor";
 
+    public static final String PLAYER_SENSOR_FIXTURE_NAME = "foot";
+    public static final String STATIC_PLATFORM_FIXTURE_NAME = "static_platform";
+    public static final String PLAYER_FIXTURE_NAME = "player";
+
     /**
      */
     public static Vector2 positionBox2d(Rectangle rect){

@@ -114,7 +114,7 @@ public class StaticPlatform extends BasePlatform {
 
                             Fixture fixture = body.createFixture(shape, 1.0f);
                             fixture.setFilterData(FixtureFilter.filterPlatform());
-                            fixture.setUserData("platform");
+                            fixture.setUserData(Box2dHelper.STATIC_PLATFORM_FIXTURE_NAME);
                             shape.dispose();
 
                             // kita kembalikan ke awal
