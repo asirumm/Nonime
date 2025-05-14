@@ -19,4 +19,8 @@ public class ContactListenerHelper {
     public static boolean isPlayerBody(Fixture fixture){
         return fixture.getUserData().equals(Box2dHelper.PLAYER_FIXTURE_NAME);
     }
+
+    public static boolean isPortalSensor(Fixture fixture){
+        return fixture.getUserData().equals(Box2dHelper.PORTAL_FIXTURE_NAME);
+    }
 }

@@ -2,18 +2,26 @@ package io.asirum.Box2d.Collision;
 
 import com.badlogic.gdx.physics.box2d.*;
 import io.asirum.Entity.Items.Key;
+import io.asirum.Entity.Items.Portal;
 import io.asirum.Entity.Player.Player;
+import io.asirum.GameLogic.PlayerFinishLogic;
 import io.asirum.Service.Log;
 
 import static io.asirum.Box2d.Collision.ContactListenerHelper.*;
 
 public class PlayerContactListener implements ContactListener {
 
+    private PlayerFinishLogic playerFinishLogic;
+
+    public PlayerContactListener(PlayerFinishLogic playerFinishLogic) {
+        this.playerFinishLogic = playerFinishLogic;
+    }
 
     @Override
     public void beginContact(Contact contact) {
         footOnPlatformSensor(contact,true);
         playerCollectKey(contact);
+        playerKnockThePortal(contact);
     }
 
     @Override
@@ -82,5 +90,33 @@ public class PlayerContactListener implements ContactListener {
 
         }
 
+    }
+
+    private void playerKnockThePortal(Contact contact) {
+        if (isPlayerBody(contact.getFixtureA()) && isPortalSensor(contact.getFixtureB())) {
+
+            Log.debug(getClass().getName(),"player ke portal");
+
+            Portal portal = (Portal)
+                contact
+                    .getFixtureB()
+                    .getBody()
+                    .getUserData();
+
+            playerFinishLogic.playerFinish(portal);
+
+        } else if (isPlayerBody(contact.getFixtureB()) && isPortalSensor(contact.getFixtureA())) {
+
+            Log.debug(getClass().getName(),"player ke portal");
+
+
+            Portal portal = (Portal)
+                contact
+                    .getFixtureA()
+                    .getBody()
+                    .getUserData();
+
+            playerFinishLogic.playerFinish(portal);
+        }
     }
 }
