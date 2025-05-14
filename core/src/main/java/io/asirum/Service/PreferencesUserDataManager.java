@@ -37,7 +37,7 @@ public class PreferencesUserDataManager {
         pref.flush();
     }
 
-    private void saveData(UserData data){
+    public void saveData(UserData data){
         String jsonData = json.toJson(data, UserData.class);
         pref.putString(LEVEL_DATA, jsonData);
 
