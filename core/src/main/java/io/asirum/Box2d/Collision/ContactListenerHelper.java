@@ -11,4 +11,12 @@ public class ContactListenerHelper {
     public static boolean isPlatform(Fixture fixture){
         return fixture.getUserData().equals(Box2dHelper.STATIC_PLATFORM_FIXTURE_NAME);
     }
+
+    public static boolean isKeySensor(Fixture fixture){
+        return fixture.getUserData().equals(Box2dHelper.KEY_FIXTURE_NAME);
+    }
+
+    public static boolean isPlayerBody(Fixture fixture){
+        return fixture.getUserData().equals(Box2dHelper.PLAYER_FIXTURE_NAME);
+    }
 }

@@ -7,13 +7,18 @@ import io.asirum.Constant;
 public class Box2dHelper {
 
     public static final String PLATFORM_LAYER = "platform";
+    public static final String KEY_LAYER = "key";
     public static final String ENTITIES_LAYER = "objects";
     public static final String PLAYER_NAME = "player";
     public static final String PLAYER_SENSOR_NAME = "foot-sensor";
+    public static final String KEY_SENSOR_NAME = "key-sensor";
+    public static final String PORTAL_SENSOR_NAME = "portal-sensor";
 
     public static final String PLAYER_SENSOR_FIXTURE_NAME = "foot";
     public static final String STATIC_PLATFORM_FIXTURE_NAME = "static_platform";
     public static final String PLAYER_FIXTURE_NAME = "player";
+    public static final String KEY_FIXTURE_NAME = "key";
+    public static final String PORTAL_FIXTURE_NAME = "portal-sensor";
 
     /**
      */

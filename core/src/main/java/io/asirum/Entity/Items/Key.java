@@ -1,18 +1,20 @@
-package io.asirum.Entity;
+package io.asirum.Entity.Items;
 
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import io.asirum.Box2d.*;
 import io.asirum.TmxMap.TmxHelper;
 
-public class Player extends BaseBox2d {
+// TODO Draw key
+public class Key extends BaseBox2d {
+    private boolean collected;
+    private Vector2 size;
 
-    public Player(World world) {
+    public Key(World world) {
         super(world);
     }
 
@@ -21,12 +23,10 @@ public class Player extends BaseBox2d {
         Rectangle rect = TmxHelper.convertRectangleMapObject(object);
 
         Vector2 position = Box2dHelper.positionBox2d(rect);
-        Vector2 size     = Box2dHelper.sizeBox2d(rect);
+        size     = Box2dHelper.sizeBox2d(rect);
 
         BodyBuilder bodyBuilder = new BodyBuilder()
-            .type(BodyDef.BodyType.DynamicBody)
             .fixRotation(true)
-            .gravityScale(3f)
             .position(position.x, position.y);
 
         body = world.createBody(bodyBuilder.build());
@@ -36,15 +36,22 @@ public class Player extends BaseBox2d {
 
         FixtureBuilder fixtureBuilder = new FixtureBuilder()
             .shape(shape)
-            .density(1f)
-            .friction(0.5f)
-            .filter(FixtureFilter.filterPlayer());
+            .filter(FixtureFilter.filterKey())
+            .isSensor(true);
 
         Fixture fixture = body.createFixture(fixtureBuilder.build());
 
-        fixture.setUserData("player");
+        fixture.setUserData(Box2dHelper.KEY_FIXTURE_NAME);
         body.setUserData(this);
 
         shape.dispose();
+    }
+
+    public boolean isCollected() {
+        return collected;
+    }
+
+    public void setCollected(boolean collected) {
+        this.collected = collected;
     }
 }
