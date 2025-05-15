@@ -23,7 +23,7 @@ public class Player extends BaseBox2d {
     private boolean doConserveMomentum = true; // Apakah momentum akan dipertahankan saat di udara
 
     // Konstanta lompat
-    private float jumpForce = 3f;
+    private float jumpForce = 3.2f;
 
     private float lastPressedJumpTime = -1f;
     private float lastOnGroundTime = -1f;
@@ -95,7 +95,7 @@ public class Player extends BaseBox2d {
         BodyBuilder bodyBuilder = new BodyBuilder()
             .type(BodyDef.BodyType.DynamicBody)
             .fixRotation(true)
-            .gravityScale(5f)
+            .gravityScale(3f)
             .position(position.x, position.y);
 
         body = world.createBody(bodyBuilder.build());
