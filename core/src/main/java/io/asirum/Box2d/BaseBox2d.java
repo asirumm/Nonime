@@ -27,4 +27,8 @@ public abstract class BaseBox2d {
     }
 
     public abstract void build(MapObject object);
+
+    public World getWorld(){
+        return world;
+    }
 }
