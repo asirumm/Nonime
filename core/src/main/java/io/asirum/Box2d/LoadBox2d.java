@@ -1,5 +1,6 @@
 package io.asirum.Box2d;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
@@ -19,7 +20,7 @@ import io.asirum.Entity.Platform.StaticPlatform;
 import io.asirum.Entity.Player.Player;
 import io.asirum.Entity.Player.PlayerMovement;
 import io.asirum.Entity.Player.PlayerSensor;
-import io.asirum.GameLogic.PlayerFinishLogic;
+import io.asirum.GameLogic.GamePlayManager;
 import io.asirum.Service.Log;
 import io.asirum.TmxMap.TmxHelper;
 import io.asirum.Util.CameraHelper;
@@ -35,11 +36,13 @@ public class LoadBox2d {
     private Stalactite stalactite;
     private CheckpointBuilder checkpointBuilder;
 
+    private GamePlayManager playManager;
+
     private StaticPlatform staticPlatform;
     private Box2DDebugRenderer debugRenderer;
     private OrthographicCamera camera;
 
-    public LoadBox2d(OrthographicCamera camera, PlayerFinishLogic playerFinishLogic){
+    public LoadBox2d(OrthographicCamera camera){
         world = new World(new Vector2(0,-9.8f),false);
         debugRenderer = new Box2DDebugRenderer();
 
@@ -53,7 +56,8 @@ public class LoadBox2d {
         stalactite     = new Stalactite(world);
         checkpointBuilder    = new CheckpointBuilder(world);
 
-        world.setContactListener(new PlayerContactListener(playerFinishLogic));
+        playManager    = new GamePlayManager(player,key);
+        world.setContactListener(new PlayerContactListener(playManager));
 
 
         this.camera = camera;
@@ -65,19 +69,7 @@ public class LoadBox2d {
 
         world.step(1 / 60f, 6, 2);
 
-        // key hanya sebagai perantara mendapatkan
-        // akses ke ToDestroy
-        if(!key.getToDestroy().isEmpty()){
-            for (Body body : key.getToDestroy()) {
-                world.destroyBody(body);
-            }
-            key.getToDestroy().clear();
-        }
-
-        if (player.isPlayerNeedRespawn()){
-            player.respawn();
-            player.setPlayerNeedRespawn(false);
-        };
+        playManager.play(Gdx.graphics.getDeltaTime());
 
         debugRenderer.render(world,camera.combined);
 
@@ -130,23 +122,13 @@ public class LoadBox2d {
                     break;
             }
         }
+
+        Log.debug(getClass().getName(),">>> selesai render box2d entity");
     }
 
 
     public void dispose(){
         world.dispose();
         debugRenderer.dispose();
-    }
-
-    public Player getPlayer() {
-        return player;
-    }
-
-    public Key getKey() {
-        return key;
-    }
-
-    public Portal getPortal() {
-        return portal;
     }
 }
