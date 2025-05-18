@@ -2,7 +2,6 @@ package io.asirum.GameLogic;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.World;
 import io.asirum.Entity.Items.Key;
 import io.asirum.Entity.Items.Portal;
 import io.asirum.Entity.Player.Player;
@@ -71,7 +70,7 @@ public class GamePlayManager {
      * param portal diperlukan untuk mengetahui apakah
      * key sudah di ambil oleh player
      */
-    public void isCanPlayerFinish(Portal portal){
+    public void isPlayerCanFinish(Portal portal){
         if(portal.getKey().isCollected()){
 
             Log.info(getClass().getName(), ">>> user naik level ke "+userData.getLevel());
