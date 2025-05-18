@@ -5,17 +5,17 @@ import io.asirum.Entity.Items.Checkpoint;
 import io.asirum.Entity.Items.Key;
 import io.asirum.Entity.Items.Portal;
 import io.asirum.Entity.Player.Player;
-import io.asirum.GameLogic.PlayerFinishLogic;
+import io.asirum.GameLogic.GamePlayManager;
 import io.asirum.Service.Log;
 
 import static io.asirum.Box2d.Collision.ContactListenerHelper.*;
 
 public class PlayerContactListener implements ContactListener {
 
-    private PlayerFinishLogic playerFinishLogic;
+    private GamePlayManager playManager;
 
-    public PlayerContactListener(PlayerFinishLogic playerFinishLogic) {
-        this.playerFinishLogic = playerFinishLogic;
+    public PlayerContactListener(GamePlayManager playManager) {
+        this.playManager= playManager;
     }
 
     @Override
@@ -106,7 +106,7 @@ public class PlayerContactListener implements ContactListener {
                     .getBody()
                     .getUserData();
 
-            playerFinishLogic.playerFinish(portal);
+            playManager.isPlayerCanFinish(portal);
 
         } else if (isPlayerBody(contact.getFixtureB()) && isPortalSensor(contact.getFixtureA())) {
 
@@ -119,7 +119,7 @@ public class PlayerContactListener implements ContactListener {
                     .getBody()
                     .getUserData();
 
-            playerFinishLogic.playerFinish(portal);
+            playManager.isPlayerCanFinish(portal);
         }
     }
 
@@ -136,8 +136,9 @@ public class PlayerContactListener implements ContactListener {
                     .getUserData();
 
             player.setPlayerNeedRespawn(true);
+            player.decreasePlayerLive();
 
-        } else if (isPlayerBody(contact.getFixtureB()) && isPortalSensor(contact.getFixtureA())) {
+        } else if (isPlayerBody(contact.getFixtureB()) && isObstacle(contact.getFixtureA())) {
 
             Log.debug(getClass().getName(),"player kena obstacle");
 
@@ -149,6 +150,7 @@ public class PlayerContactListener implements ContactListener {
                     .getUserData();
 
             player.setPlayerNeedRespawn(true);
+            player.decreasePlayerLive();
 
         }
     }
