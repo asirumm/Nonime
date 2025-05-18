@@ -1,6 +1,7 @@
 package io.asirum.Box2d.Collision;
 
 import com.badlogic.gdx.physics.box2d.*;
+import io.asirum.Entity.Items.Checkpoint;
 import io.asirum.Entity.Items.Key;
 import io.asirum.Entity.Items.Portal;
 import io.asirum.Entity.Player.Player;
@@ -22,6 +23,8 @@ public class PlayerContactListener implements ContactListener {
         footOnPlatformSensor(contact,true);
         playerCollectKey(contact);
         playerKnockThePortal(contact);
+        playerCollisionWithObstacle(contact);
+        playerCollisionWithCheckpoint(contact);
     }
 
     @Override
@@ -117,6 +120,76 @@ public class PlayerContactListener implements ContactListener {
                     .getUserData();
 
             playerFinishLogic.playerFinish(portal);
+        }
+    }
+
+    private void playerCollisionWithObstacle(Contact contact) {
+        if (isPlayerBody(contact.getFixtureA()) && isObstacle(contact.getFixtureB())) {
+
+            Log.debug(getClass().getName(),"player kena obstacle");
+
+
+            Player player =
+                (Player) contact
+                    .getFixtureA()
+                    .getBody()
+                    .getUserData();
+
+            player.setPlayerNeedRespawn(true);
+
+        } else if (isPlayerBody(contact.getFixtureB()) && isPortalSensor(contact.getFixtureA())) {
+
+            Log.debug(getClass().getName(),"player kena obstacle");
+
+
+            Player player =
+                (Player) contact
+                    .getFixtureB()
+                    .getBody()
+                    .getUserData();
+
+            player.setPlayerNeedRespawn(true);
+
+        }
+    }
+
+    private void playerCollisionWithCheckpoint(Contact contact) {
+        if (isPlayerBody(contact.getFixtureA()) && isCheckpoint(contact.getFixtureB())) {
+
+            Log.debug(getClass().getName(),"player kena checkpoint");
+
+            Checkpoint checkpoint = (Checkpoint)
+                contact
+                    .getFixtureB()
+                    .getBody()
+                    .getUserData();
+
+            Player player =
+                (Player) contact
+                    .getFixtureA()
+                    .getBody()
+                    .getUserData();
+
+            player.setLastCheckpoint(checkpoint.getPosition());
+
+
+        } else if (isPlayerBody(contact.getFixtureB()) && isCheckpoint(contact.getFixtureA())) {
+
+            Log.debug(getClass().getName(),"player kena obstacle");
+
+            Checkpoint checkpoint = (Checkpoint)
+                contact
+                    .getFixtureA()
+                    .getBody()
+                    .getUserData();
+
+            Player player =
+                (Player) contact
+                    .getFixtureB()
+                    .getBody()
+                    .getUserData();
+
+            player.setLastCheckpoint(checkpoint.getPosition());
         }
     }
 }

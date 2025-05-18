@@ -23,4 +23,12 @@ public class ContactListenerHelper {
     public static boolean isPortalSensor(Fixture fixture){
         return fixture.getUserData().equals(Box2dHelper.PORTAL_FIXTURE_NAME);
     }
+
+    public static boolean isObstacle(Fixture fixture){
+        return fixture.getUserData().equals(Box2dHelper.OBSTACLE_NAME);
+    }
+
+    public static boolean isCheckpoint(Fixture fixture){
+        return fixture.getUserData().equals(Box2dHelper.CHECKPOINT_LAYER);
+    }
 }

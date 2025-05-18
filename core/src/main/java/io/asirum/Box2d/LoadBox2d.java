@@ -9,8 +9,12 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import io.asirum.Box2d.Collision.PlayerContactListener;
+import io.asirum.Entity.Items.Checkpoint;
+import io.asirum.Entity.Items.CheckpointBuilder;
 import io.asirum.Entity.Items.Key;
 import io.asirum.Entity.Items.Portal;
+import io.asirum.Entity.Obstacle.Stalactite;
+import io.asirum.Entity.Platform.SinglePlatform;
 import io.asirum.Entity.Platform.StaticPlatform;
 import io.asirum.Entity.Player.Player;
 import io.asirum.Entity.Player.PlayerMovement;
@@ -25,8 +29,11 @@ public class LoadBox2d {
     private Player player;
     private PlayerSensor playerSensor;
     private PlayerMovement playerMovement;
+    private SinglePlatform singlePlatform;
     private Key key;
     private Portal portal;
+    private Stalactite stalactite;
+    private CheckpointBuilder checkpointBuilder;
 
     private StaticPlatform staticPlatform;
     private Box2DDebugRenderer debugRenderer;
@@ -42,6 +49,9 @@ public class LoadBox2d {
         playerMovement = new PlayerMovement(player);
         key            = new Key(world);
         portal         = new Portal(world,key);
+        singlePlatform = new SinglePlatform(world);
+        stalactite     = new Stalactite(world);
+        checkpointBuilder    = new CheckpointBuilder(world);
 
         world.setContactListener(new PlayerContactListener(playerFinishLogic));
 
@@ -63,6 +73,11 @@ public class LoadBox2d {
             }
             key.getToDestroy().clear();
         }
+
+        if (player.isPlayerNeedRespawn()){
+            player.respawn();
+            player.setPlayerNeedRespawn(false);
+        };
 
         debugRenderer.render(world,camera.combined);
 
@@ -100,6 +115,18 @@ public class LoadBox2d {
                 case Box2dHelper.PORTAL_SENSOR_NAME:
                     Log.debug(getClass().getName(),">>> objects tmx "+ Box2dHelper.PORTAL_SENSOR_NAME + " ditemukan");
                     portal.build(object);
+                    break;
+                case Box2dHelper.SINGLE_PLATFORM_LAYER:
+                    Log.debug(getClass().getName(),">>> objects tmx "+ Box2dHelper.SINGLE_PLATFORM_LAYER + " ditemukan");
+                    singlePlatform.build(object);
+                    break;
+                case Box2dHelper.OBSTACLE_LAYER:
+                    Log.debug(getClass().getName(),">>> objects tmx "+ Box2dHelper.OBSTACLE_LAYER + " ditemukan");
+                    stalactite.build(object);
+                    break;
+                case Box2dHelper.CHECKPOINT_LAYER:
+                    Log.debug(getClass().getName(),">>> objects tmx "+ Box2dHelper.CHECKPOINT_LAYER + " ditemukan");
+                    checkpointBuilder.build(object);
                     break;
             }
         }

@@ -7,6 +7,8 @@ public class FixtureFilter {
     public static final short BIT_PLATFORM = 0x0002;
     public static final short BIT_KEY = 0x0004;
     public static final short BIT_PORTAL = 0x0006;
+    public static final short BIT_OBSTACLE = 0x0008;
+    public static final short BIT_CHECKPOINT = 0x0016;
     // Artinya
     //categoryBits	"Aku ini siapa?" → Menyatakan jenis objek ini (misal: player, musuh, platform)
     //maskBits	"Aku bisa bertabrakan dengan siapa saja?"
@@ -22,7 +24,9 @@ public class FixtureFilter {
     public static Filter filterPlayer(){
         Filter playerFilter = new Filter();
         playerFilter.categoryBits = BIT_PLAYER;
-        playerFilter.maskBits = BIT_PLATFORM|BIT_KEY|BIT_PORTAL;
+        playerFilter.maskBits =
+            BIT_PLATFORM|BIT_KEY|
+            BIT_PORTAL|BIT_OBSTACLE|BIT_CHECKPOINT;
 
         return  playerFilter;
     }
@@ -38,6 +42,22 @@ public class FixtureFilter {
     public static Filter filterPortal() {
         Filter keyFilter = new Filter();
         keyFilter.categoryBits = BIT_PORTAL;
+        keyFilter.maskBits = BIT_PLAYER;
+
+        return keyFilter;
+    }
+
+    public static Filter filterObstacle() {
+        Filter keyFilter = new Filter();
+        keyFilter.categoryBits = BIT_OBSTACLE;
+        keyFilter.maskBits = BIT_PLAYER;
+
+        return keyFilter;
+    }
+
+    public static Filter filterCheckpoint() {
+        Filter keyFilter = new Filter();
+        keyFilter.categoryBits = BIT_CHECKPOINT;
         keyFilter.maskBits = BIT_PLAYER;
 
         return keyFilter;
