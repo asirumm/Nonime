@@ -16,6 +16,7 @@ import io.asirum.Constant;
 public class GameAssets {
     private TextureAtlas widgetAtlas;
     private TextureAtlas playerAtlas;
+    private TextureAtlas itemsAtlas;
     private Skin widgetSkin;
     private Sound soundLevelControl;
     private Music soundMusic;
@@ -31,7 +32,9 @@ public class GameAssets {
         Log.info(getClass().getName(),"# memulai build variable asset");
 
         try{
-            widgetAtlas     = assetManager.get(Constant.ASSET_WIDGET_ATLAS);
+            widgetAtlas         = assetManager.get(Constant.ASSET_WIDGET_ATLAS);
+            itemsAtlas          = assetManager.get(Constant.ASSET_ITEMS_ATLAS);
+            playerAtlas         = assetManager.get(Constant.ASSET_PLAYER_ATLAS);
             widgetSkin      = assetManager.get(Constant.ASSET_WIDGET_SKIN);
             soundLevelControl = assetManager.get(Constant.ASSET_SOUND_CONTROL_ON_CLICK);
             soundMusic      = assetManager.get(Constant.ASSET_SOUND);
@@ -82,4 +85,8 @@ public class GameAssets {
     public void setSoundMusic(Music soundMusic) {
         this.soundMusic = soundMusic;
     }
-}
+
+    public TextureAtlas getItemsAtlas() {
+        return itemsAtlas;
+    }
+  }

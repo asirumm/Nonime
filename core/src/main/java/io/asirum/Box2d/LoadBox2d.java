@@ -6,11 +6,9 @@ import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import io.asirum.Box2d.Collision.PlayerContactListener;
-import io.asirum.Entity.Items.Checkpoint;
 import io.asirum.Entity.Items.CheckpointBuilder;
 import io.asirum.Entity.Items.Key;
 import io.asirum.Entity.Items.Portal;
@@ -71,11 +69,13 @@ public class LoadBox2d {
 
         playManager.play(Gdx.graphics.getDeltaTime());
 
+        key.draw();
+        player.animationDraw(Gdx.graphics.getDeltaTime());
+
         debugRenderer.render(world,camera.combined);
 
         CameraHelper.lerpCamera(camera,player.getBody());
 
-        // TODO draw key
     }
 
     public void loadEntity(String map){

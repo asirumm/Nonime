@@ -29,6 +29,8 @@ public class AssetLoader implements Disposable {
 
     private void loadAtlases() {
         assetManager.load(ASSET_WIDGET_ATLAS, TextureAtlas.class);
+        assetManager.load(ASSET_ITEMS_ATLAS, TextureAtlas.class);
+        assetManager.load(ASSET_PLAYER_ATLAS, TextureAtlas.class);
     }
 
     private void loadMusic(){

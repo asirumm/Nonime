@@ -1,6 +1,7 @@
 package io.asirum.Entity.Player;
 
-import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
@@ -8,13 +9,23 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
 import io.asirum.Box2d.*;
+import io.asirum.Constant;
+import io.asirum.Service.ApplicationContext;
+import io.asirum.Service.GameAssets;
+import io.asirum.Service.Log;
 import io.asirum.TmxMap.TmxHelper;
-
+import io.asirum.Util.SpriteBatchHelper;
+// TODO rapihkan player class, pecah behavior
 public class Player extends BaseBox2d {
+
+    private boolean playerNeedRespawn;
+    private Vector2 lastPosition;
+    private short playerLive = 3;
     // ======= Parameter Gerakan =======
     private float runMaxSpeed = 7f;           // Kecepatan maksimum saat berlari
-    private float runAcceleration = 0.5f;     // Waktu untuk mencapai kecepatan maksimum dari diam
+    private float runAcceleration = 0.8f;     // Waktu untuk mencapai kecepatan maksimum dari diam
     private float runDecceleration = 0.2f;    // Waktu untuk melambat dari kecepatan maksimum ke diam
 
     private float accelInAir = 0.5f;          // Pengali akselerasi saat di udara
@@ -23,7 +34,7 @@ public class Player extends BaseBox2d {
     private boolean doConserveMomentum = true; // Apakah momentum akan dipertahankan saat di udara
 
     // Konstanta lompat
-    private float jumpForce = 3.2f;
+    private float jumpForce = 2.85f;
 
     private float lastPressedJumpTime = -1f;
     private float lastOnGroundTime = -1f;
@@ -32,6 +43,13 @@ public class Player extends BaseBox2d {
 
     // ======= Konstanta waktu fisika =======
     private static final float FIXED_DELTA_TIME = 1f / 60f;
+
+    private Animation<TextureRegion> playerRunAnim;
+    private Animation<TextureRegion> playerIdleAnim;
+    private TextureRegion playerJumpAnim;
+    private TextureRegion currentFrame;
+    private float stateTime;
+    private boolean lastFacingRight = true;
 
     public void jump() {
         // Reset "buffer time" agar tidak lompat berulang dari satu tombol tekan
@@ -83,6 +101,7 @@ public class Player extends BaseBox2d {
 
     public Player(World world) {
         super(world);
+        animationInit();
     }
 
     @Override
@@ -117,7 +136,74 @@ public class Player extends BaseBox2d {
         shape.dispose();
     }
 
+    public void animationDraw(float delta) {
+        stateTime += delta;
 
+        // Deteksi state player
+        boolean isMoving = Math.abs(body.getLinearVelocity().x) > 0.1f;
+        boolean isFalling = !isOnGround();
+        // Update arah hanya jika bergerak
+        if (isMoving) {
+            lastFacingRight = body.getLinearVelocity().x >= 0;
+        }
+        // Dapatkan frame yang sesuai berdasarkan state
+        TextureRegion frame;
+
+        if (isFalling) {
+            // Gunakan animasi jump jika tersedia, atau frame tunggal
+            frame = playerJumpAnim;
+        } else if (isMoving) {
+            frame = playerRunAnim.getKeyFrame(stateTime, true); // Loop animasi run
+        } else {
+            frame = playerIdleAnim.getKeyFrame(stateTime, true); // Loop animasi idle
+        }
+
+        // Gunakan lastFacingRight untuk flip
+        boolean shouldFlip = !lastFacingRight;
+        if ((shouldFlip && !frame.isFlipX()) || (!shouldFlip && frame.isFlipX())) {
+            frame = new TextureRegion(frame);
+            frame.flip(true, false);
+        }
+
+        currentFrame = frame;
+
+        // Hitung posisi dan ukuran render
+        float width = 32f / Constant.UNIT_SCALE;
+        float height = 32f / Constant.UNIT_SCALE;
+        float x = body.getPosition().x - width / 2f; // Pusatkan pada body
+        float y = body.getPosition().y - height / 2f;
+
+        // Render
+        SpriteBatchHelper.projectionCombineBegin();
+        ApplicationContext.getInstance().getBatch().draw(
+            currentFrame,
+            x,
+            y,
+            width,
+            height
+        );
+        SpriteBatchHelper.batchEnd();
+    }
+
+    public void animationInit(){
+        Array<TextureRegion> animIdle = new Array<>();
+        Array<TextureRegion> animRun = new Array<>();
+
+        GameAssets gm = ApplicationContext.getInstance().getGameAssets();
+
+        for (int i=1;i<=2;i++){
+            animIdle.add(gm.getPlayerAtlas().findRegion("idle"+i));
+        }
+
+        for (int i=1;i<=4;i++){
+            animRun.add(gm.getPlayerAtlas().findRegion("run"+i));
+        }
+
+        playerJumpAnim = gm.getPlayerAtlas().findRegion("jump");
+
+        playerIdleAnim = new Animation<>(0.25f,animIdle);
+        playerRunAnim  = new Animation<>(0.10f,animRun);
+    }
 
     public boolean isOnGround() {
         return onGround;
@@ -127,4 +213,33 @@ public class Player extends BaseBox2d {
         this.onGround = onGround;
     }
 
+
+    public void setLastCheckpoint(Vector2 pos){
+        lastPosition = pos;
+    }
+
+    public void respawn(){
+        if(lastPosition==null){
+            Log.info(getClass().getName(),"NULL vector respawn");
+        }else {
+            body.setTransform(lastPosition,0);
+        }
+    }
+
+    public void setPlayerNeedRespawn(boolean playerNeedRespawn) {
+        this.playerNeedRespawn = playerNeedRespawn;
+    }
+
+    public boolean isPlayerNeedRespawn() {
+        return playerNeedRespawn;
+    }
+
+    public void decreasePlayerLive(){
+        playerLive -=1;
+        Log.debug(getClass().getName(),"kesempatan hidup player "+playerLive );
+    }
+
+    public short getPlayerLive(){
+        return playerLive;
+    }
 }

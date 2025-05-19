@@ -2,13 +2,15 @@ package io.asirum;
 
 public class Constant {
     // Aspek rasio 16:9
-    public static int VIRTUAL_WIDTH = 240;
-    public static int VIRTUAL_HEIGHT = 135;
+    public static int VIRTUAL_WIDTH = 320;
+    public static int VIRTUAL_HEIGHT = 180;
 
     public static float UNIT_SCALE = 16f;
 
     // atlas
     public static String ASSET_WIDGET_ATLAS = "manifest/widget/widget.atlas";
+    public static String ASSET_ITEMS_ATLAS = "manifest/entity/key.atlas";
+    public static String ASSET_PLAYER_ATLAS = "manifest/entity/player.atlas";
 
     // skin
     public static String ASSET_WIDGET_SKIN = "manifest/widget/widget.json";
