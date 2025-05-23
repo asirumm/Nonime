@@ -7,7 +7,6 @@ import com.badlogic.gdx.utils.Array;
  */
 public class Payload {
     private String tema;
-    private String map;
     private int cost;
     private Array<GameLevel> level;
 
@@ -27,14 +26,6 @@ public class Payload {
         this.tema = tema;
     }
 
-    public String getMap() {
-        return map;
-    }
-
-    public void setMap(String map) {
-        this.map = map;
-    }
-
     public Array<GameLevel> getLevel() {
         return level;
     }
@@ -47,7 +38,6 @@ public class Payload {
     public String toString() {
         return "Payload{" +
             "tema='" + tema + '\'' +
-            ", map='" + map + '\'' +
             ", cost=" + cost +
             ", level=" + level +
             '}';

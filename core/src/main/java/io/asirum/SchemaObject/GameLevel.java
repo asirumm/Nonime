@@ -3,6 +3,15 @@ package io.asirum.SchemaObject;
 public class GameLevel {
     private String id;
     private int level;
+    private String map;
+
+    public String getMap() {
+        return map;
+    }
+
+    public void setMap(String map) {
+        this.map = map;
+    }
 
     public String getId() {
         return id;
@@ -24,6 +33,7 @@ public class GameLevel {
     public String toString() {
         return "GameLevel{" +
             "id='" + id + '\'' +
+            "map = "+map+
             ", level=" + level +
             '}';
     }

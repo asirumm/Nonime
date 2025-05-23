@@ -1,11 +1,16 @@
 {
   "tema": "savana",
-  "map": "savana.tmx",
   "cost": 3,
   "level": [
     {
       "id": "savana-1",
+      "map": "savana.tmx",
       "level": 1
+    },
+    {
+      "id": "savana-2",
+      "map": "savana.tmx",
+      "level": 2
     }
   ]
 }
