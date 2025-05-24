@@ -11,7 +11,7 @@ import io.asirum.Service.Log;
 
 /** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
 public class Main extends ManagedGame<ManagedScreen, ScreenTransition> {
-    private  AssetLoader assetLoader;
+
 
     @Override
     public void create() {
