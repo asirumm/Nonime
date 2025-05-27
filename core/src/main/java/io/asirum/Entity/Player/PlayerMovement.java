@@ -1,31 +1,27 @@
 package io.asirum.Entity.Player;
 
+import io.asirum.EventListener.InputManager;
+import io.asirum.EventListener.InputState;
+
 public class PlayerMovement {
     private Player player;
+    private InputManager inputManager;
+    private InputState inputState;
 
-    public static boolean moveLeft;
-    public static boolean moveRight;
-    public static boolean moveUp;
-
-
-    public PlayerMovement(Player player) {
+    public PlayerMovement(Player player,InputManager inputManager) {
         this.player = player;
+        this.inputManager = inputManager;
+        this.inputState = inputManager.getInputState();
     }
 
-    private void reset(){
-        moveLeft =false;
-        moveRight=false;
-        moveUp=false;
-    }
+    public void run(){
+        inputManager.handleInput();
 
-    public void render(){
-        player.run(moveLeft,moveRight);
+        player.run(inputState.isMoveLeft(),inputState.isMoveRight());
+
         // Jika pemain berada di tanah dan tombol lompat ditekan
-        if (player.isOnGround() && moveUp) {
+        if (player.isOnGround() && inputState.isMoveUp()) {
             player.jump();
         }
-
-        reset();
     }
-
 }
