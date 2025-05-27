@@ -1,21 +1,19 @@
 package io.asirum.Screen;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Align;
 import de.eskalon.commons.screen.ManagedScreen;
-import io.asirum.EventListener.BaseHandler;
+import io.asirum.Constant;
+import io.asirum.Util.ButtonActionHelper;
 import io.asirum.Service.ApplicationContext;
 import io.asirum.Service.Log;
 import io.asirum.Util.ButtonHelper;
 import io.asirum.Util.CameraHelper;
-import io.asirum.Util.SpriteBatchHelper;
 import io.asirum.Util.StageHelper;
 import io.asirum.Widget.StyleVars;
-import io.asirum.Widget.Window.Abouts;
+import io.asirum.Screen.HomeMenu.AboutWindow;
 
 import static io.asirum.Constant.VIRTUAL_HEIGHT;
 import static io.asirum.Constant.VIRTUAL_WIDTH;
@@ -29,8 +27,8 @@ public class HomeScreen extends ManagedScreen {
     private Button play;
     private Button about;
 
-    private BaseHandler baseHandler;
-    private Abouts window;
+    private ButtonActionHelper buttonActionHelper;
+    private AboutWindow window;
 
 
 
@@ -39,14 +37,14 @@ public class HomeScreen extends ManagedScreen {
 
         context = ApplicationContext.getInstance();
         skin    = context.getGameAssets().getWidgetSkin();
-        baseHandler = new BaseHandler();
-        window = new Abouts(skin);
+        buttonActionHelper = new ButtonActionHelper();
+        window = new AboutWindow(skin);
 
         stage = StageHelper.createInstance();
 
 
         play = ButtonHelper
-            .build(skin, baseHandler.onPush(MenuScreen::new, null));
+            .build(skin, buttonActionHelper.onPush(LevelScreen::new, null));
 
         about = ButtonHelper
             .build(skin, StyleVars.ABOUT_BTN,()->window.setVisible(true));
@@ -61,7 +59,7 @@ public class HomeScreen extends ManagedScreen {
         float posYplay = VIRTUAL_HEIGHT / 2f;
 
         play.setPosition(posXplay,posYplay , Align.center);
-        about.setPosition(posXplay,posYplay-play.getHeight(),Align.center);
+        about.setPosition(VIRTUAL_WIDTH, 0, Align.bottomRight);
 
     }
 

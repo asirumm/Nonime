@@ -18,8 +18,8 @@ public class BaseWindow extends Window {
         super(title, skin);
 
         // agar rapih titlenya
-        this.padTop(getTitleLabel().getPrefHeight()+13);
-        this.padLeft(getTitleLabel().getPrefHeight());
+        getTitleTable().padTop(getTitleLabel().getHeight()+getTitleTable().getPrefHeight());
+
 
         // Window properties
         this.setModal(true);
@@ -28,6 +28,7 @@ public class BaseWindow extends Window {
 
         // Set up the main container table
         mainTable = new Table();
+        mainTable.padTop(15);
 
         // Close button
         closeButton = ButtonHelper.closeButton(this);
