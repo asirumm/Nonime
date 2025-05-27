@@ -2,6 +2,7 @@ package io.asirum.Entity.Items;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.math.Rectangle;
@@ -21,46 +22,27 @@ import io.asirum.Util.SpriteBatchHelper;
 public class Key extends BaseBox2d {
     private boolean collected;
     private Vector2 size;
-    private Animation<TextureRegion> keyTexture;
-    private float stateTime = 0f;
+    private KeyAnimation keyAnimation;
 
     public Key(World world) {
         super(world);
-        GameAssets gm = ApplicationContext
-            .getInstance().getGameAssets();
-
-        Array<TextureRegion> tr = new Array<>();
-        tr.add(gm.getItemsAtlas().findRegion("key1"));
-        tr.add(gm.getItemsAtlas().findRegion("key2"));
-
-        keyTexture = new Animation<>(0.25f,tr);
-
+        keyAnimation = new KeyAnimation();
     }
     public void draw(){
 
         if (!collected) {
-            stateTime += Gdx.graphics.getDeltaTime();
+            keyAnimation.draw(body,Gdx.graphics.getDeltaTime());
         }
 
         if (collected) return;
 
-        TextureRegion currentFrame = keyTexture.getKeyFrame(stateTime, true);
-
-        Vector2 pos = body.getPosition();
-
-        SpriteBatchHelper.projectionCombineBegin();
-        ApplicationContext.getInstance().getBatch().draw(currentFrame,
-            pos.x - size.x ,
-            pos.y - size.y ,
-            1f,  1f);// ukuran pas untuk gambar saat ini
-        SpriteBatchHelper.batchEnd();
     }
     @Override
     public void build(MapObject object) {
         Rectangle rect = TmxHelper.convertRectangleMapObject(object);
 
-        Vector2 position = Box2dHelper.positionBox2d(rect);
-        size     = Box2dHelper.sizeBox2d(rect);
+        Vector2 position = positionBox2d(rect);
+        size     = sizeBox2d(rect);
 
         BodyBuilder bodyBuilder = new BodyBuilder()
             .fixRotation(true)
@@ -78,7 +60,7 @@ public class Key extends BaseBox2d {
 
         Fixture fixture = body.createFixture(fixtureBuilder.build());
 
-        fixture.setUserData(Box2dHelper.KEY_FIXTURE_NAME);
+        fixture.setUserData(Box2dVars.KEY_FIXTURE);
         body.setUserData(this);
 
         shape.dispose();
