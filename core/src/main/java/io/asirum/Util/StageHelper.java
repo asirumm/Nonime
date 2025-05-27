@@ -15,6 +15,10 @@ public class StageHelper {
      */
     public static Stage createInstance(){
         Viewport viewport = ApplicationContext.getInstance().getViewport();
+        return createInstance(viewport);
+    }
+
+    public static Stage createInstance(Viewport viewport){
         Stage stage = new Stage(viewport);
         Gdx.input.setInputProcessor(stage);
         return stage;
