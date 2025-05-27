@@ -8,6 +8,10 @@ import io.asirum.Service.Log;
 
 public class DesktopInput extends InputManager{
 
+    public DesktopInput(InputState inputState) {
+        super(inputState);
+    }
+
     public void handleInput() {
         // reset harus selalu diawal agar tidak blok playermovement.run
         reset();

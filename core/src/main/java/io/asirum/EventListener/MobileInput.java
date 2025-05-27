@@ -10,6 +10,10 @@ public class MobileInput extends InputManager{
     private Button rightButton;
     private Button upButton;
 
+    public MobileInput(InputState inputState) {
+        super(inputState);
+    }
+
     public void setButton(Button leftButton,Button rightButton, Button upButton){
         this.leftButton = leftButton;
         this.upButton = upButton;

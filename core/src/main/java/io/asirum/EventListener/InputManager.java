@@ -4,8 +4,8 @@ package io.asirum.EventListener;
 public abstract class InputManager {
     protected InputState inputState;
 
-    public InputManager (){
-        this.inputState = new InputState();
+    public InputManager (InputState inputState){
+        this.inputState = inputState;
     }
 
     public abstract void handleInput();
@@ -15,7 +15,4 @@ public abstract class InputManager {
         inputState.reset();
     }
 
-    public InputState getInputState(){
-        return inputState;
-    }
 }

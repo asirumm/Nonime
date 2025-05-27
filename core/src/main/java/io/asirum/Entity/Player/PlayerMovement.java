@@ -8,10 +8,10 @@ public class PlayerMovement {
     private InputManager inputManager;
     private InputState inputState;
 
-    public PlayerMovement(Player player,InputManager inputManager) {
+    public PlayerMovement(Player player,InputManager inputManager,InputState inputState) {
         this.player = player;
         this.inputManager = inputManager;
-        this.inputState = inputManager.getInputState();
+        this.inputState = inputState;
     }
 
     public void run(){
