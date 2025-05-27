@@ -28,8 +28,8 @@ public class CheckpointBuilder extends BaseBox2d {
     public void build(MapObject object) {
         Rectangle rect = TmxHelper.convertRectangleMapObject(object);
 
-        Vector2 position = Box2dHelper.positionBox2d(rect);
-        Vector2 size     = Box2dHelper.sizeBox2d(rect);
+        Vector2 position = positionBox2d(rect);
+        Vector2 size     = sizeBox2d(rect);
 
         BodyBuilder bodyBuilder = new BodyBuilder()
             .fixRotation(true)
@@ -49,7 +49,7 @@ public class CheckpointBuilder extends BaseBox2d {
 
         Checkpoint cp = new Checkpoint(position,body);
 
-        fixture.setUserData(Box2dHelper.CHECKPOINT_FIXTURE_NAME);
+        fixture.setUserData(Box2dVars.CHECKPOINT_FIXTURE);
         body.setUserData(cp);
 
         checkpoints.add(cp);

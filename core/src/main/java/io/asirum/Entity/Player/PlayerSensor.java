@@ -9,8 +9,6 @@ import com.badlogic.gdx.physics.box2d.World;
 import io.asirum.Box2d.*;
 import io.asirum.TmxMap.TmxHelper;
 
-import static io.asirum.Box2d.Box2dHelper.PLAYER_SENSOR_FIXTURE_NAME;
-
 public class PlayerSensor extends BaseBox2d {
     private Player player;
 
@@ -23,8 +21,8 @@ public class PlayerSensor extends BaseBox2d {
     public void build(MapObject object) {
         Rectangle rect = TmxHelper.convertRectangleMapObject(object);
 
-        Vector2 position = Box2dHelper.positionBox2d(rect);
-        Vector2 size     = Box2dHelper.sizeBox2d(rect);
+        Vector2 position = positionBox2d(rect);
+        Vector2 size     = sizeBox2d(rect);
 
         Vector2 offset = new Vector2(
             position.x - player.getBody().getPosition().x,
@@ -42,7 +40,7 @@ public class PlayerSensor extends BaseBox2d {
                 .getBody()
                 .createFixture(fixtureBuilder.build());
 
-        fixture.setUserData(PLAYER_SENSOR_FIXTURE_NAME);
+        fixture.setUserData(Box2dVars.PLAYER_SENSOR_FIXTURE);
 
         shape.dispose();
     }

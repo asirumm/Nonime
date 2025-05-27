@@ -11,9 +11,9 @@ import io.asirum.Box2d.*;
 import io.asirum.TmxMap.TmxHelper;
 
 
-public class SinglePlatform extends BaseBox2d {
+public class OneWayPlatformBuilder extends BaseBox2d {
 
-    public SinglePlatform(World world) {
+    public OneWayPlatformBuilder(World world) {
         super(world);
     }
 
@@ -21,8 +21,8 @@ public class SinglePlatform extends BaseBox2d {
     public void build(MapObject object) {
         Rectangle rect = TmxHelper.convertRectangleMapObject(object);
 
-        Vector2 position = Box2dHelper.positionBox2d(rect);
-        Vector2 size     = Box2dHelper.sizeBox2d(rect);
+        Vector2 position = positionBox2d(rect);
+        Vector2 size     = sizeBox2d(rect);
 
         BodyBuilder bodyBuilder = new BodyBuilder()
             .type(BodyDef.BodyType.StaticBody)
@@ -41,9 +41,16 @@ public class SinglePlatform extends BaseBox2d {
         Fixture fixture = body.createFixture(fixtureBuilder.build());
 
         fixture.setFilterData(FixtureFilter.filterPlatform());
-        fixture.setUserData(Box2dHelper.STATIC_PLATFORM_FIXTURE_NAME);
+        fixture.setUserData(Box2dVars.ONE_WAY_PLATFORM_FIXTURE);
+
+        OneWayPlatform w =new OneWayPlatform();
+        w.setHeight(size.y);
+        w.setBody(body);
+
+        body.setUserData(w);
 
 
         shape.dispose();
     }
+
 }

@@ -19,8 +19,8 @@ public class Stalactite extends BaseBox2d {
     public void build(MapObject object) {
         Rectangle rect = TmxHelper.convertRectangleMapObject(object);
 
-        Vector2 position = Box2dHelper.positionBox2d(rect);
-        Vector2 size     = Box2dHelper.sizeBox2d(rect);
+        Vector2 position = positionBox2d(rect);
+        Vector2 size     = sizeBox2d(rect);
 
         BodyBuilder bodyBuilder = new BodyBuilder()
             .type(BodyDef.BodyType.StaticBody)
@@ -39,7 +39,7 @@ public class Stalactite extends BaseBox2d {
         Fixture fixture = body.createFixture(fixtureBuilder.build());
 
         fixture.setFilterData(FixtureFilter.filterObstacle());
-        fixture.setUserData(Box2dHelper.OBSTACLE_NAME);
+        fixture.setUserData(Box2dVars.OBSTACLE_NAME);
 
 
         shape.dispose();

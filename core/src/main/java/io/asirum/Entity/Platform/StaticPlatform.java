@@ -1,13 +1,12 @@
 package io.asirum.Entity.Platform;
 
 import com.badlogic.gdx.maps.MapLayer;
-import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import io.asirum.Box2d.BodyBuilder;
-import io.asirum.Box2d.Box2dHelper;
+import io.asirum.Box2d.Box2dVars;
 import io.asirum.Box2d.FixtureFilter;
 import io.asirum.Constant;
 
@@ -19,7 +18,7 @@ public class StaticPlatform extends BasePlatform {
 
     @Override
     public void build(TiledMap tiledMap) {
-        MapLayer layer = tiledMap.getLayers().get(Box2dHelper.PLATFORM_LAYER);
+        MapLayer layer = tiledMap.getLayers().get(Box2dVars.PLATFORM_LAYER);
 
         if(layer instanceof TiledMapTileLayer){
 
@@ -114,7 +113,7 @@ public class StaticPlatform extends BasePlatform {
 
                             Fixture fixture = body.createFixture(shape, 1.0f);
                             fixture.setFilterData(FixtureFilter.filterPlatform());
-                            fixture.setUserData(Box2dHelper.STATIC_PLATFORM_FIXTURE_NAME);
+                            fixture.setUserData(Box2dVars.STATIC_PLATFORM_FIXTURE);
                             shape.dispose();
 
                             // kita kembalikan ke awal
