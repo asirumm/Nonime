@@ -8,41 +8,38 @@ import io.asirum.Constant;
 import io.asirum.Util.CameraHelper;
 
 public class MapRenderer {
+    private OrthographicCamera camera;
     private TiledMap map;
     private OrthogonalTiledMapRenderer mapRenderer;
-    private OrthographicCamera camera;
 
-    public MapRenderer(OrthographicCamera camera){
+    public MapRenderer(OrthographicCamera camera) {
         this.camera = camera;
     }
 
-    public void loadMap(String mapPath){
+    public void loadMap(String mapPath) {
         this.map = TmxHelper.getTiledMap(mapPath);
-
-        mapRenderer = new OrthogonalTiledMapRenderer(this.map, 1/ Constant.UNIT_SCALE);
+        this.mapRenderer = new OrthogonalTiledMapRenderer(this.map, 1.0f / Constant.UNIT_SCALE);
     }
 
-    public void setBoundary(){
-        MapProperties props = map.getProperties();
-        int width  = props.get("width",Integer.class);
-        int height = props.get("height",Integer.class);
-        int tileWidth  = props.get("tilewidth", Integer.class);
-        int tileHeight = props.get("tileheight",Integer.class);
-
-        float totalWidth  = (float) width * tileWidth * 1/Constant.UNIT_SCALE;
-        float totalHeight = (float) height * tileHeight * 1/Constant.UNIT_SCALE;
-
-        CameraHelper.boundaryCamera(camera,totalWidth,totalHeight);
+    public void setBoundaryCamera() {
+        MapProperties props = this.map.getProperties();
+        int width = ((Integer) props.get("width", Integer.class)).intValue();
+        int height = ((Integer) props.get("height", Integer.class)).intValue();
+        int tileWidth = ((Integer) props.get("tilewidth", Integer.class)).intValue();
+        int tileHeight = ((Integer) props.get("tileheight", Integer.class)).intValue();
+        float totalWidth = ((width * tileWidth) * 1.0f) / Constant.UNIT_SCALE;
+        float totalHeight = ((height * tileHeight) * 1.0f) / Constant.UNIT_SCALE;
+        CameraHelper.boundaryCamera(this.camera, totalWidth, totalHeight);
     }
 
-    public void render(){
-        camera.update();
-        mapRenderer.setView(camera);
-        mapRenderer.render();
+    public void render() {
+        this.camera.update();
+        this.mapRenderer.setView(this.camera);
+        this.mapRenderer.render();
     }
 
-    public void dispose(){
-        mapRenderer.dispose();
-        map.dispose();
+    public void dispose() {
+        this.mapRenderer.dispose();
+        this.map.dispose();
     }
 }
