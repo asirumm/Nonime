@@ -55,6 +55,20 @@ public class AnimationComponent {
 
         return animationFrames;
     }
+    public static Array<TextureRegion> createAnimationFrames( String prefix, TextureAtlas atlas) {
+        Array<TextureRegion> animationFrames = new Array<>();
+
+        for (int i = 1; ; i++) {
+            TextureRegion region = atlas.findRegion(prefix + i);
+            if (region == null)
+            {
+                break;
+            };
+            animationFrames.add(region);
+        }
+
+        return animationFrames;
+    }
 
     public Array<TextureRegion> createHorizontalFlippedFrames(Array<TextureRegion> originalFrames) {
         Array<TextureRegion> flippedFrames = new Array<>();
