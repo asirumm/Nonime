@@ -1,6 +1,8 @@
 package io.asirum.Entity.Player;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.math.Rectangle;
@@ -11,105 +13,66 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import io.asirum.Box2d.*;
-import io.asirum.Constant;
+import io.asirum.Entity.Animation.AnimationComponent;
+import io.asirum.Entity.Behavior.Jump;
+import io.asirum.Entity.Behavior.Run;
 import io.asirum.Service.ApplicationContext;
 import io.asirum.Service.GameAssets;
 import io.asirum.Service.Log;
 import io.asirum.TmxMap.TmxHelper;
 import io.asirum.Util.SpriteBatchHelper;
-// TODO rapihkan player class, pecah behavior
+
 public class Player extends BaseBox2d {
 
     private boolean playerNeedRespawn;
-    private Vector2 lastPosition;
+    private Vector2 lastPosition;// untuk checkpoint
+
     private short playerLive = 3;
+
+    private float playerHeight;// untuk fixture foot sensor
+
     // ======= Parameter Gerakan =======
-    private float runMaxSpeed = 7f;           // Kecepatan maksimum saat berlari
+    private float runMaxSpeed = 4f;           // Kecepatan maksimum saat berlari
     private float runAcceleration = 0.8f;     // Waktu untuk mencapai kecepatan maksimum dari diam
     private float runDecceleration = 0.2f;    // Waktu untuk melambat dari kecepatan maksimum ke diam
 
-    private float accelInAir = 0.5f;          // Pengali akselerasi saat di udara
-    private float deccelInAir = 0.3f;         // Pengali deselerasi saat di udara
-
-    private boolean doConserveMomentum = true; // Apakah momentum akan dipertahankan saat di udara
-
-    // Konstanta lompat
-    private float jumpForce = 2.85f;
-
-    private float lastPressedJumpTime = -1f;
-    private float lastOnGroundTime = -1f;
+ // Konstanta lompat
+    private float jumpForce = 1.03f;
+    private float maxJump = 4f;
 
     private boolean onGround = false;          // Status apakah player sedang di tanah
 
-    // ======= Konstanta waktu fisika =======
-    private static final float FIXED_DELTA_TIME = 1f / 60f;
+    private Jump jumpBehavior;
+    private Run runBehavior;
 
-    private Animation<TextureRegion> playerRunAnim;
-    private Animation<TextureRegion> playerIdleAnim;
-    private TextureRegion playerJumpAnim;
-    private TextureRegion currentFrame;
-    private float stateTime;
-    private boolean lastFacingRight = true;
-
-    public void jump() {
-        // Reset "buffer time" agar tidak lompat berulang dari satu tombol tekan
-        lastPressedJumpTime = 0f;
-        lastOnGroundTime = 0f;
-
-        // Ambil kecepatan vertikal sekarang
-        float verticalVelocity = body.getLinearVelocity().y;
-
-        // Hitung gaya lompat
-        float force = jumpForce;
-        if (verticalVelocity < 0) {
-            // Jika sedang jatuh, tambahkan nilai untuk menyeimbangkan
-            force -= verticalVelocity; // Minus dikurangi minus = bertambah
-        }
-
-        // Terapkan gaya lompat ke atas (y-axis), dengan impuls (bukan gaya konstan)
-        body.applyLinearImpulse(new Vector2(0, force), body.getWorldCenter(), true);
-    }
-
-    public void run(boolean moveLeft, boolean moveRight) {
-        float inputX = 0f;
-        if (moveLeft) inputX -= 1f;
-        if (moveRight) inputX += 1f;
-
-        float runAccelAmount = (1f / FIXED_DELTA_TIME) * runAcceleration / runMaxSpeed;
-        float runDeccelAmount = (1f / FIXED_DELTA_TIME) * runDecceleration / runMaxSpeed;
-
-        float targetSpeed = inputX * runMaxSpeed;
-        float speedDiff = targetSpeed - body.getLinearVelocity().x;
-
-        float accelRate = (Math.abs(targetSpeed) > 0.01f)
-            ? (onGround ? runAccelAmount : runAccelAmount * accelInAir)
-            : (onGround ? runDeccelAmount : runDeccelAmount * deccelInAir);
-
-        if (doConserveMomentum &&
-            Math.abs(body.getLinearVelocity().x) > Math.abs(targetSpeed) &&
-            Math.signum(body.getLinearVelocity().x) == Math.signum(targetSpeed) &&
-            Math.abs(targetSpeed) > 0.01f &&
-            !onGround) {
-
-            accelRate = 0f;
-        }
-
-        float movementForce = speedDiff * accelRate;
-        body.applyForceToCenter(new Vector2(movementForce, 0f), true);
-    }
-
+    private PlayerAnimation animation;
 
     public Player(World world) {
         super(world);
-        animationInit();
+        runBehavior  = new Run(runMaxSpeed,runAcceleration,runDecceleration);
+        jumpBehavior = new Jump(jumpForce,maxJump);
+
+        animation = new PlayerAnimation();
+    }
+
+    public void jump(){
+        jumpBehavior.doJump(body);
+    }
+
+    public void run(boolean moveLeft,boolean moveRight){
+        runBehavior.run(moveLeft,moveRight,body,onGround);
+    }
+
+    public void drawAnimation(){
+        animation.draw(Gdx.graphics.getDeltaTime(),onGround,body);
     }
 
     @Override
     public void build(MapObject object) {
         Rectangle rect = TmxHelper.convertRectangleMapObject(object);
 
-        Vector2 position = Box2dHelper.positionBox2d(rect);
-        Vector2 size     = Box2dHelper.sizeBox2d(rect);
+        Vector2 position = positionBox2d(rect);
+        Vector2 size     = sizeBox2d(rect);
 
         BodyBuilder bodyBuilder = new BodyBuilder()
             .type(BodyDef.BodyType.DynamicBody)
@@ -130,80 +93,13 @@ public class Player extends BaseBox2d {
 
         Fixture fixture = body.createFixture(fixtureBuilder.build());
 
-        fixture.setUserData(Box2dHelper.PLAYER_FIXTURE_NAME);
+        fixture.setUserData(Box2dVars.PLAYER_FIXTURE);
         body.setUserData(this);
+        playerHeight = size.y;
 
         shape.dispose();
     }
 
-    public void animationDraw(float delta) {
-        stateTime += delta;
-
-        // Deteksi state player
-        boolean isMoving = Math.abs(body.getLinearVelocity().x) > 0.1f;
-        boolean isFalling = !isOnGround();
-        // Update arah hanya jika bergerak
-        if (isMoving) {
-            lastFacingRight = body.getLinearVelocity().x >= 0;
-        }
-        // Dapatkan frame yang sesuai berdasarkan state
-        TextureRegion frame;
-
-        if (isFalling) {
-            // Gunakan animasi jump jika tersedia, atau frame tunggal
-            frame = playerJumpAnim;
-        } else if (isMoving) {
-            frame = playerRunAnim.getKeyFrame(stateTime, true); // Loop animasi run
-        } else {
-            frame = playerIdleAnim.getKeyFrame(stateTime, true); // Loop animasi idle
-        }
-
-        // Gunakan lastFacingRight untuk flip
-        boolean shouldFlip = !lastFacingRight;
-        if ((shouldFlip && !frame.isFlipX()) || (!shouldFlip && frame.isFlipX())) {
-            frame = new TextureRegion(frame);
-            frame.flip(true, false);
-        }
-
-        currentFrame = frame;
-
-        // Hitung posisi dan ukuran render
-        float width = 32f / Constant.UNIT_SCALE;
-        float height = 32f / Constant.UNIT_SCALE;
-        float x = body.getPosition().x - width / 2f; // Pusatkan pada body
-        float y = body.getPosition().y - height / 2f;
-
-        // Render
-        SpriteBatchHelper.projectionCombineBegin();
-        ApplicationContext.getInstance().getBatch().draw(
-            currentFrame,
-            x,
-            y,
-            width,
-            height
-        );
-        SpriteBatchHelper.batchEnd();
-    }
-
-    public void animationInit(){
-        Array<TextureRegion> animIdle = new Array<>();
-        Array<TextureRegion> animRun = new Array<>();
-
-        GameAssets gm = ApplicationContext.getInstance().getGameAssets();
-
-        for (int i=1;i<=2;i++){
-            animIdle.add(gm.getPlayerAtlas().findRegion("idle"+i));
-        }
-
-        for (int i=1;i<=4;i++){
-            animRun.add(gm.getPlayerAtlas().findRegion("run"+i));
-        }
-
-        playerJumpAnim = gm.getPlayerAtlas().findRegion("jump");
-
-        playerIdleAnim = new Animation<>(0.25f,animIdle);
-        playerRunAnim  = new Animation<>(0.10f,animRun);
-    }
 
     public boolean isOnGround() {
         return onGround;
@@ -241,5 +137,9 @@ public class Player extends BaseBox2d {
 
     public short getPlayerLive(){
         return playerLive;
+    }
+
+    public float getPlayerHeight() {
+        return playerHeight;
     }
 }
