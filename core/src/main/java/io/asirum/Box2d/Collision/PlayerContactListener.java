@@ -1,197 +1,156 @@
 package io.asirum.Box2d.Collision;
 
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import io.asirum.Entity.Items.Checkpoint;
 import io.asirum.Entity.Items.Key;
 import io.asirum.Entity.Items.Portal;
+import io.asirum.Entity.Platform.OneWayPlatform;
 import io.asirum.Entity.Player.Player;
 import io.asirum.GameLogic.GamePlayManager;
 import io.asirum.Service.Log;
 
-import static io.asirum.Box2d.Collision.ContactListenerHelper.*;
 
 public class PlayerContactListener implements ContactListener {
-
     private GamePlayManager playManager;
 
     public PlayerContactListener(GamePlayManager playManager) {
-        this.playManager= playManager;
+        this.playManager = playManager;
     }
 
-    @Override
+    @Override // com.badlogic.gdx.physics.box2d.ContactListener
     public void beginContact(Contact contact) {
-        footOnPlatformSensor(contact,true);
+        footOnPlatformSensor(contact, true);
         playerCollectKey(contact);
         playerKnockThePortal(contact);
         playerCollisionWithObstacle(contact);
         playerCollisionWithCheckpoint(contact);
     }
 
-    @Override
+    @Override // com.badlogic.gdx.physics.box2d.ContactListener
     public void endContact(Contact contact) {
-        footOnPlatformSensor(contact,false);
+        footOnPlatformSensor(contact, false);
     }
 
-    @Override
+    @Override // com.badlogic.gdx.physics.box2d.ContactListener
     public void preSolve(Contact contact, Manifold oldManifold) {
-
+        playerCollisionWithOneWayPlatform(contact);
     }
 
-    @Override
+    @Override // com.badlogic.gdx.physics.box2d.ContactListener
     public void postSolve(Contact contact, ContactImpulse impulse) {
-
     }
 
-    private void footOnPlatformSensor(Contact contact,boolean setOnGround){
-        if (isFootSensor(contact.getFixtureA()) && isPlatform(contact.getFixtureB())) {
-
-            Player player =
-                (Player) contact
-                    .getFixtureA()
-                    .getBody()
-                    .getUserData();
-
+    private void footOnPlatformSensor(Contact contact, boolean setOnGround) {
+        if (ContactListenerHelper.isFootSensor(contact.getFixtureA()) && ContactListenerHelper.isPlatform(contact.getFixtureB())) {
+            Player player = (Player) contact.getFixtureA().getBody().getUserData();
             player.setOnGround(setOnGround);
-
-        } else if (isFootSensor(contact.getFixtureB()) && isPlatform(contact.getFixtureA())) {
-            Player player =
-                (Player) contact
-                    .getFixtureB()
-                    .getBody()
-                    .getUserData();
-
-            player.setOnGround(setOnGround);
+            return;
+        }
+        if (ContactListenerHelper.isFootSensor(contact.getFixtureB()) && ContactListenerHelper.isPlatform(contact.getFixtureA())) {
+            Player player2 = (Player) contact.getFixtureB().getBody().getUserData();
+            player2.setOnGround(setOnGround);
+        } else if (ContactListenerHelper.isFootSensor(contact.getFixtureA()) && ContactListenerHelper.isOneWayPlatform(contact.getFixtureB())) {
+            Player player3 = (Player) contact.getFixtureA().getBody().getUserData();
+            player3.setOnGround(setOnGround);
+        } else if (ContactListenerHelper.isFootSensor(contact.getFixtureB()) && ContactListenerHelper.isOneWayPlatform(contact.getFixtureA())) {
+            Player player4 = (Player) contact.getFixtureB().getBody().getUserData();
+            player4.setOnGround(setOnGround);
         }
     }
 
-    private void playerCollectKey(Contact contact){
-        if (isPlayerBody(contact.getFixtureA()) && isKeySensor(contact.getFixtureB())) {
-
-            Log.debug(getClass().getName(),"key collected");
-
-            Key key =
-                (Key) contact
-                    .getFixtureB()
-                    .getBody()
-                    .getUserData();
-
+    private void playerCollectKey(Contact contact) {
+        if (ContactListenerHelper.isPlayerBody(contact.getFixtureA()) && ContactListenerHelper.isKeySensor(contact.getFixtureB())) {
+            Log.debug(getClass().getName(), "key collected");
+            Key key = (Key) contact.getFixtureB().getBody().getUserData();
             key.setCollected(true);
             key.appendToDestroy(key.getBody());
-
-        } else if (isPlayerBody(contact.getFixtureB()) && isKeySensor(contact.getFixtureA())) {
-
-            Log.debug(getClass().getName(),"key collected");
-
-            Key key =
-                (Key) contact
-                    .getFixtureB()
-                    .getBody()
-                    .getUserData();
-
-            key.setCollected(true);
-            key.appendToDestroy(key.getBody());
-
+            return;
         }
-
+        if (ContactListenerHelper.isPlayerBody(contact.getFixtureB()) && ContactListenerHelper.isKeySensor(contact.getFixtureA())) {
+            Log.debug(getClass().getName(), "key collected");
+            Key key2 = (Key) contact.getFixtureB().getBody().getUserData();
+            key2.setCollected(true);
+            key2.appendToDestroy(key2.getBody());
+        }
     }
 
     private void playerKnockThePortal(Contact contact) {
-        if (isPlayerBody(contact.getFixtureA()) && isPortalSensor(contact.getFixtureB())) {
-
-            Log.debug(getClass().getName(),"player ke portal");
-
-            Portal portal = (Portal)
-                contact
-                    .getFixtureB()
-                    .getBody()
-                    .getUserData();
-
-            playManager.isPlayerCanFinish(portal);
-
-        } else if (isPlayerBody(contact.getFixtureB()) && isPortalSensor(contact.getFixtureA())) {
-
-            Log.debug(getClass().getName(),"player ke portal");
-
-
-            Portal portal = (Portal)
-                contact
-                    .getFixtureA()
-                    .getBody()
-                    .getUserData();
-
-            playManager.isPlayerCanFinish(portal);
+        if (ContactListenerHelper.isPlayerBody(contact.getFixtureA()) && ContactListenerHelper.isPortalSensor(contact.getFixtureB())) {
+            Log.debug(getClass().getName(), "player ke portal");
+            Portal portal = (Portal) contact.getFixtureB().getBody().getUserData();
+            this.playManager.isPlayerCanFinish(portal);
+        } else if (ContactListenerHelper.isPlayerBody(contact.getFixtureB()) && ContactListenerHelper.isPortalSensor(contact.getFixtureA())) {
+            Log.debug(getClass().getName(), "player ke portal");
+            Portal portal2 = (Portal) contact.getFixtureA().getBody().getUserData();
+            this.playManager.isPlayerCanFinish(portal2);
         }
     }
 
     private void playerCollisionWithObstacle(Contact contact) {
-        if (isPlayerBody(contact.getFixtureA()) && isObstacle(contact.getFixtureB())) {
-
-            Log.debug(getClass().getName(),"player kena obstacle");
-
-
-            Player player =
-                (Player) contact
-                    .getFixtureA()
-                    .getBody()
-                    .getUserData();
-
+        if (ContactListenerHelper.isPlayerBody(contact.getFixtureA()) && ContactListenerHelper.isObstacle(contact.getFixtureB())) {
+            Log.debug(getClass().getName(), "player kena obstacle");
+            Player player = (Player) contact.getFixtureA().getBody().getUserData();
             player.setPlayerNeedRespawn(true);
             player.decreasePlayerLive();
-
-        } else if (isPlayerBody(contact.getFixtureB()) && isObstacle(contact.getFixtureA())) {
-
-            Log.debug(getClass().getName(),"player kena obstacle");
-
-
-            Player player =
-                (Player) contact
-                    .getFixtureB()
-                    .getBody()
-                    .getUserData();
-
-            player.setPlayerNeedRespawn(true);
-            player.decreasePlayerLive();
-
+            return;
+        }
+        if (ContactListenerHelper.isPlayerBody(contact.getFixtureB()) && ContactListenerHelper.isObstacle(contact.getFixtureA())) {
+            Log.debug(getClass().getName(), "player kena obstacle");
+            Player player2 = (Player) contact.getFixtureB().getBody().getUserData();
+            player2.setPlayerNeedRespawn(true);
+            player2.decreasePlayerLive();
         }
     }
 
     private void playerCollisionWithCheckpoint(Contact contact) {
-        if (isPlayerBody(contact.getFixtureA()) && isCheckpoint(contact.getFixtureB())) {
-
-            Log.debug(getClass().getName(),"player kena checkpoint");
-
-            Checkpoint checkpoint = (Checkpoint)
-                contact
-                    .getFixtureB()
-                    .getBody()
-                    .getUserData();
-
-            Player player =
-                (Player) contact
-                    .getFixtureA()
-                    .getBody()
-                    .getUserData();
-
+        if (ContactListenerHelper.isPlayerBody(contact.getFixtureA()) && ContactListenerHelper.isCheckpoint(contact.getFixtureB())) {
+            Log.debug(getClass().getName(), "player kena checkpoint");
+            Checkpoint checkpoint = (Checkpoint) contact.getFixtureB().getBody().getUserData();
+            Player player = (Player) contact.getFixtureA().getBody().getUserData();
             player.setLastCheckpoint(checkpoint.getPosition());
+            return;
+        }
+        if (ContactListenerHelper.isPlayerBody(contact.getFixtureB()) && ContactListenerHelper.isCheckpoint(contact.getFixtureA())) {
+            Log.debug(getClass().getName(), "player kena obstacle");
+            Checkpoint checkpoint2 = (Checkpoint) contact.getFixtureA().getBody().getUserData();
+            Player player2 = (Player) contact.getFixtureB().getBody().getUserData();
+            player2.setLastCheckpoint(checkpoint2.getPosition());
+        }
+    }
 
-
-        } else if (isPlayerBody(contact.getFixtureB()) && isCheckpoint(contact.getFixtureA())) {
-
-            Log.debug(getClass().getName(),"player kena obstacle");
-
-            Checkpoint checkpoint = (Checkpoint)
-                contact
-                    .getFixtureA()
-                    .getBody()
-                    .getUserData();
-
-            Player player =
-                (Player) contact
-                    .getFixtureB()
-                    .getBody()
-                    .getUserData();
-
-            player.setLastCheckpoint(checkpoint.getPosition());
+    private void playerCollisionWithOneWayPlatform(Contact contact) {
+        if (ContactListenerHelper.isPlayerBody(contact.getFixtureA()) && ContactListenerHelper.isOneWayPlatform(contact.getFixtureB())) {
+            Body player = contact.getFixtureA().getBody();
+            Body platform = contact.getFixtureB().getBody();
+            OneWayPlatform platformHeight = (OneWayPlatform) contact.getFixtureB().getBody().getUserData();
+            Player playerHeight = (Player) contact.getFixtureA().getBody().getUserData();
+            Vector2 playerPos = player.getPosition();
+            Vector2 platformPos = platform.getPosition();
+            float playerBottom = playerPos.y - (playerHeight.getPlayerHeight() / 2.0f);
+            float platformTop = platformPos.y + (platformHeight.getHeight() / 2.0f);
+            if (playerBottom > 0.05f + platformTop) {
+                contact.setEnabled(true);
+                return;
+            } else {
+                contact.setEnabled(false);
+                return;
+            }
+        }
+        if (ContactListenerHelper.isPlayerBody(contact.getFixtureB()) && ContactListenerHelper.isOneWayPlatform(contact.getFixtureA())) {
+            Body player2 = contact.getFixtureB().getBody();
+            Body platform2 = contact.getFixtureA().getBody();
+            OneWayPlatform platformHeight2 = (OneWayPlatform) contact.getFixtureA().getBody().getUserData();
+            Player playerHeight2 = (Player) contact.getFixtureB().getBody().getUserData();
+            Vector2 playerPos2 = player2.getPosition();
+            Vector2 platformPos2 = platform2.getPosition();
+            float playerBottom2 = playerPos2.y - (playerHeight2.getPlayerHeight() / 2.0f);
+            float platformTop2 = platformPos2.y + (platformHeight2.getHeight() / 2.0f);
+            if (playerBottom2 > 0.7f + platformTop2) {
+                contact.setEnabled(true);
+            } else {
+                contact.setEnabled(false);
+            }
         }
     }
 }
