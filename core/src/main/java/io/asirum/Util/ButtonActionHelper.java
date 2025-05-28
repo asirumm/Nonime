@@ -1,4 +1,4 @@
-package io.asirum.EventListener;
+package io.asirum.Util;
 
 import de.eskalon.commons.screen.ManagedScreen;
 import de.eskalon.commons.screen.transition.ScreenTransition;
@@ -6,10 +6,10 @@ import io.asirum.Service.ApplicationContext;
 
 import java.util.function.Supplier;
 
-public class BaseHandler {
+public class ButtonActionHelper {
     private ApplicationContext context;
 
-    public BaseHandler() {
+    public ButtonActionHelper() {
         context = ApplicationContext.getInstance();
     }
 
