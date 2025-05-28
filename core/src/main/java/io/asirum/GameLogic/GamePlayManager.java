@@ -1,47 +1,45 @@
 package io.asirum.GameLogic;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.physics.box2d.Body;
-import io.asirum.Entity.Items.Key;
-import io.asirum.Entity.Items.Portal;
 import io.asirum.Entity.Player.Player;
 import io.asirum.SchemaObject.Payload;
 import io.asirum.SchemaObject.UserData;
+import io.asirum.Screen.LevelScreen;
+import io.asirum.Screen.PlayScreen;
 import io.asirum.Service.ApplicationContext;
 import io.asirum.Service.Log;
 import io.asirum.Service.PreferencesUserDataManager;
+import io.asirum.Util.ButtonActionHelper;
+import io.asirum.Util.CameraHelper;
 
 public class GamePlayManager {
     private UserData userData;
     private Payload payload;
-    private final int REWARD_ENERGY = 3;
+    private final int REWARD_ENERGY = 1;
     private Player player;
-    private Key key;
+    private ApplicationContext context;
+    private PreferencesUserDataManager userDataManager;
 
-    public GamePlayManager(Player player, Key key) {
+    public void start(Player player,int costEnergy) {
+        this.userDataManager = new PreferencesUserDataManager();
         this.player = player;
-        this.key    = key;
+        context  = ApplicationContext.getInstance();
 
-        userData =
-            ApplicationContext
-                .getInstance()
-                .getUserData();
+        this.userData = context.getUserData();
+        this.payload = context.getPayloadGame();
 
-        if(userData==null){
-            Log.warn(getClass().getName(),
-                ">>> ada yang salah user data belum di append di app context" +
-                    ", tidak bisa update level user setelah finish");
+        if(userData==null|| payload==null){
+            Log.warn(getClass().getName(),">>> userdata atau payload belum di set pada app context");
         }
 
-        payload =
-            ApplicationContext
-                .getInstance()
-                .getPayloadGame();
+        decreaseUserEnergy(costEnergy);
+    }
 
-        if(userData==null){
-            Log.warn(getClass().getName(),
-                ">>> ada yang salah payload belum di append di app context");
-        }
+    // pengurangan energi player, untuk play game
+    private void decreaseUserEnergy(int costEnergy){
+        int currentUserEnergy = userData.getEnergy();
+            userData.setEnergy(currentUserEnergy-costEnergy);
+            userDataManager.saveData(userData);
     }
 
     private void changeUserLevel(){
@@ -67,11 +65,9 @@ public class GamePlayManager {
      * menentukan apakah player bisa finish,
      * menaikkan level user dan menambah energy
      *
-     * param portal diperlukan untuk mengetahui apakah
-     * key sudah di ambil oleh player
      */
-    public void isPlayerCanFinish(Portal portal){
-        if(portal.getKey().isCollected()){
+    public void playerFinishLogic(){
+        if(player.isBringKey()){
 
             Log.info(getClass().getName(), ">>> user naik level ke "+userData.getLevel());
 
@@ -79,28 +75,28 @@ public class GamePlayManager {
 
             rewardFinish();
 
-            PreferencesUserDataManager manager = new PreferencesUserDataManager();
-            manager.saveData(userData);
+            userDataManager = new PreferencesUserDataManager();
+            userDataManager.saveData(userData);
+
+            context.pushScreen(new LevelScreen(),null);
+
+
         }
     }
 
 
     public void play(float deltaTime){
-        // proses mendelete item key yang sudah di collect
-        if(!key.getToDestroy().isEmpty()){
-            for (Body body : key.getToDestroy()) {
-                key.getWorld().destroyBody(body);
-            }
-            key.getToDestroy().clear();
-        }
 
         // ketika player terkena obstacle maka respawn
         if (player.isPlayerNeedRespawn()){
             if(player.getPlayerLive() < 0){
-                Gdx.app.exit();// TODO game kalah ketika live habis
+                context.pushScreen(new LevelScreen(),null);
+
             }
-            player.respawn();
-            player.setPlayerNeedRespawn(false);
+            else {
+                player.respawn();
+                player.setPlayerNeedRespawn(false);
+            }
         };
 
     }

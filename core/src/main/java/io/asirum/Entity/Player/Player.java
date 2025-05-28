@@ -26,6 +26,7 @@ public class Player extends BaseBox2d {
 
     private boolean playerNeedRespawn;
     private Vector2 lastPosition;// untuk checkpoint
+    private boolean bringKey;
 
     private short playerLive = 3;
 
@@ -141,5 +142,13 @@ public class Player extends BaseBox2d {
 
     public float getPlayerHeight() {
         return playerHeight;
+    }
+
+    public boolean isBringKey() {
+        return bringKey;
+    }
+
+    public void setBringKey(boolean bringKey) {
+        this.bringKey = bringKey;
     }
 }

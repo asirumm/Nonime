@@ -10,15 +10,9 @@ import io.asirum.Box2d.*;
 import io.asirum.TmxMap.TmxHelper;
 
 public class Portal extends BaseBox2d {
-    private Key key;
 
-    public Portal(World world,Key key) {
+    public Portal(World world) {
         super(world);
-        this.key = key;
-    }
-
-    public boolean isPlayerCanFinish(){
-        return key.isCollected();
     }
 
     @Override
@@ -48,9 +42,5 @@ public class Portal extends BaseBox2d {
         body.setUserData(this);
 
         shape.dispose();
-    }
-
-    public Key getKey() {
-        return key;
     }
 }

@@ -7,6 +7,8 @@ public class Constant {
 
     public static float UNIT_SCALE = 16f;
 
+    public static boolean MUSIC_STATUS = true;
+
     // atlas
     public static String ASSET_WIDGET_ATLAS = "manifest/widget/widget.atlas";
     public static String ASSET_ITEMS_ATLAS = "manifest/entity/key.atlas";

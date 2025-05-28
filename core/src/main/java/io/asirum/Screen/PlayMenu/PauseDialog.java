@@ -1,8 +1,10 @@
 package io.asirum.Screen.PlayMenu;
 
-import com.badlogic.gdx.Gdx;
+
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import io.asirum.Screen.LevelScreen;
 import io.asirum.Screen.PlayScreen;
+import io.asirum.Service.ApplicationContext;
 import io.asirum.Widget.dialogs.BaseDialog;
 
 public class PauseDialog extends BaseDialog {
@@ -15,7 +17,8 @@ public class PauseDialog extends BaseDialog {
     @Override
     protected void result(Object object) {
         if(object.equals(false)){
-            Gdx.app.exit();
+            PlayScreen.paused = false;
+            ApplicationContext.getInstance().pushScreen(new LevelScreen(),null);
         } else if (object.equals(true)) {
             PlayScreen.paused =false;
         }
