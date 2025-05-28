@@ -4,16 +4,16 @@ public class Box2dVars {
 
     // LAYER (TMX)
     public static final String PLATFORM_LAYER = "platform";
-    public static final String ENTITIES_LAYER = "objects";
-    public static final String ONE_WAY_PLATFORM_LAYER = "one-way-platform";
+    public static final String TMX_OBJECTS_LAYERS = "objects";
+    public static final String ONE_WAY_PLATFORM_OBJECT = "one-way-platform";
     public static final String CHECKPOINT_LAYER = "checkpoint";
-    public static final String OBSTACLE_LAYER = "obstacle";
+    public static final String OBSTACLE_OBJECT = "obstacle";
 
     // OBJECT NAME (TMX)
-    public static final String PLAYER_NAME = "player";
-    public static final String PLAYER_SENSOR_NAME = "foot-sensor";
-    public static final String KEY_SENSOR_NAME = "key-sensor";
-    public static final String PORTAL_SENSOR_NAME = "portal-sensor";
+    public static final String PLAYER_OBJECT = "player";
+    public static final String PLAYER_SENSOR_OBJECT = "foot-sensor";
+    public static final String KEY_SENSOR_OBJECT = "key-sensor";
+    public static final String PORTAL_SENSOR_OBJECT = "portal-sensor";
     public static final String OBSTACLE_NAME = "obstacle";
 
     // FIXTURE
