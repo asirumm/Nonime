@@ -33,6 +33,6 @@ public class ContactListenerHelper {
     }
 
     public static boolean isCheckpoint(Fixture fixture){
-        return fixture.getUserData().equals(Box2dVars.CHECKPOINT_LAYER);
+        return fixture.getUserData().equals(Box2dVars.CHECKPOINT_OBJECT);
     }
 }

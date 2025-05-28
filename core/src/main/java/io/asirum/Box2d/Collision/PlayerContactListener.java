@@ -62,14 +62,25 @@ public class PlayerContactListener implements ContactListener {
     private void playerCollectKey(Contact contact) {
         if (ContactListenerHelper.isPlayerBody(contact.getFixtureA()) && ContactListenerHelper.isKeySensor(contact.getFixtureB())) {
             Log.debug(getClass().getName(), "key collected");
+
             Key key = (Key) contact.getFixtureB().getBody().getUserData();
+            Player player = (Player) contact.getFixtureA().getBody().getUserData();
+
+            player.setBringKey(true);
+            // agar draw dihentikan
             key.setCollected(true);
+
+            // agar kunci di hapus box2dnya
             key.appendToDestroy(key.getBody());
             return;
         }
         if (ContactListenerHelper.isPlayerBody(contact.getFixtureB()) && ContactListenerHelper.isKeySensor(contact.getFixtureA())) {
             Log.debug(getClass().getName(), "key collected");
-            Key key2 = (Key) contact.getFixtureB().getBody().getUserData();
+
+            Key key2 = (Key) contact.getFixtureA().getBody().getUserData();
+            Player player2 = (Player) contact.getFixtureB().getBody().getUserData();
+
+            player2.setBringKey(true);
             key2.setCollected(true);
             key2.appendToDestroy(key2.getBody());
         }
@@ -78,12 +89,13 @@ public class PlayerContactListener implements ContactListener {
     private void playerKnockThePortal(Contact contact) {
         if (ContactListenerHelper.isPlayerBody(contact.getFixtureA()) && ContactListenerHelper.isPortalSensor(contact.getFixtureB())) {
             Log.debug(getClass().getName(), "player ke portal");
-            Portal portal = (Portal) contact.getFixtureB().getBody().getUserData();
-            this.playManager.isPlayerCanFinish(portal);
+
+            this.playManager.playerFinishLogic();
+
         } else if (ContactListenerHelper.isPlayerBody(contact.getFixtureB()) && ContactListenerHelper.isPortalSensor(contact.getFixtureA())) {
             Log.debug(getClass().getName(), "player ke portal");
-            Portal portal2 = (Portal) contact.getFixtureA().getBody().getUserData();
-            this.playManager.isPlayerCanFinish(portal2);
+
+            this.playManager.playerFinishLogic();
         }
     }
 
