@@ -1,6 +1,5 @@
 package io.asirum.Box2d.Services;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Vector2;
@@ -52,6 +51,7 @@ public class Box2dManager {
         box2dEntities.put(Box2dVars.PORTAL_SENSOR_OBJECT, entity.getPortal());
         box2dEntities.put(Box2dVars.ONE_WAY_PLATFORM_OBJECT, platform.getOneWayPlatformBuilder());
         box2dEntities.put(Box2dVars.OBSTACLE_OBJECT, obstacle.getStalactite());
+        box2dEntities.put(Box2dVars.CHECKPOINT_OBJECT, entity.getCheckpointBuilder());
 
         // Platform statis diproses terpisah karena menggunakan pendekatan composite
         platform.getStaticPlatform().build(tmxObjectReader.getMap());

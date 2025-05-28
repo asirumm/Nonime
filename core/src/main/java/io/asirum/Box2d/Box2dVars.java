@@ -6,7 +6,7 @@ public class Box2dVars {
     public static final String PLATFORM_LAYER = "platform";
     public static final String TMX_OBJECTS_LAYERS = "objects";
     public static final String ONE_WAY_PLATFORM_OBJECT = "one-way-platform";
-    public static final String CHECKPOINT_LAYER = "checkpoint";
+    public static final String CHECKPOINT_OBJECT = "checkpoint";
     public static final String OBSTACLE_OBJECT = "obstacle";
 
     // OBJECT NAME (TMX)
