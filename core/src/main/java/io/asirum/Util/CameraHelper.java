@@ -38,8 +38,12 @@ public class CameraHelper {
 
     public static void setCameraAndViewportNormal(ApplicationContext context) {
         Log.debug("CameraHelper", ">>> mengembalikan camera ke settingan awal");
-        toOrtho(context.getCamera());
-        fitViewport(context.getCamera());
+        OrthographicCamera camera = context.getCamera();
+        toOrtho(camera);
+
+        camera.zoom = 1.0f;
+        camera.update();
+        context.setViewport(fitViewport(camera));
     }
 
     /**

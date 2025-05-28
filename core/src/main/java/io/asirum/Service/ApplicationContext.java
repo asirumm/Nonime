@@ -98,4 +98,8 @@ public class ApplicationContext {
     public SpriteBatch getBatch() {
         return batch;
     }
+
+    public void setViewport(Viewport viewport) {
+        this.viewport = viewport;
+    }
 }
