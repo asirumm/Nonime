@@ -5,15 +5,20 @@ import com.badlogic.gdx.Preferences;
 import io.asirum.Constant;
 import io.asirum.SchemaObject.UserData;
 
+import java.time.LocalDateTime;
+
 import static com.badlogic.gdx.net.HttpRequestBuilder.json;
 
 public class PreferencesUserDataManager {
     private Preferences pref;
     private final String LEVEL_DATA = "level-data";
+    private UserLastPlayedTimeService timeService;
+    private final short ENERGY_NEW_PLAYER = 12;
 
     public PreferencesUserDataManager(){
         pref = Gdx.app.getPreferences(Constant.USER_DATA_PREFERENCES);
 
+        timeService = new UserLastPlayedTimeService();
 
         // apabila belum ada preferences
         if(!pref.contains(LEVEL_DATA)){
@@ -29,8 +34,9 @@ public class PreferencesUserDataManager {
      */
     private void initializerUserData() {
         UserData userData = new UserData();
-        userData.setEnergy(12);//default
+        userData.setEnergy( ENERGY_NEW_PLAYER);//default
         userData.setLevel(1);//default
+        userData.setLastPlayedTime(timeService.timeNow());
 
         saveData(userData);
 
@@ -38,6 +44,10 @@ public class PreferencesUserDataManager {
     }
 
     public void saveData(UserData data){
+        data.setLastPlayedTime(timeService.timeNow());
+
+        Log.info(getClass().getName(),">>> save data user "+ data );
+
         String jsonData = json.toJson(data, UserData.class);
         pref.putString(LEVEL_DATA, jsonData);
 
@@ -49,7 +59,7 @@ public class PreferencesUserDataManager {
 
         UserData userData = json.fromJson(UserData.class, jsonData);
 
-        Log.debug(getClass().getName(),">>> load data user :"+userData.toString());
+        Log.info(getClass().getName(),">>> load data user :"+userData.toString());
 
         return userData;
     }
