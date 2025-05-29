@@ -1,11 +1,15 @@
 package io.asirum.SchemaObject;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 /**
  * PERLU DISESUAIKAN JIKA ANDA MERUBAH PAYLOAD
  */
 public class UserData {
     private int level;
-    private int energy;
+    private short energy;
+    private String lastPlayedTime;
 
     public int getLevel() {
         return level;
@@ -15,11 +19,19 @@ public class UserData {
         this.level = level;
     }
 
-    public int getEnergy() {
+    public short getEnergy() {
         return energy;
     }
 
-    public void setEnergy(int energy) {
+    public String getLastPlayedTime() {
+        return lastPlayedTime;
+    }
+
+    public void setLastPlayedTime(String lastPlayedTime) {
+        this.lastPlayedTime = lastPlayedTime;
+    }
+
+    public void setEnergy(short energy) {
         this.energy = energy;
     }
 
@@ -28,6 +40,7 @@ public class UserData {
         return "UserData{" +
             "level=" + level +
             ", energy=" + energy +
+            ", lastPlayGame="+lastPlayedTime+
             '}';
     }
 }
