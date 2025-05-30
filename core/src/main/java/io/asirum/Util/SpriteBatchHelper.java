@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import io.asirum.Service.ApplicationContext;
 
 public class SpriteBatchHelper {
-    public static void projectionCombineBegin(){
+    public static void setProjectionMatrixCameraCombined(){
         SpriteBatch batch = ApplicationContext.getInstance().getBatch();
         OrthographicCamera camera = ApplicationContext.getInstance().getCamera();
 
