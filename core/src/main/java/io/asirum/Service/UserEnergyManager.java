@@ -28,12 +28,12 @@ public class UserEnergyManager {
     /**
      * memproses setiap waktu untuk menambahkan energi pada interval waktu tertentu
      */
-    public void userEnergyIntervalProcess(){
+    public void userRewardProcessAfterOfflineSeveralTimes(){
         String dateUser = userData.getLastPlayedTime();
 
         // mengecek apakah user berhak diberikan reward off
         boolean status = timeService
-            .hasUserPlayedLongEnough(
+            .isUserEligibleToGetReward(
                 dateUser,
                 ENERGY_INTERVAL_HOURS);
 
@@ -45,18 +45,18 @@ public class UserEnergyManager {
             short currentEnergy = userData.getEnergy();
             short totalEnergy   = (short) (currentEnergy + energyReward);
 
-            Log.info(getClass().getName(),">>> user berhak mendapatkan energy sebesar "+energyReward );
+            Log.info(getClass().getName(),"user berhak mendapatkan energy sebesar "+energyReward );
 
-            // memberikan batas nilai energy
+            // memberikan batas nilai energy yang dapat dimiliki user
             if(totalEnergy<=MAXIMUM_ENERGY_CAN_HOLD){
                 userData.setEnergy(totalEnergy);
             }
         }
     }
 
-    public void userRewardAfterWin(){
-        Log.debug(getClass().getName(),"user mendapatkan reward kemenangan");
+    public void energyRewardAfterWinningGame(){
         short lastEnergy = userData.getEnergy();
         userData.setEnergy((short) (lastEnergy+ENERGY_REWARD_FOR_WIN));
+        Log.info(getClass().getName(),"user mendapatkan penambahan energi, reward kemenangan sejumlah %s",userData.getEnergy());
     }
 }
