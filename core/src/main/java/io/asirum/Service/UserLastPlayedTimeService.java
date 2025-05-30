@@ -1,6 +1,5 @@
 package io.asirum.Service;
 
-import java.time.DateTimeException;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -12,14 +11,14 @@ public class UserLastPlayedTimeService {
     /**
      * pengecekan apakah user berhak menerima reward offline
      */
-    public boolean hasUserPlayedLongEnough(String dateUser,int intervalTimeHours){
+    public boolean isUserEligibleToGetReward(String dateUser, int intervalTimeHours){
         LocalDateTime date = LocalDateTime.parse(dateUser,FORMATTER);
         LocalDateTime now = LocalDateTime.now();
 
-        Log.debug(getClass().getName(),"user date : "+date+" date now : "+now);
+        Log.debug(getClass().getName(),"waktu terakhir online %s : waktu sekarang %s",dateUser,now.format(FORMATTER));
 
         Duration duration = Duration.between(date, now);
-        Log.debug(getClass().getName(),"user telah offline selama :  "+duration.toHours());
+        Log.debug(getClass().getName(),"user telah offline selama :  %s jam",duration.toHours());
 
 
         if (duration.toHours() >= intervalTimeHours) {
@@ -29,22 +28,22 @@ public class UserLastPlayedTimeService {
         }
     }
 
-    public short calculateEnergy(String dateUser, short maxEnergy,short energyGain) {
-        LocalDateTime date = LocalDateTime.parse(dateUser,FORMATTER);
+    public short calculateEnergy(String lastTimeLogin, short maxEnergyUserCanGet,short energyGain) {
+        LocalDateTime userDate = LocalDateTime.parse(lastTimeLogin,FORMATTER);
 
-        Duration duration = Duration.between(date, LocalDateTime.now());
+        Duration duration = Duration.between(userDate, LocalDateTime.now());
 
-        Log.debug(getClass().getName(),"calculate energy duration "+duration.toHours());
+        Log.debug(getClass().getName(),"menghitung reward energi yang didapatkan selama offline ");
 
         long hours = duration.toHours();
-        short result = (short) ( hours * energyGain);
+        short energyUserWillHave = (short) ( hours * energyGain);
 
-        Log.info(getClass().getName(),">>> reward user dari offline sebesar : "+result +" energi");
+        Log.info(getClass().getName(),"reward user dari offline sebesar : %s energi",energyUserWillHave);
 
-        if(result>=maxEnergy){
-            return maxEnergy;
+        if(energyUserWillHave>=maxEnergyUserCanGet){
+            return maxEnergyUserCanGet;
         }else {
-            return result;
+            return energyUserWillHave;
         }
     }
 
