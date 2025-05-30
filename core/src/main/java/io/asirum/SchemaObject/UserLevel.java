@@ -2,7 +2,7 @@ package io.asirum.SchemaObject;
 
 public class UserLevel {
     private String name;
-    private int level;
+    private short level;
 
     public String getName() {
         return name;
@@ -12,11 +12,11 @@ public class UserLevel {
         this.name = name;
     }
 
-    public int getLevel() {
+    public short getLevel() {
         return level;
     }
 
-    public void setLevel(int level) {
+    public void setLevel(short level) {
         this.level = level;
     }
 

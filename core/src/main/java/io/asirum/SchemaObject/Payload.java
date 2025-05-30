@@ -2,17 +2,19 @@ package io.asirum.SchemaObject;
 
 import com.badlogic.gdx.utils.Array;
 
+import java.util.ArrayList;
+
 /**
  * representasi data json pada game-data
  */
 public class Payload {
-   private Array<Region> regions;
+   private ArrayList<Region> regions;
 
-    public Array<Region> getRegions() {
+    public ArrayList<Region> getRegions() {
         return regions;
     }
 
-    public void setRegions(Array<Region> regions) {
+    public void setRegions(ArrayList<Region> regions) {
         this.regions = regions;
     }
 

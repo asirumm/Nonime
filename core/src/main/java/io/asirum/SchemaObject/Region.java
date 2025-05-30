@@ -2,11 +2,13 @@ package io.asirum.SchemaObject;
 
 import com.badlogic.gdx.utils.Array;
 
+import java.util.ArrayList;
+
 public class Region {
     private String name;
     private short cost;
     private String background;
-    private Array<GameLevel> levels;
+    private ArrayList<GameLevel> levels;
 
     public String getName() {
         return name;
@@ -32,11 +34,11 @@ public class Region {
         this.background = background;
     }
 
-    public Array<GameLevel> getLevels() {
+    public ArrayList<GameLevel> getLevels() {
         return levels;
     }
 
-    public void setLevels(Array<GameLevel> levels) {
+    public void setLevels(ArrayList<GameLevel> levels) {
         this.levels = levels;
     }
 

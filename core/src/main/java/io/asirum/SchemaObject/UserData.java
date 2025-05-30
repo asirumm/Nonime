@@ -1,24 +1,25 @@
 package io.asirum.SchemaObject;
 
-import com.badlogic.gdx.utils.Array;
-
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 
 /**
  * PERLU DISESUAIKAN JIKA ANDA MERUBAH PAYLOAD
  */
 public class UserData {
-    private Array<UserLevel> level;
+    private ArrayList<UserLevel> level=new ArrayList<>();
     private short energy;
     private String lastPlayedTime;
 
-    public Array<UserLevel> getLevel() {
+    public ArrayList<UserLevel> getLevel() {
         return level;
     }
 
-    public void setLevel(Array<UserLevel> level) {
+    public void setLevel(ArrayList<UserLevel> level) {
         this.level = level;
+    }
+
+    public void addLevel(UserLevel userLevel){
+        this.level.add(userLevel);
     }
 
     public short getEnergy() {
