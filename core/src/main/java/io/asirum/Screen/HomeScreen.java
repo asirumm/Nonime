@@ -5,11 +5,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Align;
 import de.eskalon.commons.screen.ManagedScreen;
-import io.asirum.Constant;
-import io.asirum.Util.ButtonActionHelper;
 import io.asirum.Service.ApplicationContext;
 import io.asirum.Service.Log;
-import io.asirum.Util.ButtonHelper;
+import io.asirum.Util.ButtonAction;
+import io.asirum.Util.ButtonBuilder;
 import io.asirum.Util.CameraHelper;
 import io.asirum.Util.StageHelper;
 import io.asirum.Widget.StyleVars;
@@ -27,7 +26,6 @@ public class HomeScreen extends ManagedScreen {
     private Button play;
     private Button about;
 
-    private ButtonActionHelper buttonActionHelper;
     private AboutWindow window;
 
 
@@ -37,16 +35,15 @@ public class HomeScreen extends ManagedScreen {
 
         context = ApplicationContext.getInstance();
         skin    = context.getGameAssets().getWidgetSkin();
-        buttonActionHelper = new ButtonActionHelper();
         window = new AboutWindow(skin);
 
         stage = StageHelper.createInstance();
 
 
-        play = ButtonHelper
-            .build(skin, buttonActionHelper.onPush(LevelScreen::new, null));
+        play = ButtonBuilder
+            .build(skin, ButtonAction.switchScreen(LevelScreen::new, null));
 
-        about = ButtonHelper
+        about = ButtonBuilder
             .build(skin, StyleVars.ABOUT_BTN,()->window.setVisible(true));
 
         buttonPosition();

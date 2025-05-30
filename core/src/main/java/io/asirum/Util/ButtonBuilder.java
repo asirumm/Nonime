@@ -8,7 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import io.asirum.Service.ApplicationContext;
 import io.asirum.Widget.StyleVars;
 
-public class ButtonHelper {
+public class ButtonBuilder {
 
     public static Button build(Skin skin,String style,Runnable runnable){
         Button button = new Button(skin,style);
