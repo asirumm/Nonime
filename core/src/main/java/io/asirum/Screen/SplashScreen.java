@@ -39,7 +39,7 @@ public class SplashScreen extends ManagedScreen {
         UserEnergyManager userEnergyManager = new UserEnergyManager(context.getUserData());
 
         // proses
-        userEnergyManager.userEnergyIntervalProcess();
+        userEnergyManager.userRewardProcessAfterOfflineSeveralTimes();
 
         context.setUserEnergyManager(userEnergyManager);
 
