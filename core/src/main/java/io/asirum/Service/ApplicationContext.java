@@ -2,6 +2,7 @@ package io.asirum.Service;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import de.eskalon.commons.screen.ManagedScreen;
@@ -10,6 +11,7 @@ import de.eskalon.commons.screen.transition.ScreenTransition;
 import io.asirum.Constant;
 import io.asirum.SchemaObject.Payload;
 import io.asirum.SchemaObject.UserData;
+import io.asirum.Screen.LevelMenu.RegionContent;
 import io.asirum.Util.CameraHelper;
 
 public class ApplicationContext {
@@ -24,6 +26,8 @@ public class ApplicationContext {
     private Payload payload;
     private UserData userData;
     private UserEnergyManager userEnergyManager;
+    private Array<RegionContent> regionContents;
+    // menahan level menu konten, agar tidak lama selalu load
 
     private ApplicationContext(){
         camera = new OrthographicCamera();
@@ -113,5 +117,14 @@ public class ApplicationContext {
     public void setUserEnergyManager(UserEnergyManager userEnergyManager) {
         Log.debug(getClass().getName(),">>> user energy telah di inisialisasi");
         this.userEnergyManager = userEnergyManager;
+    }
+
+    public Array<RegionContent> getRegionContents() {
+        return regionContents;
+    }
+
+    public void setRegionContents(Array<RegionContent> regionContents) {
+        Log.debug(getClass().getName(),">>> region contents telah di inisialisasi");
+        this.regionContents = regionContents;
     }
 }
