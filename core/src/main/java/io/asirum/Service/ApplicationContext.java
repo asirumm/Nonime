@@ -54,7 +54,7 @@ public class ApplicationContext {
         try {
             instance = new ApplicationContext();
         } catch (Exception e) {
-
+            Log.error(ApplicationContext.class.getName(),"error membuat instance, app context tidak memiliki instance",e);
             throw new RuntimeException("Instance ApplicationContext kosong");
         }
     }
@@ -68,12 +68,12 @@ public class ApplicationContext {
     }
 
     public void setPayload(Payload payload) {
-        Log.info(getClass().getName(),">>>>> success add payload");
+        Log.debug(getClass().getName(),"telah di inject instance payload");
         this.payload = payload;
     }
 
     public void setScreenManager(ScreenManager<ManagedScreen, ScreenTransition> screenManager) {
-        Log.info(getClass().getName(),">>>>> success add screen manager");
+        Log.debug(getClass().getName(),"telah di inject instance screen manager");
         this.screenManager = screenManager;
     }
 
@@ -82,7 +82,7 @@ public class ApplicationContext {
     }
 
     public void setUserData(UserData userData) {
-        Log.info(getClass().getName(),">>>>> success add user data");
+        Log.debug(getClass().getName(),"telah di inject instance user data");
         this.userData = userData;
     }
 
@@ -115,7 +115,7 @@ public class ApplicationContext {
     }
 
     public void setUserEnergyManager(UserEnergyManager userEnergyManager) {
-        Log.debug(getClass().getName(),">>> user energy telah di inisialisasi");
+        Log.debug(getClass().getName(),"telah di inject instance user energy manager");
         this.userEnergyManager = userEnergyManager;
     }
 
@@ -124,7 +124,7 @@ public class ApplicationContext {
     }
 
     public void setRegionContents(Array<RegionContent> regionContents) {
-        Log.debug(getClass().getName(),">>> region contents telah di inisialisasi");
+        Log.debug(getClass().getName(),"telah di inject instance region contents");
         this.regionContents = regionContents;
     }
 }
