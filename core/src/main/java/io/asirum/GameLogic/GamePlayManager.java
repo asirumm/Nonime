@@ -1,8 +1,11 @@
 package io.asirum.GameLogic;
 
+import com.badlogic.gdx.utils.Array;
 import io.asirum.Entity.Player.Player;
 import io.asirum.SchemaObject.Payload;
+import io.asirum.SchemaObject.Region;
 import io.asirum.SchemaObject.UserData;
+import io.asirum.SchemaObject.UserLevel;
 import io.asirum.Screen.LevelScreen;
 import io.asirum.Service.ApplicationContext;
 import io.asirum.Service.Log;
@@ -16,7 +19,14 @@ public class GamePlayManager {
     private ApplicationContext context;
     private PreferencesUserDataManager userDataManager;
     private UserEnergyManager userEnergyManager;
+    private Region region; // player sedang bermain dimana
 
+    public GamePlayManager(Region region) {
+        this.region = region;
+    }
+
+    // parameter ini dibuat karena urutan eksekusi, maka dari itu tidak
+    // ditaruh di konstructor
     public void start(Player player,int costEnergy) {
         context  = ApplicationContext.getInstance();
 
@@ -46,16 +56,30 @@ public class GamePlayManager {
         userDataManager.saveData(userData);
     }
 
-    private void changeUserLevel(){
-        int currentLevel = userData.getLevel();
+    /**
+     * Menambah level pengguna di wilayah yang sedang dimainkan jika belum mencapai level maksimum.
+     */
+    private void updateUserLevelProgress() {
+        // Nama region yang sedang dimainkan
+        String currentRegionName = region.getName();
 
-        int maxLevel = payload.getLevel().size;
+        // Loop melalui semua data level pengguna
+        for (UserLevel userLevel : userData.getLevel()) {
 
-        // jika level user sudah max maka tidak ada penambahan
-        if (currentLevel!=maxLevel){
-            userData.setLevel(currentLevel+1);
+            // Bandingkan nama region pengguna dengan region yang sedang dimainkan
+            if (userLevel.getName().equals(currentRegionName)) {
+
+                int maxLevel = region.getLevels().size;
+
+                // Tambah level jika belum mencapai maksimum
+                if (userLevel.getLevel() < maxLevel) {
+                    int currentLevel = userLevel.getLevel();
+                    userLevel.setLevel(currentLevel + 1);
+                }
+
+                // Jika sudah mencapai maksimum, tidak dilakukan perubahan
+            }
         }
-
     }
 
     private void rewardFinish(){
@@ -73,7 +97,7 @@ public class GamePlayManager {
 
             Log.info(getClass().getName(), ">>> user naik level ke "+userData.getLevel());
 
-            changeUserLevel();
+            updateUserLevelProgress();
 
             rewardFinish();
 

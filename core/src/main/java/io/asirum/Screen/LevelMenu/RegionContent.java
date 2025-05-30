@@ -43,7 +43,7 @@ public class RegionContent {
         // table level
         Table footerTable = new Table();
 
-        footerTable.setDebug(true);
+//        footerTable.setDebug(true);
         footerTable.top();
 //        headerTable.setDebug(true);
 

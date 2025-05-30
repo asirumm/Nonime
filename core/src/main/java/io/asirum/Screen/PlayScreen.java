@@ -14,6 +14,7 @@ import io.asirum.EventListener.InputState;
 import io.asirum.EventListener.MobileInput;
 import io.asirum.GameLogic.GamePlayManager;
 import io.asirum.SchemaObject.GameLevel;
+import io.asirum.SchemaObject.Region;
 import io.asirum.SchemaObject.UserData;
 import io.asirum.Screen.PlayMenu.WidgetController;
 import io.asirum.Service.ApplicationContext;
@@ -23,7 +24,7 @@ import io.asirum.TmxMap.TmxHelper;
 import io.asirum.Util.AudioHelper;
 import io.asirum.Util.CameraHelper;
 
-public class PlayScreen extends ManagedScreen {
+public class PlayScreen  extends ManagedScreen{
     public static boolean paused = false;
 
     private OrthographicCamera camera;
@@ -38,21 +39,23 @@ public class PlayScreen extends ManagedScreen {
     private PlayerMovement playerMovement;
     private WidgetController widgetController;
 
-    public PlayScreen(GameLevel gameLevel,int cost) {
+    public PlayScreen(GameLevel gameLevel,Region region) {
         Log.debug(getClass().getName(), "[berhasil switch screen]");
+
+        Log.info(getClass().getName(), "user bermain di "+region.getName() + " level :" +gameLevel.getLevel());
 
         AudioHelper.stopMusic();
 
         this.context = ApplicationContext.getInstance();
 
-        gamePlayManager = new GamePlayManager();
+        gamePlayManager = new GamePlayManager(region);
 
         cameraBox2dConfiguration(); // konfigurasi kamera untuk box2d
 
         box2dManagerConfig(gameLevel);// konfigurasi box2dmanager
         Player player = box2dManager.getEntity().getPlayer();
 
-        gamePlayManager.start(player,cost);
+        gamePlayManager.start(player,region.getCost());
 
         mapRenderInit(gameLevel);// inisialisasi map render
 

@@ -25,7 +25,6 @@ public class LevelScrollPane {
 
     private void buildContent(){
         tableContainer.clear();
-//        tableContainer.setFillParent(true);
 
         // menambahkan table A,B dan seterusnya
         for (RegionContent content:regionContents){
