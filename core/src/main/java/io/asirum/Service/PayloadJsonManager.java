@@ -12,11 +12,12 @@ public class PayloadJsonManager {
         jsonManager = new JsonManager();
     }
 
-    public void load(){
+    public Payload load(){
         payloads = jsonManager.parser(Payload.class, Constant.GAME_DATA_JSON);;
 
-        Log.info(getClass().getName(),">>> success load game data");
+        Log.info(getClass().getName(),"telah berhasil load payload data");
 
+        return payloads;
     }
 
     public Payload getPayload() {
