@@ -133,7 +133,7 @@ public class Player extends BaseBox2d {
 
     public void decreasePlayerLive(){
         playerLive -=1;
-        Log.debug(getClass().getName(),"kesempatan hidup player "+playerLive );
+        Log.debug(getClass().getName(),"kesempatan hidup player %s",playerLive );
     }
 
     public short getPlayerLive(){
@@ -149,6 +149,7 @@ public class Player extends BaseBox2d {
     }
 
     public void setBringKey(boolean bringKey) {
+        Log.debug(getClass().getCanonicalName(),"player telah membawa kunci");
         this.bringKey = bringKey;
     }
 }

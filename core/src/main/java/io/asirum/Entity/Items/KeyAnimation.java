@@ -1,6 +1,5 @@
 package io.asirum.Entity.Items;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -9,9 +8,9 @@ import com.badlogic.gdx.utils.Array;
 import io.asirum.Constant;
 import io.asirum.Entity.Animation.AnimationComponent;
 import io.asirum.Entity.Animation.AnimationConstant;
-import io.asirum.Entity.Animation.AnimationState;
 import io.asirum.Service.ApplicationContext;
 import io.asirum.Service.GameAssets;
+import io.asirum.Service.Log;
 import io.asirum.Util.SpriteBatchHelper;
 
 import static io.asirum.Entity.Animation.AnimationComponent.createAnimationFrames;
@@ -29,6 +28,8 @@ public class KeyAnimation {
     }
 
     private void declareAnimations() {
+        Log.debug(getClass().getCanonicalName(),"mendeklarasikan animasi key");
+
         GameAssets assets = ApplicationContext.getInstance().getGameAssets();
         TextureAtlas atlas = assets.getItemsAtlas();
 
@@ -51,7 +52,7 @@ public class KeyAnimation {
         float y = body.getPosition().y - height / 2f;
 
         // Memulai proses menggambar sprite
-        SpriteBatchHelper.projectionCombineBegin();
+        SpriteBatchHelper.setProjectionMatrixCameraCombined();
 
         ApplicationContext.getInstance().getBatch().draw(frame, x, y, width, height);
 

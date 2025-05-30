@@ -96,7 +96,7 @@ public class PlayerAnimation {
         float y = body.getPosition().y - height / 2f;
 
         // Memulai proses menggambar sprite
-        SpriteBatchHelper.projectionCombineBegin();
+        SpriteBatchHelper.setProjectionMatrixCameraCombined();
 
         // Menggambar sprite dengan sedikit offset ke atas (0.1f) pada sumbu y
         ApplicationContext.getInstance().getBatch().draw(frame, x, y + 0.1f, width, height);
@@ -106,7 +106,7 @@ public class PlayerAnimation {
     }
 
     private void declareAnimations(){
-        Log.debug(getClass().getName(),"deklarasi animasi player start");
+        Log.debug(getClass().getName(),"deklarasi animasi player");
 
         GameAssets assets = ApplicationContext.getInstance().getGameAssets();
         TextureAtlas atlas = assets.getPlayerAtlas();
