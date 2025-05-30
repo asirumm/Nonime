@@ -20,7 +20,7 @@ public class AssetLoader implements Disposable {
     }
 
     public void loadAssets(){
-        Log.info(getClass().getName(),"# start load assets");
+        Log.info(getClass().getName(),"Memulai load game asset");
 
         loadSkin();
         loadAtlases();
@@ -56,5 +56,7 @@ public class AssetLoader implements Disposable {
     @Override
     public void dispose() {
         assetManager.dispose();
+
+        Log.debug(getClass().getName(),"[dispose]");
     }
 }
