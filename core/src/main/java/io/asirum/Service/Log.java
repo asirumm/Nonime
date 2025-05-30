@@ -37,11 +37,11 @@ public class Log {
 
 
     public static void info(String className, String message, Object... args) {
-        log(LogLevel.DEBUG, className, format(message, args), null);
+        log(LogLevel.INFO, className, format(message, args), null);
     }
 
     public static void warn(String className, String message, Object... args) {
-        log(LogLevel.DEBUG, className, format(message, args), null);
+        log(LogLevel.WARN, className, format(message, args), null);
     }
 
     public static void error(String className, String message,Exception e,Object... args) {
