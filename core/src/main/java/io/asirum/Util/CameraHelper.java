@@ -18,9 +18,11 @@ import static io.asirum.Constant.VIRTUAL_WIDTH;
 public class CameraHelper {
     public static void toOrtho(OrthographicCamera camera) {
         camera.setToOrtho(false, Constant.VIRTUAL_WIDTH, Constant.VIRTUAL_HEIGHT);
+        Log.debug(CameraHelper.class.getCanonicalName(),"berhasil set to ortho");
     }
 
     public static FitViewport fitViewport(OrthographicCamera camera) {
+        Log.debug(CameraHelper.class.getCanonicalName(),"memberikan nilai fitviewport");
         return new FitViewport(Constant.VIRTUAL_WIDTH, Constant.VIRTUAL_HEIGHT, camera);
     }
 
@@ -29,7 +31,8 @@ public class CameraHelper {
     }
 
     public static void cameraAndViewportForBox2d(ApplicationContext context) {
-        Log.debug("CameraHelper", ">>> konfigurasi kamera untuk box2d");
+        Log.debug(CameraHelper.class.getCanonicalName(),"konfigurasi kamera untuk box2d");
+
         float virtualWidth = Constant.VIRTUAL_WIDTH / Constant.UNIT_SCALE;
         float virtualHeight = Constant.VIRTUAL_HEIGHT / Constant.UNIT_SCALE;
         context.getCamera().setToOrtho(false, virtualWidth, virtualHeight);
@@ -37,7 +40,8 @@ public class CameraHelper {
     }
 
     public static void setCameraAndViewportNormal(ApplicationContext context) {
-        Log.debug("CameraHelper", ">>> mengembalikan camera ke settingan awal");
+        Log.debug(CameraHelper.class.getCanonicalName(),"konfigurasi kamera dan viewport normal");
+
         OrthographicCamera camera = context.getCamera();
         toOrtho(camera);
 
