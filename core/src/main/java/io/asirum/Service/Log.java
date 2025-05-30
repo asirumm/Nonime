@@ -6,6 +6,8 @@ import com.badlogic.gdx.files.FileHandle;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
+import static java.lang.String.format;
+
 public class Log {
     private static FileHandle logFile = Gdx.files.local("log/application.log");
     private static boolean writeToFile = true;
@@ -29,20 +31,21 @@ public class Log {
         minimumLevel = minLevel;
     }
 
-    public static void debug(String className, String message) {
-        log(LogLevel.DEBUG, className, message, null);
+    public static void debug(String className, String message, Object... args) {
+        log(LogLevel.DEBUG, className, format(message, args), null);
     }
 
-    public static void info(String className, String message) {
-        log(LogLevel.INFO, className, message, null);
+
+    public static void info(String className, String message, Object... args) {
+        log(LogLevel.DEBUG, className, format(message, args), null);
     }
 
-    public static void warn(String className, String message) {
-        log(LogLevel.WARN, className, message, null);
+    public static void warn(String className, String message, Object... args) {
+        log(LogLevel.DEBUG, className, format(message, args), null);
     }
 
-    public static void error(String className, String message,Exception e) {
-        log(LogLevel.ERROR, className, message, e);
+    public static void error(String className, String message,Exception e,Object... args) {
+        log(LogLevel.ERROR, className, format(message,args), e);
     }
 
     public static void error(String className, Exception e) {
@@ -54,7 +57,7 @@ public class Log {
             return;
         }
 
-        String logEntry = level + " | [" + className + "] " + message;
+        String logEntry = level + " | [" + className + "] " +" - "+ message;
 
         if (e != null) {
             StringWriter sw = new StringWriter();

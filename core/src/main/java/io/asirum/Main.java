@@ -20,7 +20,7 @@ public class Main extends ManagedGame<ManagedScreen, ScreenTransition> {
         // selalu clear log file
         // TODO : mengganti toFile = true jika production
         Log.clear();
-        Log.configure(false,true, Log.LogLevel.DEBUG);
+        Log.configure(true,false, Log.LogLevel.DEBUG);
 
         // auto dispose screen yang sudah tidak digunakan
         // dari screen x ke screen y, maka auto dispose screen x
