@@ -1,8 +1,7 @@
 package io.asirum.SchemaObject;
 
 public class GameLevel {
-    private String id;
-    private int level;
+    private short level;
     private String map;
 
     public String getMap() {
@@ -13,26 +12,17 @@ public class GameLevel {
         this.map = map;
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public int getLevel() {
+    public short getLevel() {
         return level;
     }
 
-    public void setLevel(int level) {
+    public void setLevel(short level) {
         this.level = level;
     }
 
     @Override
     public String toString() {
         return "GameLevel{" +
-            "id='" + id + '\'' +
             "map = "+map+
             ", level=" + level +
             '}';
