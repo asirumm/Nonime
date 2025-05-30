@@ -1,16 +1,66 @@
 {
-  "tema": "savana",
-  "cost": 3,
-  "level": [
+  "regions": [
     {
-      "id": "savana-1",
-      "map": "savana.tmx",
-      "level": 1
+      "name":"savana",
+      "cost": 3,
+      "background": "",
+      "levels": [
+        {
+          "map": "manifest/map/map.tmx",
+          "level": 1
+        },
+        {
+          "map": "manifest/map/map.tmx",
+          "level": 2
+        },
+        {
+          "map": "manifest/map/map.tmx",
+          "level": 3
+        },
+        {
+          "map": "manifest/map/map.tmx",
+          "level": 4
+        },
+        {
+          "map": "manifest/map/map.tmx",
+          "level": 5
+        },
+        {
+          "map": "manifest/map/map.tmx",
+          "level": 6
+        }
+      ]
     },
     {
-      "id": "savana-2",
-      "map": "savana.tmx",
-      "level": 2
+      "name":"unbounds",
+      "cost": 3,
+      "background": "",
+      "levels": [
+        {
+          "map": "manifest/map/map.tmx",
+          "level": 1
+        },
+        {
+          "map": "manifest/map/map.tmx",
+          "level": 2
+        },
+        {
+          "map": "manifest/map/map.tmx",
+          "level": 3
+        },
+        {
+          "map": "manifest/map/map.tmx",
+          "level": 4
+        },
+        {
+          "map": "manifest/map/map.tmx",
+          "level": 5
+        },
+        {
+          "map": "manifest/map/map.tmx",
+          "level": 6
+        }
+      ]
     }
   ]
 }

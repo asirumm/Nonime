@@ -2,8 +2,10 @@ package io.asirum.Service;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
+import com.badlogic.gdx.utils.Array;
 import io.asirum.Constant;
 import io.asirum.SchemaObject.UserData;
+import io.asirum.SchemaObject.UserLevel;
 
 import java.time.LocalDateTime;
 
@@ -34,9 +36,13 @@ public class PreferencesUserDataManager {
      */
     private void initializerUserData() {
         UserData userData = new UserData();
+        Array<UserLevel> userLevels = new Array<>();
+
+        userData.setLevel(userLevels);
         userData.setEnergy( ENERGY_NEW_PLAYER);//default
-        userData.setLevel(1);//default
         userData.setLastPlayedTime(timeService.timeNow());
+
+        Log.debug(getClass().getName(),"user data baru "+userData);
 
         saveData(userData);
 

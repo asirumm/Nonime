@@ -6,40 +6,20 @@ import com.badlogic.gdx.utils.Array;
  * representasi data json pada game-data
  */
 public class Payload {
-    private String tema;
-    private int cost;
-    private Array<GameLevel> level;
+   private Array<Region> regions;
 
-    public String getTema() {
-        return tema;
+    public Array<Region> getRegions() {
+        return regions;
     }
 
-    public int getCost() {
-        return cost;
-    }
-
-    public void setCost(int cost) {
-        this.cost = cost;
-    }
-
-    public void setTema(String tema) {
-        this.tema = tema;
-    }
-
-    public Array<GameLevel> getLevel() {
-        return level;
-    }
-
-    public void setLevel(Array<GameLevel> level) {
-        this.level = level;
+    public void setRegions(Array<Region> regions) {
+        this.regions = regions;
     }
 
     @Override
     public String toString() {
         return "Payload{" +
-            "tema='" + tema + '\'' +
-            ", cost=" + cost +
-            ", level=" + level +
+            "regions=" + regions +
             '}';
     }
 }

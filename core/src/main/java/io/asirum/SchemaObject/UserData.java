@@ -1,5 +1,7 @@
 package io.asirum.SchemaObject;
 
+import com.badlogic.gdx.utils.Array;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -7,15 +9,15 @@ import java.time.format.DateTimeFormatter;
  * PERLU DISESUAIKAN JIKA ANDA MERUBAH PAYLOAD
  */
 public class UserData {
-    private int level;
+    private Array<UserLevel> level;
     private short energy;
     private String lastPlayedTime;
 
-    public int getLevel() {
+    public Array<UserLevel> getLevel() {
         return level;
     }
 
-    public void setLevel(int level) {
+    public void setLevel(Array<UserLevel> level) {
         this.level = level;
     }
 
