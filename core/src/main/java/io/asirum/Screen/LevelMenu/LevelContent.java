@@ -13,6 +13,7 @@ import io.asirum.Widget.StyleVars;
 
 public class LevelContent {
     private TextButton name;
+    private short level;
 
     private Skin skin;
 
@@ -23,11 +24,13 @@ public class LevelContent {
     public void build(short userLevel, short playerEnergy,
                       Region region, GameLevel gameLevel){
 
-        name = new TextButton(String.valueOf(gameLevel.getLevel()),skin, StyleVars.LEVEL_TEXT_BUTTON);
+        level = gameLevel.getLevel();
 
-        if(gameLevel.getLevel()<=userLevel){
+        name = new TextButton(String.valueOf(level),skin, StyleVars.LEVEL_TEXT_BUTTON);
+
+        // apabila level lebih besar dari userLevel maka disable
+        if(userLevel>=level){
             onClick(playerEnergy,region.getCost(),gameLevel,region);
-
         }else {
             name.setDisabled(true);
         }
@@ -46,11 +49,19 @@ public class LevelContent {
                         .pushScreen(new PlayScreen(gameLevel,region),null);
 
                 }else {
-                    Log.debug("ContentLevelScreen","energy user gk cukup");
+                    Log.debug(LevelContent.class.getCanonicalName(),"energy user tidak cukup cost %s energi user %s",regionCost,playerEnergy);
 
                 }
             }
         });
+    }
+
+    public void undisable(){
+        name.setDisabled(false);
+    }
+
+    public short getLevel() {
+        return level;
     }
 
     public TextButton getTextButton() {

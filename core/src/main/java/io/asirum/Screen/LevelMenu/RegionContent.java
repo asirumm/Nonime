@@ -9,7 +9,7 @@ import com.badlogic.gdx.utils.Array;
 import io.asirum.SchemaObject.GameLevel;
 import io.asirum.SchemaObject.Region;
 import io.asirum.SchemaObject.UserData;
-import io.asirum.SchemaObject.UserLevel;
+import io.asirum.Service.UserLevelManager;
 import io.asirum.Widget.StyleVars;
 
 public class RegionContent {
@@ -17,7 +17,7 @@ public class RegionContent {
     private Array<LevelContent> levelContents;
     private Label regionName;
     private TextButton regionCost;
-    private String regionId;
+    private String name;
     // digunakan untuk pencarian, fitur user naik level
     // akan iterasi level data dan me undisable sesuai level user
 
@@ -33,7 +33,7 @@ public class RegionContent {
         buildRegionNameLabel(region.getName());
         buildRegionCostLabel(String.valueOf(region.getCost()));
 
-        regionId = region.getName();
+        name = region.getName();
 
         // header table untuk nama dan cost
         Table headerTable = new Table();
@@ -50,8 +50,9 @@ public class RegionContent {
         rootContainer.add(headerTable).expandX().fillX().row();
         rootContainer.add(footerTable).expand().fill();
 
+        UserLevelManager userLevelManager = new UserLevelManager(userData);
 
-        short userLevelForThisRegion = userLevel(userData,region);
+        short userLevelForThisRegion = userLevelManager.getUserLevelByRegion(region);
 
         for (GameLevel gameLevel: region.getLevels()){
 
@@ -79,16 +80,6 @@ public class RegionContent {
         }
     }
 
-    private short userLevel(UserData userData,Region region){
-        // mencari data level sesuai region sekarang
-        for (UserLevel userLevel:userData.getLevel()){
-            if(userLevel.getName() == region.getName()){
-                return (short) userLevel.getLevel();
-            }
-        }
-        return 1; // default apabila user blom ada level
-    }
-
     private void buildRegionNameLabel(String name) {
         regionName =  new Label(name,skin, StyleVars.TITLE_LIGHT_LABEL);
         regionName.setAlignment(Align.center);
@@ -102,7 +93,15 @@ public class RegionContent {
         return rootContainer;
     }
 
-    public String getId(){
-        return regionId;
+    public String getRegionName(){
+        return name;
+    }
+
+    public void unlockLevel(short userLevel){
+        for (LevelContent levelContent : levelContents){
+            if (levelContent.getLevel() == userLevel){
+                levelContent.undisable();
+            }
+        }
     }
 }
