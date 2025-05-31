@@ -15,7 +15,6 @@ import io.asirum.EventListener.MobileInput;
 import io.asirum.GameLogic.GamePlayManager;
 import io.asirum.SchemaObject.GameLevel;
 import io.asirum.SchemaObject.Region;
-import io.asirum.SchemaObject.UserData;
 import io.asirum.Screen.PlayMenu.WidgetController;
 import io.asirum.Service.ApplicationContext;
 import io.asirum.Service.Log;
@@ -42,7 +41,7 @@ public class PlayScreen  extends ManagedScreen{
     public PlayScreen(GameLevel gameLevel,Region region) {
         Log.debug(getClass().getName(), "[berhasil switch screen]");
 
-        Log.info(getClass().getName(), "user bermain di "+region.getName() + " level :" +gameLevel.getLevel());
+        Log.info(getClass().getName(), "user bermain di region %s level %s",region.getName(),gameLevel.getLevel());
 
         AudioHelper.stopMusic();
 
@@ -89,6 +88,8 @@ public class PlayScreen  extends ManagedScreen{
     }
 
     private void box2dManagerConfig(GameLevel gameLevel) {
+        Log.debug(getClass().getCanonicalName(),"inisialisasi Box2dManager");
+
         TiledMap tiledMap = TmxHelper.getTiledMap(gameLevel.getMap());
 
         box2dManager = new Box2dManager(camera, tiledMap,gamePlayManager);
@@ -104,18 +105,19 @@ public class PlayScreen  extends ManagedScreen{
         if (Gdx.app.getType() == Application.ApplicationType.Desktop) {
             this.inputManager = new DesktopInput(this.inputState);
             this.widgetController.buildDesktopWidget();
-            Log.debug(getClass().getName(),">>> user menggunakan desktop");
+            Log.debug(getClass().getCanonicalName(),"user menggunakan desktop");
 
         } else {
             this.inputManager = new MobileInput(this.inputState);
             this.widgetController.buildMobileWidget((MobileInput) this.inputManager);
 
-            Log.debug(getClass().getName(),">>> user menggunakan mobile");
+            Log.debug(getClass().getCanonicalName(),"user menggunakan mobile device");
 
         }
     }
 
     private void mapRenderInit(GameLevel gameLevel) {
+        Log.debug(getClass().getCanonicalName(),"memulai load map");
         this.mapRenderer = new MapRenderer(this.camera);
         this.mapRenderer.loadMap(gameLevel.getMap());
     }
