@@ -41,7 +41,9 @@ public class Box2dManager {
 
     // Mengurai data dari file TMX menjadi entitas Box2D
     public void parseTmxToBox2dEntities() {
-        tmxObjectReader.initializeMapObjects(Box2dVars.TMX_OBJECTS_LAYERS);
+        Log.debug(getClass().getCanonicalName(),"Bersiap parse object tmx ke box2d");
+
+        tmxObjectReader.getMapObjectsFromLayers(Box2dVars.TMX_OBJECTS_LAYERS);
 
         HashMap<String, BaseBox2d> box2dEntities = new HashMap<>();
 

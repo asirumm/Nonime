@@ -2,6 +2,7 @@ package io.asirum.Entity.Player;
 
 import io.asirum.EventListener.InputManager;
 import io.asirum.EventListener.InputState;
+import io.asirum.Service.Log;
 
 public class PlayerMovement {
     private Player player;
@@ -9,6 +10,8 @@ public class PlayerMovement {
     private InputState inputState;
 
     public PlayerMovement(Player player,InputManager inputManager,InputState inputState) {
+        Log.debug(getClass().getCanonicalName(),"playerMovement telah di inisialisasi");
+
         this.player = player;
         this.inputManager = inputManager;
         this.inputState = inputState;

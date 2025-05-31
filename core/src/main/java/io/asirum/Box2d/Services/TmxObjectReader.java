@@ -4,7 +4,6 @@ import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import io.asirum.Box2d.BaseBox2d;
-import io.asirum.Box2d.Box2dVars;
 import io.asirum.Service.Log;
 
 import java.util.HashMap;
@@ -18,7 +17,7 @@ public class TmxObjectReader {
         this.map = map;
     }
 
-    public void initializeMapObjects (String objectLayers){
+    public void getMapObjectsFromLayers(String objectLayers){
         mapObjects = map.getLayers().get(objectLayers).getObjects();
     }
 
@@ -30,7 +29,7 @@ public class TmxObjectReader {
         for (MapObject object : mapObjects){
             if(data.containsKey(object.getName())){
 
-                Log.debug(getClass().getName(),">>> objects tmx "+ object.getName()+ " berhasil di parse");
+                Log.debug(getClass().getName(),"object %s tmx berhasil di parse",object.getName());
 
                 data.get(object.getName()).build(object);
             }
@@ -41,7 +40,4 @@ public class TmxObjectReader {
         return map;
     }
 
-    public MapObjects getMapObjects() {
-        return mapObjects;
-    }
 }
