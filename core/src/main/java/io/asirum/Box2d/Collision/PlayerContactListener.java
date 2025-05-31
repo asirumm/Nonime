@@ -4,7 +4,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import io.asirum.Entity.Items.Checkpoint;
 import io.asirum.Entity.Items.Key;
-import io.asirum.Entity.Items.Portal;
 import io.asirum.Entity.Platform.OneWayPlatform;
 import io.asirum.Entity.Player.Player;
 import io.asirum.GameLogic.GamePlayManager;
@@ -61,7 +60,7 @@ public class PlayerContactListener implements ContactListener {
 
     private void playerCollectKey(Contact contact) {
         if (ContactListenerHelper.isPlayerBody(contact.getFixtureA()) && ContactListenerHelper.isKeySensor(contact.getFixtureB())) {
-            Log.debug(getClass().getName(), "key collected");
+            Log.debug(getClass().getName(), "key berhasil di ambil");
 
             Key key = (Key) contact.getFixtureB().getBody().getUserData();
             Player player = (Player) contact.getFixtureA().getBody().getUserData();
@@ -75,7 +74,7 @@ public class PlayerContactListener implements ContactListener {
             return;
         }
         if (ContactListenerHelper.isPlayerBody(contact.getFixtureB()) && ContactListenerHelper.isKeySensor(contact.getFixtureA())) {
-            Log.debug(getClass().getName(), "key collected");
+            Log.debug(getClass().getName(), "key berhasil di ambil");
 
             Key key2 = (Key) contact.getFixtureA().getBody().getUserData();
             Player player2 = (Player) contact.getFixtureB().getBody().getUserData();

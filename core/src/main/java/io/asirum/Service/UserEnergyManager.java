@@ -58,6 +58,6 @@ public class UserEnergyManager {
         short lastEnergy = userData.getEnergy();
         short amount = (short) (lastEnergy+ENERGY_REWARD_FOR_WIN);
         userData.setEnergy(amount);
-        Log.info(getClass().getName(),"user mendapatkan penambahan energi, reward kemenangan sejumlah %s",amount);
+        Log.info(getClass().getName(),"user mendapatkan penambahan energi, reward kemenangan sejumlah %s",ENERGY_REWARD_FOR_WIN);
     }
 }
