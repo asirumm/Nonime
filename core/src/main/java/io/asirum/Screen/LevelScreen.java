@@ -21,8 +21,6 @@ public class LevelScreen extends ManagedScreen {
 
     private Payload payload;
     private UserData userData;
-    private UserEnergyManager userEnergyManager;
-    private PreferencesUserDataManager userDataManager;
 
     private LevelScrollPane scrollPane;
     private Array<RegionContent> regionContents;
@@ -32,32 +30,25 @@ public class LevelScreen extends ManagedScreen {
 
         AudioHelper.playMusic();// play music
 
-        userDataManager = new PreferencesUserDataManager();
-
         // set context
         context = ApplicationContext.getInstance();
         Skin widgetSkin = context.getGameAssets().getWidgetSkin();
+
+        this.userData = context.getUserData();
+        this.payload  = context.getPayloadGame();
 
         // agar ketika dari playgame tidak menggunakan camera box2d
         CameraHelper.setCameraAndViewportNormal(context);
         this.stage   = StageHelper.createInstance();
 
-
-        // load data payload
-        setPayload();
-        // load data user
-        setUserData();
-
-        // setting user energy managemet
-        setupEnergyUserManagement();
-
-        //
+        // membuat atau menagambil data regionContents dari context
         setupRegionContents(widgetSkin);
 
         // konsep baca di dokumentasi level menu
         scrollPane = new LevelScrollPane(widgetSkin, regionContents);
         scrollPane.build();
 
+        // membuat kontroller home,music etc
         WidgetController buttonScreen =
             new WidgetController(
                 widgetSkin, scrollPane.getScrollPane(),userData.getEnergy());
@@ -81,6 +72,8 @@ public class LevelScreen extends ManagedScreen {
      */
     private void setupRegionContents(Skin skin) {
 
+        Log.debug(getClass().getCanonicalName(),"membuat instance region contents");
+
         if (context.getRegionContents()==null) {
 
             regionContents = new Array<>();
@@ -98,70 +91,6 @@ public class LevelScreen extends ManagedScreen {
 
         }else {
             regionContents = context.getRegionContents();
-        }
-    }
-
-    /**
-     * proses
-     * - membuat instance userEnergyManagement
-     * - proses reward energy ke user
-     * - inject instance ke app context
-     * - save data
-     */
-    private void setupEnergyUserManagement() {
-        Log.debug(getClass().getName(),">>> proses user energy manager");
-
-        userEnergyManager = new UserEnergyManager(userData);
-
-        // proses reward dari beberapa jam off
-        userEnergyManager.userEnergyIntervalProcess();
-
-        context.setUserEnergyManager(userEnergyManager);
-
-        userDataManager.saveData(userData);
-    }
-
-
-    /**
-     * inisialisasi user data apabila di context belum ada kita load
-     */
-    private void setUserData() {
-        Log.debug(getClass().getName(),">>> set user data");
-
-        if(context.getUserData()==null){
-            Log.debug(getClass().getName(),">>> load user data");
-
-            PreferencesUserDataManager manager = new PreferencesUserDataManager();
-
-            // load data
-            userData = manager.loadData();
-
-            // inject data ke context
-            context.setUserData(userData);
-
-        }else {
-            userData =context.getUserData();
-        }
-
-    }
-
-    private void setPayload() {
-        Log.debug(getClass().getName(),">>> set payload");
-
-        if(context.getPayloadGame()==null){
-            Log.debug(getClass().getName(),">>> load payload");
-
-            PayloadJsonManager manager = new PayloadJsonManager();
-            manager.load();
-
-            // load data
-            payload = manager.getPayload();
-
-            // set ke context
-            context.setPayload(payload);
-
-        }else {
-            payload =context.getPayloadGame();
         }
     }
 

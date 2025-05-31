@@ -2,24 +2,21 @@ package io.asirum.GameLogic;
 
 import com.badlogic.gdx.utils.Array;
 import io.asirum.Entity.Player.Player;
-import io.asirum.SchemaObject.Payload;
 import io.asirum.SchemaObject.Region;
 import io.asirum.SchemaObject.UserData;
 import io.asirum.SchemaObject.UserLevel;
+import io.asirum.Screen.LevelMenu.RegionContent;
 import io.asirum.Screen.LevelScreen;
-import io.asirum.Service.ApplicationContext;
-import io.asirum.Service.Log;
-import io.asirum.Service.PreferencesUserDataManager;
-import io.asirum.Service.UserEnergyManager;
+import io.asirum.Service.*;
 
 public class GamePlayManager {
     private UserData userData;
-    private Payload payload;
     private Player player;
     private ApplicationContext context;
     private PreferencesUserDataManager userDataManager;
     private UserEnergyManager userEnergyManager;
     private Region region; // player sedang bermain dimana
+    private UserLevelManager levelManager;
 
     public GamePlayManager(Region region) {
         this.region = region;
@@ -36,18 +33,19 @@ public class GamePlayManager {
         userEnergyManager = context.getUserEnergyManager();
 
         this.userData = context.getUserData();
-        this.payload = context.getPayloadGame();
 
-        if(userData==null|| payload==null){
-            Log.warn(getClass().getName(),">>> userdata atau payload belum di set pada app context");
+        if(userData==null){
+            Log.warn(getClass().getCanonicalName(),"userdata belum di tambahkan pada app context");
         }
+
+        levelManager = new UserLevelManager(userData);
 
         decreaseUserEnergy((short) costEnergy);
     }
 
     // pengurangan energi player, untuk play game
     private void decreaseUserEnergy(short costEnergy){
-        Log.debug(getClass().getName(),"user energi berkurang "+costEnergy);
+        Log.info(getClass().getName(),"user energi berkurang karena bermain sejumlah %s",costEnergy);
 
         short currentUserEnergy = userData.getEnergy();
 
@@ -59,31 +57,34 @@ public class GamePlayManager {
     /**
      * Menambah level pengguna di wilayah yang sedang dimainkan jika belum mencapai level maksimum.
      */
-    private void updateUserLevelProgress() {
-        // Nama region yang sedang dimainkan
+    private short unlockUserLevel() {
         String currentRegionName = region.getName();
+        Log.debug(getClass().getCanonicalName(), "Memproses unlock level baru pada region %s", currentRegionName);
 
-        // Loop melalui semua data level pengguna
-        for (UserLevel userLevel : userData.getLevel()) {
+        for (UserLevel data : userData.getLevel()) {
+            if (data.getName().equals(currentRegionName)) {
+                short currentLevel = data.getLevel();
+                int maxLevel = region.getLevels().size(); // jumlah level maksimal di region
 
-            // Bandingkan nama region pengguna dengan region yang sedang dimainkan
-            if (userLevel.getName().equals(currentRegionName)) {
-
-                int maxLevel = region.getLevels().size;
-
-                // Tambah level jika belum mencapai maksimum
-                if (userLevel.getLevel() < maxLevel) {
-                    int currentLevel = userLevel.getLevel();
-                    userLevel.setLevel(currentLevel + 1);
+                if (currentLevel < maxLevel) {
+                    short newLevel = (short) (currentLevel + 1);
+                    data.setLevel(newLevel);
+                    Log.debug(getClass().getCanonicalName(), "Berhasil menambah level user ke %d", newLevel);
+                    return newLevel;
+                } else {
+                    Log.debug(getClass().getCanonicalName(), "Level user sudah maksimum: %d", currentLevel);
+                    return currentLevel;
                 }
-
-                // Jika sudah mencapai maksimum, tidak dilakukan perubahan
             }
         }
+
+        // Jika data region tidak ditemukan di userData
+        Log.warn(getClass().getCanonicalName(), "Region %s tidak ditemukan di data user", currentRegionName);
+        return 1;
     }
 
     private void rewardFinish(){
-        userEnergyManager.userRewardAfterWin();
+        userEnergyManager.energyRewardAfterWinningGame();
     }
 
     /**
@@ -95,18 +96,22 @@ public class GamePlayManager {
     public void playerFinishLogic(){
         if(player.isBringKey()){
 
-            Log.info(getClass().getName(), ">>> user naik level ke "+userData.getLevel());
+            short currentUserLevel = levelManager.getUserLevelByRegion(region);
 
-            updateUserLevelProgress();
+            Log.info(getClass().getName(), "user naik level dari level %s pada region %s",currentUserLevel,region.getName());
+
+            short newLevel = unlockUserLevel();
+
+            updateLevelUnlockUI(newLevel);
 
             rewardFinish();
 
-            Log.debug(getClass().getName(),">>> saving user data");
             userDataManager = new PreferencesUserDataManager();
+
             userDataManager.saveData(userData);
 
-            context.pushScreen(new LevelScreen(),null);
 
+            context.pushScreen(new LevelScreen(),null);
         }
     }
 
@@ -124,5 +129,18 @@ public class GamePlayManager {
             }
         };
 
+    }
+
+    private void updateLevelUnlockUI(short newLevel){
+        Array<RegionContent> regionContents = context.getRegionContents();
+
+        for (RegionContent content : regionContents){
+            if (content.getRegionName().equals(region.getName())){
+
+                Log.info(getClass().getCanonicalName(),"berhasil unlock level %s di region %s",newLevel,region.getName());
+
+                content.unlockLevel(newLevel);
+            }
+        }
     }
 }
