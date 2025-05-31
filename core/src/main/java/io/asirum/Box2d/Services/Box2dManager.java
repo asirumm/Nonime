@@ -9,6 +9,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import io.asirum.Box2d.BaseBox2d;
 import io.asirum.Box2d.Box2dVars;
 import io.asirum.Box2d.Collision.PlayerContactListener;
+import io.asirum.Entity.Obstacle.Crusher;
 import io.asirum.GameLogic.GamePlayManager;
 import io.asirum.Service.Log;
 import io.asirum.Util.CameraHelper;
@@ -54,6 +55,7 @@ public class Box2dManager {
         box2dEntities.put(Box2dVars.ONE_WAY_PLATFORM_OBJECT, platform.getOneWayPlatformBuilder());
         box2dEntities.put(Box2dVars.OBSTACLE_OBJECT, obstacle.getStalactite());
         box2dEntities.put(Box2dVars.CHECKPOINT_OBJECT, entity.getCheckpointBuilder());
+        box2dEntities.put(Box2dVars.CRUSHER_OBJECT, obstacle.getCrusherBuilder());
 
         // Platform statis diproses terpisah karena menggunakan pendekatan composite
         platform.getStaticPlatform().build(tmxObjectReader.getMap());
@@ -67,7 +69,15 @@ public class Box2dManager {
         entity.getKey().drawAnimation();
         entity.getPlayer().drawAnimation();
 
-//        debugRenderer.render(world,camera.combined);
+        // pergerakan crusher, apabila di map ada
+        if(!obstacle.getCrusherBuilder()
+            .getCrushers().isEmpty()){
+
+            obstacle.getCrusherBuilder()
+                .getCrushers().forEach(Crusher::runBehavior);
+        }
+
+        debugRenderer.render(world,camera.combined);
 
         // menghancurkan object yang perlu dihancurkan
         checkObjectToDestroy();

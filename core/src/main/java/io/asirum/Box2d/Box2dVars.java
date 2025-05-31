@@ -8,6 +8,7 @@ public class Box2dVars {
     public static final String ONE_WAY_PLATFORM_OBJECT = "one-way-platform";
     public static final String CHECKPOINT_OBJECT = "checkpoint";
     public static final String OBSTACLE_OBJECT = "obstacle";
+    public static final String CRUSHER_OBJECT = "crusher";
 
     // OBJECT NAME (TMX)
     public static final String PLAYER_OBJECT = "player";
