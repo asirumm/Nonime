@@ -69,7 +69,7 @@ public class WidgetController {
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Constant.VIRTUAL_WIDTH,Constant.VIRTUAL_HEIGHT);
         viewport = new FitViewport(Constant.VIRTUAL_WIDTH,Constant.VIRTUAL_HEIGHT,camera);
-        Log.debug(getClass().getName(),">>> hud camera berhasil di inisialisasi");
+        Log.debug(getClass().getCanonicalName(),"HUD camera berhasil di inisialisasi");
     }
 
     public void render(){
@@ -79,14 +79,15 @@ public class WidgetController {
     }
 
     public void dispose(){
-        Log.debug(getClass().getName(),"[dispose]");
         stage.dispose();
+        Log.debug(getClass().getName(),"[dispose]");
     }
 
     public void resize(int width, int height) {
         viewport.update(width, height, true);
     }
 
+    // desktop menggunakan keyboard
     public void buildDesktopWidget(){
 
     }

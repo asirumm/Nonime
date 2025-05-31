@@ -6,8 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import io.asirum.Constant;
-import io.asirum.Util.ButtonHelper;
-import io.asirum.Util.StageHelper;
+import io.asirum.Util.ButtonBuilder;
 
 public class BaseWindow extends Window {
 
@@ -31,7 +30,7 @@ public class BaseWindow extends Window {
         mainTable.padTop(15);
 
         // Close button
-        closeButton = ButtonHelper.closeButton(this);
+        closeButton = ButtonBuilder.closeButton(this);
 
         // window size
         this.setSize(Constant.VIRTUAL_WIDTH - 10, Constant.VIRTUAL_HEIGHT - 10);

@@ -3,7 +3,7 @@ package io.asirum.Screen.PlayMenu;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import io.asirum.Screen.PlayScreen;
-import io.asirum.Util.ButtonHelper;
+import io.asirum.Util.ButtonBuilder;
 import io.asirum.Widget.StyleVars;
 
 public class HudWidget {
@@ -44,7 +44,7 @@ public class HudWidget {
 
 
     public void buildPauseButton(){
-        pauseButton = ButtonHelper.build(skin, StyleVars.PAUSE_BUTTON, new Runnable() {
+        pauseButton = ButtonBuilder.build(skin, StyleVars.PAUSE_BUTTON, new Runnable() {
             @Override
             public void run() {
                 PlayScreen.paused= true;

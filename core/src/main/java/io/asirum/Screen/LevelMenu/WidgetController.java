@@ -7,10 +7,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Align;
 import io.asirum.Constant;
-import io.asirum.Util.ButtonActionHelper;
+import io.asirum.Util.ButtonAction;
 import io.asirum.Screen.HomeScreen;
 import io.asirum.Service.ApplicationContext;
-import io.asirum.Util.ButtonHelper;
+import io.asirum.Util.ButtonBuilder;
 import io.asirum.Widget.StyleVars;
 
 public class WidgetController {
@@ -18,7 +18,6 @@ public class WidgetController {
     private Button music;
     private Skin skin;
     private ImageTextButton userEnergy;
-    private ButtonActionHelper buttonActionHelper;
     private Button leftControl;
     private Button rightControl;
 
@@ -27,7 +26,6 @@ public class WidgetController {
 
     public WidgetController(Skin skin, ScrollPane scrollPane,short userEnergy){
         this.scrollPane = scrollPane;
-        buttonActionHelper = new ButtonActionHelper();
         this.skin = skin;
 
         // agar posisi button presisi didalam scrollpane
@@ -49,7 +47,7 @@ public class WidgetController {
     }
 
     private void buildHomeBtn(float scrollPaneWidth,float scrollPaneY){
-        home = ButtonHelper.build(skin, StyleVars.HOME_BUTTON, buttonActionHelper.onPush(HomeScreen::new,null));
+        home = ButtonBuilder.build(skin, StyleVars.HOME_BUTTON, ButtonAction.switchScreen(HomeScreen::new,null));
 
         home.setPosition(
             ( scrollPaneWidth / 2)-30,scrollPaneY
@@ -57,7 +55,7 @@ public class WidgetController {
     }
 
     private void buildLeftControl(float scrollpaneX,float scrollPaneY){
-        leftControl = ButtonHelper.build(skin, StyleVars.LEFT_CONTROL, new Runnable() {
+        leftControl = ButtonBuilder.build(skin, StyleVars.LEFT_CONTROL, new Runnable() {
             @Override
             public void run() {
                 float currentScroll = scrollPane.getScrollX();
@@ -68,7 +66,7 @@ public class WidgetController {
     }
 
     private void buildRightControl(float scrollpaneWidth,float scrollPaneY){
-        rightControl =  ButtonHelper.build(skin, StyleVars.RIGHT_CONTROL, new Runnable() {
+        rightControl =  ButtonBuilder.build(skin, StyleVars.RIGHT_CONTROL, new Runnable() {
             @Override
             public void run() {
                 float currentScroll = scrollPane.getScrollX();
@@ -79,7 +77,7 @@ public class WidgetController {
     }
 
     private void buildMusicBtn(float scrollPaneY){
-        music = ButtonHelper.build(skin, StyleVars.MUSIC_BTN, new Runnable() {
+        music = ButtonBuilder.build(skin, StyleVars.MUSIC_BTN, new Runnable() {
             @Override
             public void run() {
                 Music soundMusic =  ApplicationContext.getInstance().getGameAssets().getSoundMusic();
