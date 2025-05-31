@@ -1,8 +1,10 @@
 package io.asirum.TmxMap;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import io.asirum.Constant;
 import io.asirum.Util.CameraHelper;
@@ -17,6 +19,10 @@ public class MapRenderer {
     }
 
     public void loadMap(String mapPath) {
+        TmxMapLoader.Parameters params = new TmxMapLoader.Parameters();
+        params.textureMinFilter = Texture.TextureFilter.Nearest;
+        params.textureMagFilter = Texture.TextureFilter.Nearest;
+
         this.map = TmxHelper.getTiledMap(mapPath);
         this.mapRenderer = new OrthogonalTiledMapRenderer(this.map, 1.0f / Constant.UNIT_SCALE);
     }
