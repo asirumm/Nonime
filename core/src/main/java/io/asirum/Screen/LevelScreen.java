@@ -1,5 +1,6 @@
 package io.asirum.Screen;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Array;
@@ -98,6 +99,8 @@ public class LevelScreen extends ManagedScreen {
     public void render(float delta) {
         stage.act(delta);
         stage.draw();
+        System.out.println("FPS : "+Gdx.graphics.getFramesPerSecond());
+
     }
 
 

@@ -85,6 +85,7 @@ public class PlayScreen  extends ManagedScreen{
         // logika game
         gamePlayManager.play(delta);
 
+        System.out.println("FPS : "+Gdx.graphics.getFramesPerSecond());
     }
 
     private void box2dManagerConfig(GameLevel gameLevel) {
