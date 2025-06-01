@@ -25,11 +25,15 @@ public class TmxHelper {
         return rect;
     }
 
+    public static TiledMap getTiledMap(String map){
+        return new TmxMapLoader().load(map);
+    }
+
     public static TiledMap getTiledMap(String map, TmxMapLoader.Parameters param){
         return new TmxMapLoader().load(map,param);
     }
 
-    public static TiledMap getTiledMap(String map){
+    public static TiledMap getTiledMapFromAtlas(String map){
         AtlasTmxMapLoader.AtlasTiledMapLoaderParameters params = new AtlasTmxMapLoader.AtlasTiledMapLoaderParameters();
         params.generateMipMaps = false;
         params.convertObjectToTileSpace = false;
