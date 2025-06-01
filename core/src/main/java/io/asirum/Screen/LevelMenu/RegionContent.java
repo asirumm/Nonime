@@ -97,10 +97,10 @@ public class RegionContent {
         return name;
     }
 
-    public void unlockLevel(short userLevel){
+    public void unlockLevel(short userLevel,short playerEnergy,GameLevel gameLevel,Region region){
         for (LevelContent levelContent : levelContents){
             if (levelContent.getLevel() == userLevel){
-                levelContent.undisable();
+                levelContent.undisable(playerEnergy,gameLevel,region);
             }
         }
     }

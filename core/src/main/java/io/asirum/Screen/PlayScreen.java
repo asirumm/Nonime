@@ -47,7 +47,7 @@ public class PlayScreen  extends ManagedScreen{
 
         this.context = ApplicationContext.getInstance();
 
-        gamePlayManager = new GamePlayManager(region);
+        gamePlayManager = new GamePlayManager(region,gameLevel);
 
         cameraBox2dConfiguration(); // konfigurasi kamera untuk box2d
 

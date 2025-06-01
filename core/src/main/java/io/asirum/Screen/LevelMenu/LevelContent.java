@@ -28,16 +28,20 @@ public class LevelContent {
 
         name = new TextButton(String.valueOf(levelContent),skin, StyleVars.LEVEL_TEXT_BUTTON);
 
-        onClick(playerEnergy,region.getCost(),gameLevel,region);
-
         if(userLevel>= levelContent){
             name.setDisabled(false);
         }else {
             name.setDisabled(true);
         }
+
+        onClick(playerEnergy,region.getCost(),gameLevel,region);
     }
 
     private void onClick(short playerEnergy,short regionCost,GameLevel gameLevel,Region region) {
+
+        if (name.isDisabled()){
+            return;
+        }
 
         name.addListener(new ClickListener(){
             @Override
@@ -57,8 +61,9 @@ public class LevelContent {
         });
     }
 
-    public void undisable(){
+    public void undisable(short playerEnergy,GameLevel gameLevel,Region region){
         name.setDisabled(false);
+        onClick(playerEnergy,region.getCost(),gameLevel,region);
     }
 
     public short getLevel() {

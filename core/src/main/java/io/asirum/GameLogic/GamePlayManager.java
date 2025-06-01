@@ -2,6 +2,7 @@ package io.asirum.GameLogic;
 
 import com.badlogic.gdx.utils.Array;
 import io.asirum.Entity.Player.Player;
+import io.asirum.SchemaObject.GameLevel;
 import io.asirum.SchemaObject.Region;
 import io.asirum.SchemaObject.UserData;
 import io.asirum.SchemaObject.UserLevel;
@@ -17,9 +18,11 @@ public class GamePlayManager {
     private UserEnergyManager userEnergyManager;
     private Region region; // player sedang bermain dimana
     private UserLevelManager levelManager;
+    private GameLevel gameLevel;
 
-    public GamePlayManager(Region region) {
+    public GamePlayManager(Region region,GameLevel gameLevel) {
         this.region = region;
+        this.gameLevel = gameLevel;
     }
 
     // parameter ini dibuat karena urutan eksekusi, maka dari itu tidak
@@ -139,7 +142,7 @@ public class GamePlayManager {
 
                 Log.info(getClass().getCanonicalName(),"berhasil unlock level %s di region %s",newLevel,region.getName());
 
-                content.unlockLevel(newLevel);
+                content.unlockLevel(newLevel,userData.getEnergy(),gameLevel,region);
             }
         }
     }
