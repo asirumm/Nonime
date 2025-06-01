@@ -1,9 +1,7 @@
 package io.asirum.Entity.Player;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g2d.ParticleEffectPool;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
@@ -11,16 +9,12 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.utils.Array;
 import io.asirum.Box2d.*;
-import io.asirum.Entity.Animation.AnimationComponent;
+import io.asirum.Constant;
 import io.asirum.Entity.Behavior.Jump;
 import io.asirum.Entity.Behavior.Run;
-import io.asirum.Service.ApplicationContext;
-import io.asirum.Service.GameAssets;
-import io.asirum.Service.Log;
+import io.asirum.Service.*;
 import io.asirum.TmxMap.TmxHelper;
-import io.asirum.Util.SpriteBatchHelper;
 
 public class Player extends BaseBox2d {
 
@@ -117,7 +111,7 @@ public class Player extends BaseBox2d {
 
     public void respawn(){
         if(lastPosition==null){
-            Log.info(getClass().getName(),"NULL vector respawn");
+            Log.warn(getClass().getName(),"User tidak menyentuh checkpoint pertama");
         }else {
             body.setTransform(lastPosition,0);
         }
