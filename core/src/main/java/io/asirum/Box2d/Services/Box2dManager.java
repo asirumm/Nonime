@@ -11,6 +11,7 @@ import io.asirum.Box2d.Box2dVars;
 import io.asirum.Box2d.Collision.PlayerContactListener;
 import io.asirum.Entity.Obstacle.Crusher;
 import io.asirum.GameLogic.GamePlayManager;
+import io.asirum.Service.ApplicationContext;
 import io.asirum.Service.Log;
 import io.asirum.Util.CameraHelper;
 
@@ -26,6 +27,7 @@ public class Box2dManager {
     private EntityBox2d entity;
     private PlatformBox2d platform;
     private ObstacleBox2d obstacle;
+    private Box2dObjectDestroyer box2dObjectDestroyer;
 
     public Box2dManager(OrthographicCamera camera, TiledMap map, GamePlayManager playManager) {
 
@@ -38,6 +40,9 @@ public class Box2dManager {
         tmxObjectReader = new TmxObjectReader(map);
 
         this.camera = camera;
+
+        box2dObjectDestroyer = ApplicationContext.getInstance().getBox2dObjectDestroyer();
+
     }
 
     // Mengurai data dari file TMX menjadi entitas Box2D
@@ -87,11 +92,17 @@ public class Box2dManager {
     }
 
     private void checkObjectToDestroy() {
-        if(!entity.getPlayer().getToDestroy().isEmpty()){
-            for (Body body : entity.getPlayer().getToDestroy()) {
-                entity.getPlayer().getWorld().destroyBody(body);
+        // apabila pada array object destroy ada isinya
+        // maka kita hancurkan
+        if(!box2dObjectDestroyer.getBodiesWantToDestroy().isEmpty()){
+
+            Log.debug(getClass().getCanonicalName(),"ada object yang dapat didestroy dari world");
+
+            for (Body body : box2dObjectDestroyer.getBodiesWantToDestroy()) {
+                world.destroyBody(body);
             }
-            entity.getPlayer().getToDestroy().clear();
+
+            box2dObjectDestroyer.clear();
         }
     }
 

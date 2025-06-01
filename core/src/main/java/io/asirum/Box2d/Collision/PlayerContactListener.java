@@ -7,7 +7,10 @@ import io.asirum.Entity.Items.Key;
 import io.asirum.Entity.Platform.OneWayPlatform;
 import io.asirum.Entity.Player.Player;
 import io.asirum.GameLogic.GamePlayManager;
+import io.asirum.Service.ApplicationContext;
 import io.asirum.Service.Log;
+
+import java.util.concurrent.ThreadPoolExecutor;
 
 
 public class PlayerContactListener implements ContactListener {
@@ -70,7 +73,10 @@ public class PlayerContactListener implements ContactListener {
             key.setCollected(true);
 
             // agar kunci di hapus box2dnya
-            key.appendToDestroy(key.getBody());
+            ApplicationContext
+                .getInstance()
+                .getBox2dObjectDestroyer()
+                .appendToDestroy(key.getBody());
             return;
         }
         if (ContactListenerHelper.isPlayerBody(contact.getFixtureB()) && ContactListenerHelper.isKeySensor(contact.getFixtureA())) {
@@ -81,7 +87,12 @@ public class PlayerContactListener implements ContactListener {
 
             player2.setBringKey(true);
             key2.setCollected(true);
-            key2.appendToDestroy(key2.getBody());
+
+            ApplicationContext
+                .getInstance()
+                .getBox2dObjectDestroyer()
+                .appendToDestroy(key2.getBody());
+
         }
     }
 

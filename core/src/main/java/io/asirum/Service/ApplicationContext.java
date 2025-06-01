@@ -8,6 +8,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import de.eskalon.commons.screen.ManagedScreen;
 import de.eskalon.commons.screen.ScreenManager;
 import de.eskalon.commons.screen.transition.ScreenTransition;
+import io.asirum.Box2d.Services.Box2dObjectDestroyer;
 import io.asirum.Constant;
 import io.asirum.SchemaObject.Payload;
 import io.asirum.SchemaObject.UserData;
@@ -25,6 +26,7 @@ public class ApplicationContext {
     private ScreenManager<ManagedScreen, ScreenTransition> screenManager;
     private Payload payload;
     private UserData userData;
+    private Box2dObjectDestroyer box2dObjectDestroyer;
     private UserEnergyManager userEnergyManager;
     private Array<RegionContent> regionContents;
     // menahan level menu konten, agar tidak lama selalu load
@@ -34,6 +36,7 @@ public class ApplicationContext {
         batch  = new SpriteBatch();
         assetLoader = new AssetLoader();
         gameAssets = new GameAssets(assetLoader);
+        box2dObjectDestroyer = new Box2dObjectDestroyer();
 
         CameraHelper.toOrtho(camera);
 
@@ -108,6 +111,10 @@ public class ApplicationContext {
 
     public void setViewport(Viewport viewport) {
         this.viewport = viewport;
+    }
+
+    public Box2dObjectDestroyer getBox2dObjectDestroyer() {
+        return box2dObjectDestroyer;
     }
 
     public UserEnergyManager getUserEnergyManager() {
