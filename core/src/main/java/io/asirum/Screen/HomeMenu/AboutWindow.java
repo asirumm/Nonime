@@ -34,9 +34,10 @@ public class AboutWindow extends BaseWindow {
         scrollPane.setForceScroll(false, true);
 
         // menambahkan table ke scrollpane
-        addChildToTable(scrollPane);
+        contentTable.add(scrollPane).top().expand().fill();
 
         StageHelper.debugStage(false,scrollPane,mainTable,this);
+        mainTable.padTop(15);
 
         this.setVisible(false);
     }

@@ -1,23 +1,24 @@
 package io.asirum.Screen.LevelMenu;
 
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import io.asirum.SchemaObject.GameLevel;
 import io.asirum.SchemaObject.Region;
 import io.asirum.SchemaObject.UserData;
 import io.asirum.Service.UserLevelManager;
+import io.asirum.Util.ButtonBuilder;
 import io.asirum.Widget.StyleVars;
 
 public class RegionContent {
     private Table rootContainer;
     private Array<LevelContent> levelContents;
     private Label regionName;
-    private TextButton regionCost;
+    private Button infoBtn;
     private String name;
+    private RegionWindowInfo regionWindowInfo;
+
     // digunakan untuk pencarian, fitur user naik level
     // akan iterasi level data dan me undisable sesuai level user
 
@@ -30,14 +31,16 @@ public class RegionContent {
     }
 
     public void build(Region region, UserData userData){
+        regionWindowInfo = new RegionWindowInfo(skin,region);
+
         buildRegionNameLabel(region.getName());
-        buildRegionCostLabel(String.valueOf(region.getCost()));
+        buildInfoButton();
 
         name = region.getName();
 
         // header table untuk nama dan cost
         Table headerTable = new Table();
-        headerTable.add(regionCost).left().expandX();
+        headerTable.add(infoBtn).left().expandX();
         headerTable.add(regionName).left().expandX();
 
         // table level
@@ -85,8 +88,10 @@ public class RegionContent {
         regionName.setAlignment(Align.center);
     }
 
-    private void buildRegionCostLabel(String cost) {
-        regionCost =  new TextButton(cost,skin, StyleVars.COST_TEXT_BUTTON);
+    private void buildInfoButton() {
+        infoBtn = ButtonBuilder.build(skin,StyleVars.HOME_BUTTON,()->{
+            regionWindowInfo.setVisible(true);
+        });
     }
 
     public Table getContent() {
@@ -103,5 +108,9 @@ public class RegionContent {
                 levelContent.undisable(playerEnergy,gameLevel,region);
             }
         }
+    }
+
+    public RegionWindowInfo getRegionWindowInfo() {
+        return regionWindowInfo;
     }
 }

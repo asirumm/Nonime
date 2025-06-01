@@ -63,6 +63,10 @@ public class LevelScreen extends ManagedScreen {
             buttonScreen.getRightControl()
         );
 
+        for (RegionContent rc : regionContents){
+            StageHelper.addActors(stage,rc.getRegionWindowInfo());
+        }
+
 //        StageHelper.debugStage(true,levelScrollPane.getContainer(),levelContentData.getContent());
     }
 
