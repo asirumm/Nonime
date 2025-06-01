@@ -1,5 +1,6 @@
 package io.asirum.Box2d.Services;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.PolylineMapObject;
@@ -37,7 +38,14 @@ public class TmxObjectReader {
      */
     public void parseToBox2d(HashMap<String, BaseBox2d> entity){
 
+        if(mapObjects.get(0)==null){
+            Log.warn(getClass().getCanonicalName(),"Layer tidak memiliki data object. Periksa kembali tilemap");
+            throw new RuntimeException("Layer tidak memiliki object data, periksa kembali tile map");
+        }
+
         for (MapObject object : mapObjects){
+
+            Log.debug(getClass().getName(),"object tmx saat ini : %s",object.getName());
 
             if (object instanceof PolylineMapObject){
                 Log.debug(getClass().getName(),"object polyline ditemukan ");
