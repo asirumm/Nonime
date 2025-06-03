@@ -9,6 +9,8 @@ import java.io.StringWriter;
 import static java.lang.String.format;
 
 public class Log {
+    // production
+//    private static FileHandle logFile = Gdx.files.external("asirum-game/log/application.log");
     private static FileHandle logFile = Gdx.files.local("log/application.log");
     private static boolean writeToFile = true;
     private static boolean writeToConsole = true;
