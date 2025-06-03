@@ -1,10 +1,9 @@
 package io.asirum.Widget.Window;
 
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.utils.Align;
 import io.asirum.Constant;
 import io.asirum.Util.ButtonBuilder;
-import io.asirum.Widget.StyleVars;
 
 public class BaseWindow extends Window {
 
@@ -15,8 +14,7 @@ public class BaseWindow extends Window {
     public BaseWindow(String title, Skin skin) {
         super(title, skin);
 
-        // agar rapih titlenya
-//        getTitleTable().padTop(getTitleLabel().getHeight()+getTitleTable().getPrefHeight());
+        getTitleLabel().setAlignment(Align.center);
 
         // Window properties
         this.setModal(true);
@@ -25,15 +23,12 @@ public class BaseWindow extends Window {
 
         // Close button
         closeButton = ButtonBuilder.closeButton(this);
+        this.getTitleTable().add(closeButton).right();
+
 
         contentTable = new Table();
 
-        mainTable = new Table();
-        mainTable.pad(0);
-        mainTable.add(contentTable).expand().fill().padTop(0).top().row();
-        mainTable.add(closeButton).right().row();
-
-        this.add(mainTable).expand().fill();
+        this.add(contentTable).expand().fill();
 
         // window size
         this.setSize(Constant.VIRTUAL_WIDTH - 10, Constant.VIRTUAL_HEIGHT - 10);

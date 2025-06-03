@@ -10,23 +10,15 @@ public class AboutWindow extends BaseWindow {
     private ScrollPane scrollPane;
 
     private final String text =
-        "game info : \n"+
-            "> every 3 hours energy will added \n"+
-        "made with : libGDX \n" +
-            "font : alagard by Hewett Tsoi \n" +
-            "assets : by me with aseprite\n"+
-            "music : a big world by one people entertaiment\n";
+        "framework - libGDX\n"+"font - algard by Hawett Tsoi";
 
     public AboutWindow(Skin skin){
-        super("information", skin);
-
-
-        getTitleLabel().setAlignment(Align.center);
-        getTitleLabel().setStyle(skin.get(StyleVars.TITLE_LIGHT_LABEL, Label.LabelStyle.class));
+        super("credits", skin);
 
         // Content label
         Label aboutLabel = new Label(text, skin);
         aboutLabel.setWrap(true);
+        aboutLabel.setAlignment(Align.topLeft);
 
         // ScrollPane setup
         scrollPane = new ScrollPane(aboutLabel);
@@ -36,8 +28,8 @@ public class AboutWindow extends BaseWindow {
         // menambahkan table ke scrollpane
         contentTable.add(scrollPane).top().expand().fill();
 
-        StageHelper.debugStage(false,scrollPane,mainTable,this);
-        mainTable.padTop(15);
+        StageHelper.debugStage(false,scrollPane,this);
+
 
         this.setVisible(false);
     }
