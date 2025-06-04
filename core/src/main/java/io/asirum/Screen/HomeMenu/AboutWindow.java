@@ -6,6 +6,8 @@ import io.asirum.Util.StageHelper;
 import io.asirum.Widget.StyleVars;
 import io.asirum.Widget.Window.BaseWindow;
 
+import javax.swing.*;
+
 public class AboutWindow extends BaseWindow {
     private ScrollPane scrollPane;
 
@@ -13,7 +15,11 @@ public class AboutWindow extends BaseWindow {
         "framework - libGDX\n"+"font - algard by Hawett Tsoi";
 
     public AboutWindow(Skin skin){
-        super("credits", skin);
+        super( skin);
+        withCloseButton();
+
+        Label titleLabel = new Label("credits",skin,StyleVars.TITLE_UNDERLINE);
+        setTitleLabel(titleLabel);
 
         // Content label
         Label aboutLabel = new Label(text, skin);
@@ -26,7 +32,7 @@ public class AboutWindow extends BaseWindow {
         scrollPane.setForceScroll(false, true);
 
         // menambahkan table ke scrollpane
-        contentTable.add(scrollPane).top().expand().fill();
+        content.add(scrollPane).top().expand().fill();
 
         StageHelper.debugStage(false,scrollPane,this);
 
