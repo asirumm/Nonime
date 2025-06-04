@@ -4,7 +4,6 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import io.asirum.Constant;
-import io.asirum.Util.ButtonBuilder;
 import io.asirum.Widget.StyleVars;
 
 public class BaseWindow extends Table {
@@ -55,8 +54,15 @@ public class BaseWindow extends Table {
 
     protected void withCloseButton(){
         // Tombol close di kanan
-        closeButton = ButtonBuilder.closeButton(this);
+        closeButton = new Button(skin, StyleVars.CLOSE_BTN);
         header.add(closeButton).right();
+
+        closeButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                setVisible(false);
+            }
+        });
     }
 
     // Untuk mengatur atau mengganti judul setelah dibuat
