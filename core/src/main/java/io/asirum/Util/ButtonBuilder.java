@@ -1,5 +1,6 @@
 package io.asirum.Util;
 
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -49,9 +50,9 @@ public class ButtonBuilder {
     /**
      * membuat close button untuk window
      */
-    public static Button closeButton(Window window){
+    public static Button closeButton(Actor actor){
         Skin skin =  ApplicationContext.getInstance().getGameAssets().getWidgetSkin();
 
-        return build(skin, StyleVars.CLOSE_BTN,()->window.setVisible(false));
+        return build(skin, StyleVars.CLOSE_BTN,()->actor.setVisible(false));
     }
 }

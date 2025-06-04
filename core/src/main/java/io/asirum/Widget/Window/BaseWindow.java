@@ -1,44 +1,69 @@
 package io.asirum.Widget.Window;
 
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
-import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import io.asirum.Constant;
 import io.asirum.Util.ButtonBuilder;
+import io.asirum.Widget.StyleVars;
 
-public class BaseWindow extends Window {
-
-    protected Table mainTable;
-    protected Table contentTable;
+public class BaseWindow extends Table {
+    protected Table header;
+    protected Table content;
+    protected Label titleLabel;
     protected Button closeButton;
+    private Skin skin;
 
-    public BaseWindow(String title, Skin skin) {
-        super(title, skin);
-
-        getTitleLabel().setAlignment(Align.center);
-
-        // Window properties
-        this.setModal(true);
-        this.setMovable(false);
-        this.setResizable(false);
-
-        // Close button
-        closeButton = ButtonBuilder.closeButton(this);
-        this.getTitleTable().add(closeButton).right();
-
-
-        contentTable = new Table();
-
-        this.add(contentTable).expand().fill();
-
-        // window size
-        this.setSize(Constant.VIRTUAL_WIDTH - 10, Constant.VIRTUAL_HEIGHT - 10);
-
-        // Center the window
-        this.setPosition(
-            (Constant.VIRTUAL_WIDTH - this.getWidth()) / 2,
-            (Constant.VIRTUAL_HEIGHT - this.getHeight()) / 2
-        );
+    public BaseWindow(Skin skin) {
+        this(null, skin);
+        this.skin = skin;
     }
 
+    public BaseWindow(String title, Skin skin) {
+        // Set background dari style Window
+        Window.WindowStyle style = skin.get(Window.WindowStyle.class);
+        this.setBackground(style.background);
 
+        this.skin = skin;
+
+        this.setSize(Constant.VIRTUAL_WIDTH, Constant.VIRTUAL_HEIGHT);
+
+        initHeader(title);
+        initContent();
+
+        // Tambahkan ke tabel utama
+        this.add(header).fillX().top();
+        this.row();
+        this.add(content).expand().fill();
+
+        header.setDebug(true);
+        content.setDebug(true);
+    }
+
+    private void initHeader(String title) {
+        header = new Table();
+
+        // Label judul (jika ada)
+        titleLabel = new Label(title != null ? title : "", skin);
+
+        header.add(titleLabel).expandX().center();
+    }
+
+    private void initContent() {
+        content = new Table();
+    }
+
+    protected void withCloseButton(){
+        // Tombol close di kanan
+        closeButton = ButtonBuilder.closeButton(this);
+        header.add(closeButton).right();
+    }
+
+    // Untuk mengatur atau mengganti judul setelah dibuat
+    protected void setTitleLabel(Label label) {
+        this.titleLabel = label;
+        header.clear();
+        header.add(titleLabel).expandX().center();
+        header.add(closeButton).right().width(closeButton.getPrefWidth());
+    }
 }
