@@ -16,12 +16,12 @@ public class GamePlayManager {
     private ApplicationContext context;
     private PreferencesUserDataManager userDataManager;
     private UserEnergyManager userEnergyManager;
-    private Region region; // player sedang bermain dimana
+    private Region regionWherePlayerPlaying; // player sedang bermain dimana
     private UserLevelManager levelManager;
     private GameLevel gameLevel;
 
     public GamePlayManager(Region region,GameLevel gameLevel) {
-        this.region = region;
+        this.regionWherePlayerPlaying = region;
         this.gameLevel = gameLevel;
     }
 
@@ -61,13 +61,13 @@ public class GamePlayManager {
      * Menambah level pengguna di wilayah yang sedang dimainkan jika belum mencapai level maksimum.
      */
     private short unlockUserLevel() {
-        String currentRegionName = region.getName();
+        String currentRegionName = regionWherePlayerPlaying.getName();
         Log.debug(getClass().getCanonicalName(), "Memproses unlock level baru pada region %s", currentRegionName);
 
         for (UserLevel data : userData.getLevel()) {
             if (data.getName().equals(currentRegionName)) {
                 short currentLevel = data.getLevel();
-                int maxLevel = region.getLevels().size(); // jumlah level maksimal di region
+                int maxLevel = regionWherePlayerPlaying.getLevels().size(); // jumlah level maksimal di region
 
                 if (currentLevel < maxLevel) {
                     short newLevel = (short) (currentLevel + 1);
@@ -99,9 +99,9 @@ public class GamePlayManager {
     public void playerFinishLogic(){
         if(player.isBringKey()){
 
-            short currentUserLevel = levelManager.getUserLevelByRegion(region);
+            short currentUserLevel = levelManager.getUserLevelByRegion(regionWherePlayerPlaying);
 
-            Log.info(getClass().getName(), "user naik level dari level %s pada region %s",currentUserLevel,region.getName());
+            Log.info(getClass().getName(), "user naik level dari level %s pada region %s",currentUserLevel, regionWherePlayerPlaying.getName());
 
             short newLevel = unlockUserLevel();
 
@@ -123,6 +123,7 @@ public class GamePlayManager {
 
         // ketika player terkena obstacle maka respawn
         if (player.isPlayerNeedRespawn()){
+            // apabila life habis maka berakhir
             if(player.getPlayerLive() < 0){
                 context.pushScreen(new LevelScreen(),null);
             }
@@ -138,11 +139,11 @@ public class GamePlayManager {
         Array<RegionContent> regionContents = context.getRegionContents();
 
         for (RegionContent content : regionContents){
-            if (content.getRegionName().equals(region.getName())){
+            if (content.getRegion().getName().equals(regionWherePlayerPlaying.getName())){
 
-                Log.info(getClass().getCanonicalName(),"berhasil unlock level %s di region %s",newLevel,region.getName());
+                Log.info(getClass().getCanonicalName(),"berhasil unlock level %s di region %s",newLevel, regionWherePlayerPlaying.getName());
 
-                content.unlockLevel(newLevel,userData.getEnergy(),gameLevel,region);
+                content.unlockLevel(gameLevel);
             }
         }
     }
