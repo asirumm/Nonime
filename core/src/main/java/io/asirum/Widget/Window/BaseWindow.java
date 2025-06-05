@@ -4,6 +4,8 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import io.asirum.Constant;
+import io.asirum.Service.ApplicationContext;
+import io.asirum.Util.AudioHelper;
 import io.asirum.Widget.StyleVars;
 
 public class BaseWindow extends Table {
@@ -14,13 +16,23 @@ public class BaseWindow extends Table {
     private Skin skin;
 
     public BaseWindow(Skin skin) {
-        this(null, skin);
+        this(null, skin,null);
         this.skin = skin;
     }
 
-    public BaseWindow(String title, Skin skin) {
+    public BaseWindow(Skin skin,String style) {
+        this(null, skin,style);
+        this.skin = skin;
+    }
+
+    public BaseWindow(String title, Skin skin,String styleName) {
         // Set background dari style Window
-        Window.WindowStyle style = skin.get(Window.WindowStyle.class);
+        Window.WindowStyle style =null;
+        if(styleName!=null){
+            style = skin.get(styleName, Window.WindowStyle.class);
+        }else {
+             style = skin.get(Window.WindowStyle.class);
+        }
         this.setBackground(style.background);
 
         this.skin = skin;
@@ -33,10 +45,7 @@ public class BaseWindow extends Table {
         // Tambahkan ke tabel utama
         this.add(header).fillX().top();
         this.row();
-        this.add(content).expand().fill();
-
-        header.setDebug(true);
-        content.setDebug(true);
+        this.add(content).expand().fill().row();
     }
 
     private void initHeader(String title) {
@@ -60,6 +69,10 @@ public class BaseWindow extends Table {
         closeButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                ApplicationContext
+                    .getInstance()
+                    .getGameAssets()
+                    .getSoundLevelControl().play();
                 setVisible(false);
             }
         });
