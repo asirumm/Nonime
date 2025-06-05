@@ -1,0 +1,140 @@
+{
+"com.badlogic.gdx.graphics.g2d.BitmapFont": {
+	"alagard-16": {
+		"file": "alagard-16.fnt",
+		"scaledSize": -1,
+		"markupEnabled": false,
+		"flip": false
+	}
+},
+"com.badlogic.gdx.graphics.Color": {
+	"dark": {
+		"r": 0.101960786,
+		"g": 0.08627451,
+		"b": 0.05882353,
+		"a": 1
+	},
+	"main": {
+		"r": 0.6509804,
+		"g": 0.54509807,
+		"b": 0.23137255,
+		"a": 1
+	}
+},
+"com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle": {
+	"default": {
+		"up": "play",
+		"down": "play2"
+	},
+	"credits": {
+		"up": "credits"
+	},
+	"home": {
+		"up": "home"
+	},
+	"pause": {
+		"up": "pause"
+	},
+	"music": {
+		"up": "music-on",
+		"disabled": "music-off"
+	},
+	"left": {
+		"up": "left"
+	},
+	"right": {
+		"up": "right"
+	},
+	"close": {
+		"up": "close"
+	},
+	"control-left": {
+		"up": "c-lft"
+	},
+	"control-right": {
+		"up": "c-right"
+	},
+	"control-up": {
+		"up": "c-up"
+	},
+	"yes": {
+		"up": "yes"
+	},
+	"no": {
+		"up": "no"
+	}
+},
+"com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton$ImageTextButtonStyle": {
+	"default": {
+		"imageUp": "energy-icon",
+		"font": "alagard-16",
+		"fontColor": "dark",
+		"up": "energy-box"
+	},
+	"cost": {
+		"imageUp": "cost",
+		"font": "alagard-16",
+		"fontColor": "dark"
+	},
+	"life": {
+		"imageUp": "health",
+		"font": "alagard-16",
+		"fontColor": "main"
+	},
+	"arrow-left": {
+		"imageUp": "arrow-top",
+		"font": "alagard-16",
+		"fontColor": "dark"
+	}
+},
+"com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle": {
+	"default": {
+		"font": "alagard-16",
+		"fontColor": "dark"
+	},
+	"underline-title": {
+		"font": "alagard-16",
+		"fontColor": "dark",
+		"background": "underline"
+	},
+	"tooltip": {
+		"font": "alagard-16",
+		"fontColor": "dark",
+		"background": "transparant"
+	}
+},
+"com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle": {
+	"default": {
+		"font": "alagard-16",
+		"fontColor": "main"
+	},
+	"underline": {
+		"font": "alagard-16",
+		"fontColor": "main"
+	},
+	"level": {
+		"font": "alagard-16",
+		"fontColor": "dark",
+		"up": "level",
+		"down": "level-1",
+		"disabled": "level-off"
+	}
+},
+"com.badlogic.gdx.scenes.scene2d.ui.TextTooltip$TextTooltipStyle": {
+	"default": {
+		"label": "default"
+	}
+},
+"com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle": {
+	"default": {
+		"background": "sample",
+		"titleFont": "alagard-16",
+		"titleFontColor": "dark"
+	},
+	"level": {
+		"background": "level-window",
+		"titleFont": "alagard-16",
+		"titleFontColor": "dark"
+	}
+}
+}
