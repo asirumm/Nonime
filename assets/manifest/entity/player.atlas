@@ -1,0 +1,25 @@
+player.png
+	size: 512, 64
+	repeat: none
+idle1
+	bounds: 138, 2, 32, 32
+idle2
+	bounds: 2, 2, 32, 32
+idle3
+	bounds: 274, 2, 32, 32
+idle4
+	bounds: 104, 2, 32, 32
+jump
+	bounds: 206, 2, 32, 32
+run1
+	bounds: 240, 2, 32, 32
+run2
+	bounds: 70, 2, 32, 32
+run3
+	bounds: 342, 2, 32, 32
+run4
+	bounds: 172, 2, 32, 32
+run5
+	bounds: 36, 2, 32, 32
+run6
+	bounds: 308, 2, 32, 32
