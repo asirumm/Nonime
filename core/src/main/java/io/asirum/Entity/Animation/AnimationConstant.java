@@ -1,5 +1,10 @@
 package io.asirum.Entity.Animation;
 
+/**
+ * Kelas ini menjadi penamaan animasi ketika in game
+ * contoh : animation.play(AnimationConstant.IDLE_RIGHT);
+ * maka gunakan kelas ini agar lebih mudah
+ */
 public class AnimationConstant {
     // Format: STATE_DIRECTION
     public static final String IDLE_RIGHT = AnimationState.IDLE.getPrefixName() + "-" + Direction.RIGHT.getSuffix();

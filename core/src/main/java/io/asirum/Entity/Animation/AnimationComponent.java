@@ -38,8 +38,11 @@ public class AnimationComponent {
     /**
      * Membuat array animasi dari region atlas berdasarkan nama prefix.
      * Metode ini akan mencari region bernama `prefixName1`, `prefixName2`, dan seterusnya
-     * hingga region dengan nama tersebut tidak ditemukan dalam atlas.
+     * hingga region dengan nama tersebut tidak ditemukan dalam atlas. Sehingga
+     * anda tidak perlu mendefinisikan berapa jumlah gambar.
      *
+     * Ingat : gunakan nama gambar sesuai prefix yang telah di sediakan
+     * di AnimationConstant
      */
     public static Array<TextureRegion> createAnimationFrames( AnimationState state, TextureAtlas atlas) {
         Array<TextureRegion> animationFrames = new Array<>();
@@ -55,6 +58,16 @@ public class AnimationComponent {
 
         return animationFrames;
     }
+
+    /**
+     * Membuat array animasi dari region atlas berdasarkan nama prefix.
+     * Metode ini akan mencari region bernama `prefixName1`, `prefixName2`, dan seterusnya
+     * hingga region dengan nama tersebut tidak ditemukan dalam atlas. Sehingga
+     * anda tidak perlu mendefinisikan berapa jumlah gambar.
+     *
+     * Ingat : gunakan nama gambar sesuai prefix yang telah di sediakan
+     * di AnimationConstant
+     */
     public static Array<TextureRegion> createAnimationFrames( String prefix, TextureAtlas atlas) {
         Array<TextureRegion> animationFrames = new Array<>();
 
@@ -70,6 +83,11 @@ public class AnimationComponent {
         return animationFrames;
     }
 
+    /**
+     * Membuat flip horizontal pada setiap frame gambar
+     * buat flip sebelum play game jangan di ingame
+     * itu membuat berat kerja cpu bertambah
+     */
     public Array<TextureRegion> createHorizontalFlippedFrames(Array<TextureRegion> originalFrames) {
         Array<TextureRegion> flippedFrames = new Array<>();
 

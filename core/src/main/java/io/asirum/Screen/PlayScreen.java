@@ -87,6 +87,9 @@ public class PlayScreen  extends ManagedScreen{
 
     }
 
+    /**
+     * membuat instance box2d dan melakukan proses parsing ke box2d
+     */
     private void box2dManagerConfig(GameLevel gameLevel) {
         Log.debug(getClass().getCanonicalName(),"inisialisasi Box2dManager");
 
@@ -96,6 +99,10 @@ public class PlayScreen  extends ManagedScreen{
         box2dManager.parseTmxToBox2dEntities();
     }
 
+    /**
+     * konfigurasi widgetcontroller
+     * apakah player menggunakan device desktop atau mobile
+     */
     private void inputManagerConfig(Player player) {
         this.widgetController = new WidgetController(player);
 
@@ -116,19 +123,26 @@ public class PlayScreen  extends ManagedScreen{
         }
     }
 
+    /**
+     * membuat instance map render
+     * meload map dengan map render
+     */
     private void mapRenderInit(GameLevel gameLevel) {
         Log.debug(getClass().getCanonicalName(),"memulai load map");
         this.mapRenderer = new MapRenderer(this.camera);
         this.mapRenderer.loadMap(gameLevel.getMap());
     }
 
+    /**
+     * konfigurasi kamera untuk box2d beserta zoom
+     */
     private void cameraBox2dConfiguration() {
         Log.debug(getClass().getName(),"start configurasi kamera untuk box2d");
         this.camera = this.context.getCamera();
 
         CameraHelper.cameraAndViewportForBox2d(this.context);
 
-        this.camera.zoom -= 0.2f;
+        this.camera.zoom += 0.1f;
     }
 
     @Override
