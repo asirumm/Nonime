@@ -39,6 +39,7 @@ public class UserLevelManager {
         final short DEFAULT_LEVEL  = 1;
 
         // Jika belum ada data level sama sekali
+        // maka user akan diberikan level default di setiap region
         if (userData.getLevel().isEmpty()){
             for (Region region : regions){
 
@@ -53,33 +54,35 @@ public class UserLevelManager {
         } else if (regions.size() != userData.getLevel().size()) {
 
             ArrayList<UserLevel> userLevels = userData.getLevel();
-            ArrayList<String> regionNames = new ArrayList<>();
-            ArrayList<String> regionUserHave = new ArrayList<>();
-            ArrayList<String> regionUserDoesntHad = new ArrayList<>();
+            ArrayList<String> regionsAvailabelAtGameData = new ArrayList<>();
+            ArrayList<String> regionsUserHave = new ArrayList<>();
+            ArrayList<String> regionsWhereUserDoesntHave = new ArrayList<>();
 
             // Kumpulkan semua nama region yang tersedia
             for (Region region : regions) {
-                regionNames.add(region.getName());
+                regionsAvailabelAtGameData.add(region.getName());
             }
 
             // Kumpulkan semua nama level yang dimiliki user
             for (UserLevel userLevel : userLevels) {
-                regionUserHave.add(userLevel.getName());
+                regionsUserHave.add(userLevel.getName());
             }
 
             // Cari nama region yang tidak dimiliki user
-            for (String name : regionNames) {
-                boolean notFound = regionUserHave.stream()
+            for (String name : regionsAvailabelAtGameData) {
+
+                boolean notFound = regionsUserHave
+                    .stream()
                     .noneMatch(userName -> userName.equals(name));
 
                 if (notFound) {
-                    regionUserDoesntHad.add(name);
+                    regionsWhereUserDoesntHave.add(name);
                 }
             }
 
             // Apabila ada data region yang belum dimiliki maka inject
-            if (!regionUserDoesntHad.isEmpty()) {
-                for (String missing : regionUserDoesntHad) {
+            if (!regionsWhereUserDoesntHave.isEmpty()) {
+                for (String missing : regionsWhereUserDoesntHave) {
                     UserLevel temp = new UserLevel();
                     temp.setName(missing);
                     temp.setLevel(DEFAULT_LEVEL);
