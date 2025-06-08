@@ -12,7 +12,7 @@ import io.asirum.Service.Log;
 
 import java.util.concurrent.ThreadPoolExecutor;
 
-
+// TODO KITA PERLU REFACTOR KELAS INI
 public class PlayerContactListener implements ContactListener {
     private GamePlayManager playManager;
 
@@ -52,8 +52,10 @@ public class PlayerContactListener implements ContactListener {
         if (ContactListenerHelper.isFootSensor(contact.getFixtureB()) && ContactListenerHelper.isPlatform(contact.getFixtureA())) {
             Player player2 = (Player) contact.getFixtureB().getBody().getUserData();
             player2.setOnGround(setOnGround);
+
         } else if (ContactListenerHelper.isFootSensor(contact.getFixtureA()) && ContactListenerHelper.isOneWayPlatform(contact.getFixtureB())) {
             Player player3 = (Player) contact.getFixtureA().getBody().getUserData();
+
             player3.setOnGround(setOnGround);
         } else if (ContactListenerHelper.isFootSensor(contact.getFixtureB()) && ContactListenerHelper.isOneWayPlatform(contact.getFixtureA())) {
             Player player4 = (Player) contact.getFixtureB().getBody().getUserData();
@@ -145,13 +147,17 @@ public class PlayerContactListener implements ContactListener {
         if (ContactListenerHelper.isPlayerBody(contact.getFixtureA()) && ContactListenerHelper.isOneWayPlatform(contact.getFixtureB())) {
             Body player = contact.getFixtureA().getBody();
             Body platform = contact.getFixtureB().getBody();
+
             OneWayPlatform platformHeight = (OneWayPlatform) contact.getFixtureB().getBody().getUserData();
             Player playerHeight = (Player) contact.getFixtureA().getBody().getUserData();
+
             Vector2 playerPos = player.getPosition();
             Vector2 platformPos = platform.getPosition();
-            float playerBottom = playerPos.y - (playerHeight.getPlayerHeight() / 2.0f);
-            float platformTop = platformPos.y + (platformHeight.getHeight() / 2.0f);
-            if (playerBottom > 0.05f + platformTop) {
+
+            float playerBottom = playerPos.y - (playerHeight.getPlayerHeight()/2f);
+            float platformTop = platformPos.y + (platformHeight.getHeight() /2f);
+
+            if (playerBottom >=  platformTop- 0.01f ) {
                 contact.setEnabled(true);
                 return;
             } else {
@@ -166,9 +172,9 @@ public class PlayerContactListener implements ContactListener {
             Player playerHeight2 = (Player) contact.getFixtureB().getBody().getUserData();
             Vector2 playerPos2 = player2.getPosition();
             Vector2 platformPos2 = platform2.getPosition();
-            float playerBottom2 = playerPos2.y - (playerHeight2.getPlayerHeight() / 2.0f);
-            float platformTop2 = platformPos2.y + (platformHeight2.getHeight() / 2.0f);
-            if (playerBottom2 > 0.7f + platformTop2) {
+            float playerBottom2 = playerPos2.y - (playerHeight2.getPlayerHeight()/2f);
+            float platformTop2 = platformPos2.y + (platformHeight2.getHeight() /2f);
+            if (playerBottom2 >=  platformTop2-0.1f) {
                 contact.setEnabled(true);
             } else {
                 contact.setEnabled(false);
