@@ -4,6 +4,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 
 public class OneWayPlatform {
     private Body body;
+    // JANGAN DIHAPUS BERGUNA UNTUK ONE WAY
     private float height;
 
     public Body getBody() {

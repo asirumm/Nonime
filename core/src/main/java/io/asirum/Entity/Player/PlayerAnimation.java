@@ -99,7 +99,7 @@ public class PlayerAnimation {
         SpriteBatchHelper.setProjectionMatrixCameraCombined();
 
         // Menggambar sprite dengan sedikit offset ke atas (0.1f) pada sumbu y
-        ApplicationContext.getInstance().getBatch().draw(frame, x, y + 0.1f, width, height);
+        ApplicationContext.getInstance().getBatch().draw(frame, x, y +0.3f, width, height);
 
         // Mengakhiri proses menggambar
         SpriteBatchHelper.batchEnd();

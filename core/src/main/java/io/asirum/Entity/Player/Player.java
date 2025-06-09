@@ -24,16 +24,17 @@ public class Player extends BaseBox2d {
 
     private short playerLive = 3;
 
+    // JANGAN DIHAPUS BERGUNA UNTUK ONE WAY
     private float playerHeight;// untuk fixture foot sensor
 
     // ======= Parameter Gerakan =======
-    private float runMaxSpeed = 6.5f;           // Kecepatan maksimum saat berlari
+    private float runMaxSpeed = 5.5f;           // Kecepatan maksimum saat berlari
     private float runAcceleration = 1f;     // Waktu untuk mencapai kecepatan maksimum dari diam
     private float runDecceleration = 0.5f;    // Waktu untuk melambat dari kecepatan maksimum ke diam
 
  // Konstanta lompat
-    private float jumpForce = 3.5f;
-    private float maxJump = 8f;
+    private float jumpForce = 2.3f;
+    private float maxJump = 3.3f;
 
     private boolean onGround = false;          // Status apakah player sedang di tanah
 
