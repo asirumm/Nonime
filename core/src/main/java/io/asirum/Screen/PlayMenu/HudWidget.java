@@ -8,12 +8,13 @@ import io.asirum.Widget.StyleVars;
 
 public class HudWidget {
     private Button pauseButton;
-    private TextButton playerLive;
+    private ImageTextButton playerLive;
     private Table leftTable;
     private Table rightTable;
     private Skin skin;
     private Stage stage;
     private PauseDialog dialog;
+    private ImageButton keyIcon;
 
     public HudWidget(Table hudTable, Skin skin, Stage stage) {
         this.skin = skin;
@@ -31,11 +32,22 @@ public class HudWidget {
     public void build(int life){
       buildPauseButton();
       buildPlayerLive(String.valueOf(life));
+      buildKeyIcon();
     }
 
     public void buildPlayerLive(String life){
-        playerLive = new TextButton(life,skin);
+        playerLive = new ImageTextButton(life,skin,StyleVars.LIFE_ICON);
         leftTable.add(playerLive).left();
+    }
+
+    public void buildKeyIcon(){
+        keyIcon = new ImageButton(skin);
+        leftTable.add(keyIcon).left().padLeft(5);
+        keyIconSetVisible(false);
+    }
+
+    public void keyIconSetVisible(boolean visible){
+        keyIcon.setVisible(visible);
     }
 
     public void updatePlayerLive(String life){

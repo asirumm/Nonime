@@ -76,6 +76,11 @@ public class WidgetController {
         stage.act(Gdx.graphics.getDeltaTime());
         hudWidget.updatePlayerLive(String.valueOf(player.getPlayerLive()));
         stage.draw();
+
+        // ketika player sudah mendapatkan key maka tampilkan icon key
+        if(player.isBringKey()){
+            hudWidget.keyIconSetVisible(true);
+        }
     }
 
     public void dispose(){
