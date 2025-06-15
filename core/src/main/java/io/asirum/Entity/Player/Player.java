@@ -1,7 +1,5 @@
 package io.asirum.Entity.Player;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.ParticleEffectPool;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
@@ -10,9 +8,9 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import io.asirum.Box2d.*;
-import io.asirum.Constant;
 import io.asirum.Entity.Behavior.Jump;
 import io.asirum.Entity.Behavior.Run;
+import io.asirum.Entity.EntityAnimation.PlayerAnimation;
 import io.asirum.Service.*;
 import io.asirum.TmxMap.TmxHelper;
 
@@ -28,13 +26,13 @@ public class Player extends BaseBox2d {
     private float playerHeight;// untuk fixture foot sensor
 
     // ======= Parameter Gerakan =======
-    private float runMaxSpeed = 5.5f;           // Kecepatan maksimum saat berlari
-    private float runAcceleration = 1f;     // Waktu untuk mencapai kecepatan maksimum dari diam
-    private float runDecceleration = 0.5f;    // Waktu untuk melambat dari kecepatan maksimum ke diam
+    private float runMaxSpeed = 7f;           // Kecepatan maksimum saat berlari
+    private float runAcceleration = 2f;     // Waktu untuk mencapai kecepatan maksimum dari diam
+    private float runDecceleration = 1f;    // Waktu untuk melambat dari kecepatan maksimum ke diam
 
  // Konstanta lompat
-    private float jumpForce = 2.3f;
-    private float maxJump = 3.3f;
+    private float jumpForce = 5f;
+    private float maxJump = 7f;
 
     private boolean onGround = false;          // Status apakah player sedang di tanah
 
@@ -48,7 +46,8 @@ public class Player extends BaseBox2d {
         runBehavior  = new Run(runMaxSpeed,runAcceleration,runDecceleration);
         jumpBehavior = new Jump(jumpForce,maxJump);
 
-        animation = new PlayerAnimation();
+        animation = new PlayerAnimation(this);
+        animation.animationInitialization();
     }
 
     public void jump(){
@@ -59,8 +58,8 @@ public class Player extends BaseBox2d {
         runBehavior.run(moveLeft,moveRight,body,onGround);
     }
 
-    public void drawAnimation(){
-        animation.draw(Gdx.graphics.getDeltaTime(),onGround,body);
+    public void drawAnimation(float delta){
+        animation.draw(body,delta);
     }
 
     @Override
@@ -111,15 +110,14 @@ public class Player extends BaseBox2d {
     }
 
     public void respawn(){
-        if(lastPosition==null){
-            Log.warn(getClass().getName(),"User tidak menyentuh checkpoint pertama");
-        }else {
+        if(animation.isAnimationFinished()){
             body.setTransform(lastPosition,0);
+            playerNeedRespawn =false;
         }
     }
 
-    public void setPlayerNeedRespawn(boolean playerNeedRespawn) {
-        this.playerNeedRespawn = playerNeedRespawn;
+    public void playerNeedRespawnActive() {
+        this.playerNeedRespawn = true;
     }
 
     public boolean isPlayerNeedRespawn() {

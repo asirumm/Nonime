@@ -3,7 +3,8 @@ package io.asirum.Entity.Animation;
 public enum AnimationState {
     IDLE("idle"),
     RUN("run"),
-    JUMP("jump");
+    JUMP("jump"),
+    DIED("die");
 
     private final String prefixName;
 

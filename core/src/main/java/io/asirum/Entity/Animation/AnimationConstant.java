@@ -13,7 +13,6 @@ public class AnimationConstant {
     public static final String RUN_LEFT = AnimationState.RUN.getPrefixName() + "-" + Direction.LEFT.getSuffix();
     public static final String JUMP_RIGHT = AnimationState.JUMP.getPrefixName() + "-" + Direction.RIGHT.getSuffix();
     public static final String JUMP_LEFT = AnimationState.JUMP.getPrefixName() + "-" + Direction.LEFT.getSuffix();
-
-    // Konstanta durasi frame
-    public static final float FRAME_DURATION = 0.25f;
+    public static final String DIED_RIGHT = AnimationState.DIED.getPrefixName() + "-" + Direction.RIGHT.getSuffix();;
+    public static final String DIED_LEFT = AnimationState.DIED.getPrefixName() + "-" + Direction.LEFT.getSuffix();;
 }

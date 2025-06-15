@@ -79,8 +79,8 @@ public class Box2dManager {
     public void render(float delta){
         world.step(1 / 60f, 6, 2);
 
-        entity.getKey().drawAnimation();
-        entity.getPlayer().drawAnimation();
+        entity.getKey().drawAnimation(delta);
+        entity.getPlayer().drawAnimation(delta);
 
         // pergerakan crusher, apabila di map ada
         if(!obstacle.getCrusherBuilder()

@@ -2,7 +2,6 @@ package io.asirum.Box2d.Collision;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
-import io.asirum.Box2d.Box2dVars;
 import io.asirum.Entity.Items.Checkpoint;
 import io.asirum.Entity.Items.Key;
 import io.asirum.Entity.Platform.OneWayPlatform;
@@ -10,10 +9,6 @@ import io.asirum.Entity.Player.Player;
 import io.asirum.GameLogic.GamePlayManager;
 import io.asirum.Service.ApplicationContext;
 import io.asirum.Service.Log;
-
-import static io.asirum.Box2d.Box2dVars.ONE_WAY_PLATFORM_FIXTURE;
-import static io.asirum.Box2d.Box2dVars.PLAYER_FIXTURE;
-import static io.asirum.Box2d.Collision.ContactListenerHelper.*;
 
 // TODO KITA PERLU REFACTOR KELAS INI
 /**
@@ -195,7 +190,7 @@ public class PlayerContactListener implements ContactListener {
 
         if (player != null) {
             Log.debug(getClass().getName(), "player kena obstacle");
-            player.setPlayerNeedRespawn(true);
+            player.playerNeedRespawnActive();
             player.decreasePlayerLive();
         }
     }
