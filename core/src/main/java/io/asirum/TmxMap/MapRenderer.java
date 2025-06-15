@@ -23,7 +23,7 @@ public class MapRenderer {
         params.textureMinFilter = Texture.TextureFilter.Nearest;
         params.textureMagFilter = Texture.TextureFilter.Nearest;
 
-        this.map = TmxHelper.getTiledMap(mapPath);
+        this.map = TmxHelper.getTiledMap(mapPath,params);
         this.mapRenderer = new OrthogonalTiledMapRenderer(this.map, 1.0f / Constant.UNIT_SCALE);
     }
 
