@@ -6,15 +6,15 @@ public class UserEnergyManager {
     // jumah energi yang didapatkan per interval waktu
     public static final short ENERGY_GAIN_PER_INTERVAL = 3;
     // energi maks yang dapat diberikan dari off ke on
-    // semisalnya user off 24 jam maka 24 x 3. Ini dibatasi
-    public static final short MAX_ENERGY_INTERVAL_HOURS = 20;
+    // semisalnya user off 24 jam maka (24 : 2) x 3. Ini dibatasi
+    public static final short MAX_ENERGY_INTERVAL_HOURS = 30;
     // rentan waktu interval untuk user diberikan reward dari
     // off
     public static final short ENERGY_INTERVAL_HOURS = 3;
     // reward setelah menang
     public static final short ENERGY_REWARD_FOR_WIN = 2;
     // maks energy user yang dapat ditampung
-    public static final short MAXIMUM_ENERGY_CAN_HOLD = 600;
+    public static final short MAXIMUM_ENERGY_CAN_HOLD = 1000;
 
 
     private UserLastPlayedTimeService timeService;
