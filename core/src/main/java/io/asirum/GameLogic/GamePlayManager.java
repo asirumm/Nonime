@@ -5,8 +5,10 @@ import io.asirum.Entity.Player.Player;
 import io.asirum.SchemaObject.GameLevel;
 import io.asirum.SchemaObject.Region;
 import io.asirum.SchemaObject.UserData;
+import io.asirum.Screen.FailedScreen;
 import io.asirum.Screen.LevelMenu.RegionContent;
 import io.asirum.Screen.LevelScreen;
+import io.asirum.Screen.WinScreen;
 import io.asirum.Service.*;
 
 /**
@@ -117,7 +119,7 @@ public class GamePlayManager {
             // pengecekan apabila user bermain di level 1 padahal
             // ia sudah berada di level 3 maka level tidak bertambah
 
-            if(levelWhereUserPlayNow > levelUserAtCurrentRegion){
+            if(levelWhereUserPlayNow >= levelUserAtCurrentRegion){
                 Log.info(getClass().getName(), "user naik level dari level %s pada region %s",levelUserAtCurrentRegion, regionWherePlayerPlaying.getName());
 
                 short newLevel = unlockingUserLevelAtCurrentRegion();
@@ -132,7 +134,7 @@ public class GamePlayManager {
 
             userDataManager.saveData(userData);
 
-            context.pushScreen(new LevelScreen(),null);
+            context.pushScreen(new WinScreen(),null);
         }
     }
 
@@ -143,7 +145,7 @@ public class GamePlayManager {
         if (player.isPlayerNeedRespawn()){
             // apabila life habis maka berakhir
             if(player.getPlayerLive() < 0){
-                context.pushScreen(new LevelScreen(),null);
+                context.pushScreen(new FailedScreen(),null);
             }
             else {
                 player.respawn();
