@@ -68,11 +68,12 @@ public class GamePlayManager {
         String currentRegionName = regionWherePlayerPlaying.getName();
         Log.debug(getClass().getCanonicalName(), "Memproses unlock level baru pada region %s", currentRegionName);
 
-        short userLevel = levelManager.getUserLevelByRegion(regionWherePlayerPlaying);
+        short userLevelOnCurrentRegion = levelManager.getUserLevelByRegion(regionWherePlayerPlaying);
         short maxLevelRegion = (short) regionWherePlayerPlaying.getLevels().size();
 
-        if (userLevel < maxLevelRegion) {
-            short newLevel = (short) (userLevel + 1);
+        if (userLevelOnCurrentRegion < maxLevelRegion) {
+            // menambahkan level
+            short newLevel = (short) (userLevelOnCurrentRegion + 1);
 
             // mengganti nilai level di region user
             userData.getLevel().forEach(data -> {
@@ -84,14 +85,14 @@ public class GamePlayManager {
             Log.debug(getClass().getCanonicalName(), "Berhasil menambah level user ke %d", newLevel);
             return newLevel;
 
-        } else if (userLevel==maxLevelRegion){
-            Log.debug(getClass().getCanonicalName(), "Level user sudah maksimum: %d", userLevel);
-            return userLevel;
+        } else if (userLevelOnCurrentRegion==maxLevelRegion){
+            Log.debug(getClass().getCanonicalName(), "Level user sudah maksimum: %d", userLevelOnCurrentRegion);
+            return userLevelOnCurrentRegion;
 
         }else {
             // Jika data region tidak ditemukan di userData
             Log.warn(getClass().getCanonicalName(), "Region %s tidak ditemukan di data user", currentRegionName);
-            return userLevel;
+            return userLevelOnCurrentRegion;
         }
 
     }
@@ -110,20 +111,26 @@ public class GamePlayManager {
         // apabila player sudah memiliki kunci
         if(player.isBringKey()){
 
-            short currentUserLevel = levelManager.getUserLevelByRegion(regionWherePlayerPlaying);
+            short levelUserAtCurrentRegion = levelManager.getUserLevelByRegion(regionWherePlayerPlaying);
+            short levelWhereUserPlayNow = gameLevel.getLevel();
 
-            Log.info(getClass().getName(), "user naik level dari level %s pada region %s",currentUserLevel, regionWherePlayerPlaying.getName());
+            // pengecekan apabila user bermain di level 1 padahal
+            // ia sudah berada di level 3 maka level tidak bertambah
 
-            short newLevel = unlockingUserLevelAtCurrentRegion();
+            if(levelWhereUserPlayNow > levelUserAtCurrentRegion){
+                Log.info(getClass().getName(), "user naik level dari level %s pada region %s",levelUserAtCurrentRegion, regionWherePlayerPlaying.getName());
 
-            updateToUndisableLevelButton(newLevel);
+                short newLevel = unlockingUserLevelAtCurrentRegion();
+
+                updateToUndisableLevelButton(newLevel);
+
+            }
 
             processingRewardFinishGame();
 
             userDataManager = new PreferencesUserDataManager();
 
             userDataManager.saveData(userData);
-
 
             context.pushScreen(new LevelScreen(),null);
         }
