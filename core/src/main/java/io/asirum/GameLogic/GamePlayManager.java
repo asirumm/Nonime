@@ -140,7 +140,6 @@ public class GamePlayManager {
             }
             else {
                 player.respawn();
-                player.setPlayerNeedRespawn(false);
             }
         };
 
