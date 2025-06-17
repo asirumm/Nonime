@@ -109,11 +109,14 @@ public class PlayerContactListener implements ContactListener {
         float playerBottom = playerPos.y - (player.getPlayerHeight() / 2f);
         float platformTop = platformPos.y + (platform.getHeight() / 2f);
 
-        // Only set player as grounded if they are above the platform
-        if (playerBottom >= platformTop - 0.01f) {
-            player.setOnGround(setOnGround);
+        // Strict positioning check without margin
+        if (playerBottom >= platformTop) {
+            // Only allow grounding if player is moving downward or already on ground
+            float playerVerticalVelocity = playerBody.getLinearVelocity().y;
+            if (playerVerticalVelocity <= 0 || player.isOnGround()) {
+                player.setOnGround(setOnGround);
+            }
         } else {
-            // Force player to not be grounded if they're below the platform
             player.setOnGround(false);
         }
     }
