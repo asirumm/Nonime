@@ -1,6 +1,7 @@
 package io.asirum.Screen.PlayMenu;
 
 
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import io.asirum.Screen.LevelScreen;
 import io.asirum.Screen.PlayScreen;
@@ -9,9 +10,13 @@ import io.asirum.Widget.dialogs.BaseDialog;
 
 public class PauseDialog extends BaseDialog {
     public PauseDialog(Skin skin) {
-        super("pause", skin);
-        button("continue",true);
-        button("home",false);
+        super("", skin,"pause");
+
+        Button yes = new Button(skin,"yes");
+        Button no = new Button(skin,"no");
+
+        button(no,true);
+        button(yes,false);
     }
 
     @Override

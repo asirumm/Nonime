@@ -3,7 +3,6 @@ package io.asirum.Screen.PlayMenu;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -15,7 +14,7 @@ import io.asirum.Service.ApplicationContext;
 import io.asirum.Service.Log;
 import io.asirum.Util.StageHelper;
 
-public class WidgetController {
+public class WidgetPlayManager {
     private Table rootTable;
     private Table bottomTable;// controller
     private Table topTable;// hud
@@ -32,7 +31,7 @@ public class WidgetController {
 
     private Player player;
 
-    public WidgetController(Player player) {
+    public WidgetPlayManager(Player player) {
         this.player = player;
         initHudCamera();
 
@@ -107,6 +106,9 @@ public class WidgetController {
         bottomTable.add(mobileController.getMobileControllerTable()).fillX().expandX();
     }
 
-
+    public void playDialog(){
+        InteractiveDialog dialog = new InteractiveDialog(skin);
+        stage.addActor(dialog);
+    }
 
 }
