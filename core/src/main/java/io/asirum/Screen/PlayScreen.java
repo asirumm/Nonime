@@ -2,10 +2,13 @@ package io.asirum.Screen;
 
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import de.eskalon.commons.screen.ManagedScreen;
 import io.asirum.Box2d.Services.Box2dManager;
+import io.asirum.Constant;
 import io.asirum.Entity.Player.Player;
 import io.asirum.Entity.Player.PlayerMovement;
 import io.asirum.EventListener.DesktopInput;
@@ -15,13 +18,18 @@ import io.asirum.EventListener.MobileInput;
 import io.asirum.GameLogic.GamePlayManager;
 import io.asirum.SchemaObject.GameLevel;
 import io.asirum.SchemaObject.Region;
-import io.asirum.Screen.PlayMenu.WidgetController;
+import io.asirum.Screen.PlayMenu.InteractiveDialog;
+import io.asirum.Screen.PlayMenu.WidgetPlayManager;
 import io.asirum.Service.ApplicationContext;
 import io.asirum.Service.Log;
 import io.asirum.TmxMap.MapRenderer;
 import io.asirum.TmxMap.TmxHelper;
 import io.asirum.Util.AudioHelper;
 import io.asirum.Util.CameraHelper;
+import io.asirum.Util.SpriteBatchHelper;
+
+import static io.asirum.Constant.VIRTUAL_HEIGHT;
+import static io.asirum.Constant.VIRTUAL_WIDTH;
 
 public class PlayScreen  extends ManagedScreen{
     public static boolean paused = false;
@@ -36,7 +44,11 @@ public class PlayScreen  extends ManagedScreen{
     private InputState inputState;
     private MapRenderer mapRenderer;
     private PlayerMovement playerMovement;
-    private WidgetController widgetController;
+    private WidgetPlayManager widgetController;
+
+    private SpriteBatch batch;
+
+    private Region region;
 
     public PlayScreen(GameLevel gameLevel,Region region) {
         Log.debug(getClass().getName(), "[berhasil switch screen]");
@@ -45,7 +57,10 @@ public class PlayScreen  extends ManagedScreen{
 
         AudioHelper.stopMusic();
 
+        this.region = region;
+
         this.context = ApplicationContext.getInstance();
+        batch  =context.getBatch();
 
         gamePlayManager = new GamePlayManager(region,gameLevel);
 
@@ -61,10 +76,18 @@ public class PlayScreen  extends ManagedScreen{
         inputManagerConfig(player);// konfigurasi kontroller
 
         this.playerMovement = new PlayerMovement(player, this.inputManager, this.inputState);
+
+        if (gameLevel.getLevel()==1 && region.getName().equals("forest")){
+            widgetController.playDialog();
+        }
+
     }
 
     @Override
     public void render(float delta) {
+
+        drawBackground();
+
         // membatasi kamera agar tidak keluar area tmx
         this.mapRenderer.setBoundaryCamera();
 
@@ -104,7 +127,7 @@ public class PlayScreen  extends ManagedScreen{
      * apakah player menggunakan device desktop atau mobile
      */
     private void inputManagerConfig(Player player) {
-        this.widgetController = new WidgetController(player);
+        this.widgetController = new WidgetPlayManager(player);
 
         this.inputState = new InputState();
 
@@ -142,13 +165,37 @@ public class PlayScreen  extends ManagedScreen{
 
         CameraHelper.cameraAndViewportForBox2d(this.context);
 
-        this.camera.zoom += 0.1f;
+        this.camera.zoom -= 0.2f;
     }
 
     @Override
     public void resize(int width, int height) {
         this.widgetController.resize(width, height);
         CameraHelper.resizer(width, height);
+    }
+
+    private void drawBackground(){
+
+        SpriteBatchHelper.setProjectionMatrixCameraCombined(batch);
+
+        context.getBatch().draw(
+            context
+                .getGameAssets()
+                .getBackgroundAtlas()
+                .findRegion(region.getBackground()),
+            0,
+            0,
+            mapRenderer.getMapWorldSize().x,
+            mapRenderer.getMapWorldSize().y
+        );
+
+        SpriteBatchHelper.batchEnd(batch);
+
+    }
+
+    @Override
+    public Color getClearColor() {
+        return Color.BLACK;
     }
 
     @Override
