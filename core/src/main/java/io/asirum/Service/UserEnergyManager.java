@@ -12,7 +12,7 @@ public class UserEnergyManager {
     // off
     public static final short ENERGY_INTERVAL_HOURS = 3;
     // reward setelah menang
-    public static final short ENERGY_REWARD_FOR_WIN = 2;
+    public static final short ENERGY_REWARD_FOR_WIN = 1;
     // maks energy user yang dapat ditampung
     public static final short MAXIMUM_ENERGY_CAN_HOLD = 1000;
 
