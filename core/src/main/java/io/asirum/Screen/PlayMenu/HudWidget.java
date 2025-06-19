@@ -37,7 +37,7 @@ public class HudWidget {
 
     public void buildPlayerLive(String life){
         playerLive = new ImageTextButton(life,skin,StyleVars.LIFE_ICON);
-        leftTable.add(playerLive).left();
+        leftTable.add(playerLive).left().padLeft(4);
     }
 
     public void buildKeyIcon(){

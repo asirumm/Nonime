@@ -72,7 +72,7 @@ public class RegionContent {
 
             listOfLevel.add(level);
 
-            tableLevelData.add(level.getLevelButton()).pad(2);
+            tableLevelData.add(level.getLevelButton()).pad(4);
 
             // membuat row apabila pada table konten level
             // sudah ada 5 jadi seperti

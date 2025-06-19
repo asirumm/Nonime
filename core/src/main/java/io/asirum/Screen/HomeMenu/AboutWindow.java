@@ -12,7 +12,15 @@ public class AboutWindow extends BaseWindow {
     private ScrollPane scrollPane;
 
     private final String text =
-        "framework - libGDX\n"+"font - algard by Hawett Tsoi";
+        ".framework - libGDX\n"+
+            "\n"+ ".font - alagard by Hawett Tsoi\n"+
+            "\n"+ ".font - Upheaval by Enigma\n"+
+            "\n"+ ".characther - sunnyLand by Ansimuz\n" +
+            "\n"+ ".map - sunnyLand by Ansimuz\n"+
+            "\n"+  ".sound forest - by Isaías Arrué R. / Mr Walkman ColorWave.music, CC4.0\n"+
+            "\n"+ ".home background - by craftpix.net\n"+
+            "\n"+ ".aspect ratio - 16:9 (480x270)\n"+
+            "\n"+ "asset made with Aseprite";
 
     public AboutWindow(Skin skin){
         super( skin);
