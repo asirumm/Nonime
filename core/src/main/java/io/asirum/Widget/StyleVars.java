@@ -16,6 +16,7 @@ public class StyleVars {
     public static final String LEVEL_TEXT_BUTTON = "level";
     public static final String MUSIC_BTN = "music";
     public static final String TITLE_UNDERLINE = "underline-title";
-    public static final String ICON_COST = "cost";
+    public static final String COST_TEXT_BUTTON = "cost";
     public static final String LEVEL_WINDOW = "level";
+    public static final String LIFE_ICON = "life";
 }
