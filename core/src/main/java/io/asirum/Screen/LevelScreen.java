@@ -1,5 +1,6 @@
 package io.asirum.Screen;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Array;
@@ -12,7 +13,6 @@ import io.asirum.Service.*;
 import io.asirum.Util.AudioHelper;
 import io.asirum.Util.CameraHelper;
 import io.asirum.Util.StageHelper;
-import io.asirum.Widget.ToolipPopup;
 
 public class LevelScreen extends ManagedScreen {
     private Stage stage;
@@ -45,6 +45,8 @@ public class LevelScreen extends ManagedScreen {
         LevelWindow levelWindow = new LevelWindow(widgetSkin,userData.getEnergy(),regionContents);
 
         stage.addActor(levelWindow);
+        stage.addActor(levelWindow.getCostTooltip());
+        stage.addActor(levelWindow.getUserEnergyTooltip());
 
 //        StageHelper.debugStage(true,levelScrollPane.getContainer(),levelContentData.getContent());
     }
@@ -82,6 +84,11 @@ public class LevelScreen extends ManagedScreen {
         stage.draw();
     }
 
+
+    @Override
+    public Color getClearColor() {
+        return Color.valueOf("#9dc2f6");
+    }
 
     @Override
     public void resize(int width, int height) {
