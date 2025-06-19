@@ -6,6 +6,7 @@ public class OneWayPlatform {
     private Body body;
     // JANGAN DIHAPUS BERGUNA UNTUK ONE WAY
     private float height;
+    private float width;
 
     public Body getBody() {
         return body;
@@ -17,6 +18,14 @@ public class OneWayPlatform {
 
     public float getHeight() {
         return height;
+    }
+
+    public float getWidth() {
+        return width;
+    }
+
+    public void setWidth(float width) {
+        this.width = width;
     }
 
     public void setHeight(float height) {

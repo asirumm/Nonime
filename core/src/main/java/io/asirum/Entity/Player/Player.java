@@ -24,6 +24,7 @@ public class Player extends BaseBox2d {
 
     // JANGAN DIHAPUS BERGUNA UNTUK ONE WAY
     private float playerHeight;// untuk fixture foot sensor
+    private float playerWidth;
 
     // ======= Parameter Gerakan =======
     private float runMaxSpeed = 7f;           // Kecepatan maksimum saat berlari
@@ -31,8 +32,8 @@ public class Player extends BaseBox2d {
     private float runDecceleration = 1f;    // Waktu untuk melambat dari kecepatan maksimum ke diam
 
  // Konstanta lompat
-    private float jumpForce = 5f;
-    private float maxJump = 7f;
+    private float jumpForce = 5.2f;
+    private float maxJump = 5.7f;
 
     private boolean onGround = false;          // Status apakah player sedang di tanah
 
@@ -91,6 +92,7 @@ public class Player extends BaseBox2d {
         fixture.setUserData(Box2dVars.PLAYER_FIXTURE);
         body.setUserData(this);
         playerHeight = size.y;
+        playerWidth = size.x;
 
         shape.dispose();
     }
@@ -117,6 +119,7 @@ public class Player extends BaseBox2d {
     }
 
     public void playerNeedRespawnActive() {
+        ApplicationContext.getInstance().getGameAssets().getSoundDie().play();
         this.playerNeedRespawn = true;
     }
 
@@ -135,6 +138,10 @@ public class Player extends BaseBox2d {
 
     public float getPlayerHeight() {
         return playerHeight;
+    }
+
+    public float getPlayerWidth() {
+        return playerWidth;
     }
 
     public boolean isBringKey() {
