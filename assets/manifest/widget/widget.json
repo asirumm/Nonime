@@ -8,36 +8,32 @@
 	}
 },
 "com.badlogic.gdx.graphics.Color": {
-	"dark": {
-		"r": 0.101960786,
-		"g": 0.08627451,
-		"b": 0.05882353,
+	"secondary": {
+		"r": 0,
+		"g": 0,
+		"b": 0,
 		"a": 1
 	},
 	"main": {
-		"r": 0.6509804,
-		"g": 0.54509807,
-		"b": 0.23137255,
+		"r": 0.9098039,
+		"g": 0.74509805,
+		"b": 0.20784314,
 		"a": 1
 	}
 },
 "com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle": {
 	"default": {
-		"up": "play",
-		"down": "play2"
-	},
-	"credits": {
-		"up": "credits"
+		"up": "play"
 	},
 	"home": {
-		"up": "home"
-	},
-	"pause": {
-		"up": "pause"
+		"up": "home-btn"
 	},
 	"music": {
 		"up": "music-on",
 		"disabled": "music-off"
+	},
+	"credits": {
+		"up": "credits"
 	},
 	"left": {
 		"up": "left"
@@ -45,78 +41,74 @@
 	"right": {
 		"up": "right"
 	},
-	"close": {
-		"up": "close"
-	},
 	"control-left": {
-		"up": "c-lft"
+		"up": "control-left"
 	},
 	"control-right": {
-		"up": "c-right"
+		"up": "control-right"
 	},
 	"control-up": {
-		"up": "c-up"
+		"up": "control-up"
+	},
+	"close": {
+		"up": "close"
 	},
 	"yes": {
 		"up": "yes"
 	},
 	"no": {
 		"up": "no"
+	},
+	"pause": {
+		"up": "pause-btn"
+	}
+},
+"com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle": {
+	"default": {
+		"imageUp": "key-ico"
 	}
 },
 "com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton$ImageTextButtonStyle": {
 	"default": {
-		"imageUp": "energy-icon",
+		"imageUp": "energy-ico",
 		"font": "alagard-16",
-		"fontColor": "dark",
-		"up": "energy-box"
+		"fontColor": "main",
+		"up": "box-energy"
 	},
 	"cost": {
-		"imageUp": "cost",
-		"font": "alagard-16",
-		"fontColor": "dark"
-	},
-	"life": {
-		"imageUp": "health",
+		"imageUp": "energy-ico",
 		"font": "alagard-16",
 		"fontColor": "main"
 	},
-	"arrow-left": {
-		"imageUp": "arrow-top",
+	"life": {
+		"imageUp": "life-ico",
 		"font": "alagard-16",
-		"fontColor": "dark"
+		"fontColor": "main"
 	}
 },
 "com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle": {
 	"default": {
 		"font": "alagard-16",
-		"fontColor": "dark"
+		"fontColor": "main"
 	},
 	"underline-title": {
 		"font": "alagard-16",
-		"fontColor": "dark",
+		"fontColor": "main",
 		"background": "underline"
 	},
-	"tooltip": {
+	"dialog": {
 		"font": "alagard-16",
-		"fontColor": "dark",
-		"background": "transparant"
+		"fontColor": "secondary"
 	}
 },
 "com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle": {
 	"default": {
-		"font": "alagard-16",
-		"fontColor": "main"
-	},
-	"underline": {
-		"font": "alagard-16",
-		"fontColor": "main"
+		"font": "alagard-16"
 	},
 	"level": {
 		"font": "alagard-16",
-		"fontColor": "dark",
-		"up": "level",
-		"down": "level-1",
+		"fontColor": "main",
+		"up": "level-on",
 		"disabled": "level-off"
 	}
 },
@@ -127,14 +119,39 @@
 },
 "com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle": {
 	"default": {
-		"background": "sample",
+		"background": "credits-window",
 		"titleFont": "alagard-16",
-		"titleFontColor": "dark"
+		"titleFontColor": "main"
 	},
 	"level": {
 		"background": "level-window",
 		"titleFont": "alagard-16",
-		"titleFontColor": "dark"
+		"titleFontColor": "main"
+	},
+	"pause": {
+		"background": "pause-window",
+		"titleFont": "alagard-16",
+		"titleFontColor": "main"
+	},
+	"dialog": {
+		"background": "dialog-window",
+		"titleFont": "alagard-16",
+		"titleFontColor": "main"
+	},
+	"success": {
+		"background": "win-window",
+		"titleFont": "alagard-16",
+		"titleFontColor": "main"
+	},
+	"failed": {
+		"background": "failed-window",
+		"titleFont": "alagard-16",
+		"titleFontColor": "main"
+	},
+	"tooltip": {
+		"background": "tooltip-window",
+		"titleFont": "alagard-16",
+		"titleFontColor": "secondary"
 	}
 }
 }
