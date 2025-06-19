@@ -47,7 +47,7 @@ public class PlayerAnimation extends EntityAnimations{
         // kita buat aset dengan kanvas ex : 64
         // actual size paling 30 atau 40an, disini masalahnya
         // di box2d kita gk buat rectangle 64 tapi sesuai actual size
-        float y = body.getPosition().y- height/2f +1.2f ;
+        float y = body.getPosition().y- height/2f + .3f ;
         Vector2 position = new Vector2(x,y);
 
         // animasi yang akan dirender
