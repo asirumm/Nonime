@@ -8,6 +8,8 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import io.asirum.Box2d.*;
+import io.asirum.Entity.EntityAnimation.KeyAnimation;
+import io.asirum.Service.ApplicationContext;
 import io.asirum.TmxMap.TmxHelper;
 
 
@@ -19,15 +21,15 @@ public class Key extends BaseBox2d {
     public Key(World world) {
         super(world);
         keyAnimation = new KeyAnimation();
+        keyAnimation.animationInitialization();
     }
-    public void drawAnimation(){
+    public void drawAnimation(float delta){
 
         if (!collected) {
-            keyAnimation.draw(body,Gdx.graphics.getDeltaTime());
+            keyAnimation.draw(body,delta);
         }
 
         if (collected) return;
-
     }
     @Override
     public void build(MapObject object) {
@@ -63,6 +65,7 @@ public class Key extends BaseBox2d {
     }
 
     public void setCollected(boolean collected) {
+        ApplicationContext.getInstance().getGameAssets().getSoundKey().play();
         this.collected = collected;
     }
 }

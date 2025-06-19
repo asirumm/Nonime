@@ -4,6 +4,9 @@ import com.badlogic.gdx.physics.box2d.World;
 import io.asirum.Entity.Obstacle.CrusherBuilder;
 import io.asirum.Entity.Obstacle.Stalactite;
 
+/**
+ * saya menyatukan semua entitas obstacle disini
+ */
 public class ObstacleBox2d {
     private Stalactite stalactite;
     private CrusherBuilder crusherBuilder;

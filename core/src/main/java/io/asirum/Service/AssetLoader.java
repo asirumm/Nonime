@@ -31,11 +31,14 @@ public class AssetLoader implements Disposable {
         assetManager.load(ASSET_WIDGET_ATLAS, TextureAtlas.class);
         assetManager.load(ASSET_ITEMS_ATLAS, TextureAtlas.class);
         assetManager.load(ASSET_PLAYER_ATLAS, TextureAtlas.class);
+        assetManager.load(BACKGROUND_ATLAS, TextureAtlas.class);
     }
 
     private void loadMusic(){
         assetManager.load(ASSET_SOUND_CONTROL_ON_CLICK, Sound.class);
         assetManager.load(ASSET_SOUND, Music.class);
+        assetManager.load(ASSET_KEY, Sound.class);
+        assetManager.load(ASSET_DIE, Sound.class);
     }
 
     private void loadSkin(){

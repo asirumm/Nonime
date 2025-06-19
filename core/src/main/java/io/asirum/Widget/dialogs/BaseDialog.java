@@ -18,7 +18,6 @@ public class BaseDialog extends Dialog {
     }
 
     {
-        this.setDebug(true);
         this.setPosition((float) Constant.VIRTUAL_WIDTH/2,(float)Constant.VIRTUAL_HEIGHT/2);
     }
 }

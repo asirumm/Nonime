@@ -45,6 +45,7 @@ public class OneWayPlatformBuilder extends BaseBox2d {
 
         OneWayPlatform w =new OneWayPlatform();
         w.setHeight(size.y);
+        w.setWidth(size.x);
         w.setBody(body);
 
         body.setUserData(w);

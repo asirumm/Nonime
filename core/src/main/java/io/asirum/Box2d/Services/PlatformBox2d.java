@@ -4,6 +4,9 @@ import com.badlogic.gdx.physics.box2d.World;
 import io.asirum.Entity.Platform.OneWayPlatformBuilder;
 import io.asirum.Entity.Platform.StaticPlatform;
 
+/**
+ * saya menyatukan semua entitas platform disini
+ */
 public class PlatformBox2d {
     private OneWayPlatformBuilder oneWayPlatformBuilder;
     private StaticPlatform staticPlatform;

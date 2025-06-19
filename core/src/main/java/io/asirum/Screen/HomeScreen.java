@@ -1,16 +1,18 @@
 package io.asirum.Screen;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Align;
 import de.eskalon.commons.screen.ManagedScreen;
+import de.eskalon.commons.screen.transition.impl.*;
+import io.asirum.Entity.Animation.Direction;
 import io.asirum.Service.ApplicationContext;
 import io.asirum.Service.Log;
-import io.asirum.Util.ButtonAction;
-import io.asirum.Util.ButtonBuilder;
-import io.asirum.Util.CameraHelper;
-import io.asirum.Util.StageHelper;
+import io.asirum.Util.*;
 import io.asirum.Widget.StyleVars;
 import io.asirum.Screen.HomeMenu.AboutWindow;
 
@@ -28,7 +30,7 @@ public class HomeScreen extends ManagedScreen {
 
     private AboutWindow window;
 
-
+    private SpriteBatch batch;
 
     public HomeScreen() {
         Log.debug(getClass().getName(),"[berhasil switch screen]");
@@ -36,10 +38,12 @@ public class HomeScreen extends ManagedScreen {
         context = ApplicationContext.getInstance();
         skin    = context.getGameAssets().getWidgetSkin();
         window = new AboutWindow(skin);
+        batch = context.getBatch();
 
         stage = StageHelper.createInstance();
 
-
+        // wtf transition bug di android
+        // jadi aneh ketika di android
         play = ButtonBuilder
             .build(skin, ButtonAction.switchScreen(LevelScreen::new, null));
 
@@ -60,27 +64,28 @@ public class HomeScreen extends ManagedScreen {
 
     }
 
-//    private void drawBackground(){
-//        SpriteBatchHelper.projectionCombineBegin();
-//
-//        context.getBatch().draw(
-//            context
-//                .getGameAssets()
-//                .getBackgroundAtlas()
-//                .findRegion(BACKGROUND),
-//            0,
-//            0,
-//            VIRTUAL_WIDTH,
-//            VIRTUAL_HEIGHT
-//        );
-//
-//        SpriteBatchHelper.batchEnd();
-//
-//    }
+    private void drawBackground(){
+
+        SpriteBatchHelper.setProjectionMatrixCameraCombined(batch);
+
+        context.getBatch().draw(
+            context
+                .getGameAssets()
+                .getBackgroundAtlas()
+                .findRegion("background"),
+            0,
+            0,
+            VIRTUAL_WIDTH,
+            VIRTUAL_HEIGHT
+        );
+
+        SpriteBatchHelper.batchEnd(batch);
+
+    }
 
     @Override
     public void render(float delta) {
-//        drawBackground();
+        drawBackground();
         stage.act(delta);
         stage.draw();
     }

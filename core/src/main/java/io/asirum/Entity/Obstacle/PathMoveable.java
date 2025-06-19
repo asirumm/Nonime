@@ -1,11 +1,18 @@
-package io.asirum.Entity.Behavior;
+package io.asirum.Entity.Obstacle;
 
 import com.badlogic.gdx.math.Vector2;
 
 import java.util.ArrayList;
 
+/**
+ * Representasi polyline path pada tiled tmx
+ * digunakan untuk jalur jalan crusher
+ */
 public class PathMoveable {
     private String name ;
+    // setiap path memiliki nama object berbeda, untuk identifikasi milik
+    // crusher/object siapa. Pada crusher akan diberikan props nilai
+    // nama path
     private ArrayList<Vector2> paths=new ArrayList<>();
 
     public void addPath(Vector2 path){

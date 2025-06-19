@@ -5,23 +5,29 @@ import io.asirum.Entity.Player.Player;
 import io.asirum.SchemaObject.GameLevel;
 import io.asirum.SchemaObject.Region;
 import io.asirum.SchemaObject.UserData;
-import io.asirum.SchemaObject.UserLevel;
+import io.asirum.Screen.FailedScreen;
 import io.asirum.Screen.LevelMenu.RegionContent;
 import io.asirum.Screen.LevelScreen;
+import io.asirum.Screen.WinScreen;
 import io.asirum.Service.*;
 
+/**
+ * Kelas ini merupakan manajemen player bermain
+ * menginstruksikan kematian, respawn, reward dan sebagainya
+ * dalam in game
+ */
 public class GamePlayManager {
     private UserData userData;
     private Player player;
     private ApplicationContext context;
     private PreferencesUserDataManager userDataManager;
     private UserEnergyManager userEnergyManager;
-    private Region region; // player sedang bermain dimana
+    private Region regionWherePlayerPlaying; // player sedang bermain dimana
     private UserLevelManager levelManager;
     private GameLevel gameLevel;
 
     public GamePlayManager(Region region,GameLevel gameLevel) {
-        this.region = region;
+        this.regionWherePlayerPlaying = region;
         this.gameLevel = gameLevel;
     }
 
@@ -60,33 +66,40 @@ public class GamePlayManager {
     /**
      * Menambah level pengguna di wilayah yang sedang dimainkan jika belum mencapai level maksimum.
      */
-    private short unlockUserLevel() {
-        String currentRegionName = region.getName();
+    private short unlockingUserLevelAtCurrentRegion() {
+        String currentRegionName = regionWherePlayerPlaying.getName();
         Log.debug(getClass().getCanonicalName(), "Memproses unlock level baru pada region %s", currentRegionName);
 
-        for (UserLevel data : userData.getLevel()) {
-            if (data.getName().equals(currentRegionName)) {
-                short currentLevel = data.getLevel();
-                int maxLevel = region.getLevels().size(); // jumlah level maksimal di region
+        short userLevelOnCurrentRegion = levelManager.getUserLevelByRegion(regionWherePlayerPlaying);
+        short maxLevelRegion = (short) regionWherePlayerPlaying.getLevels().size();
 
-                if (currentLevel < maxLevel) {
-                    short newLevel = (short) (currentLevel + 1);
+        if (userLevelOnCurrentRegion < maxLevelRegion) {
+            // menambahkan level
+            short newLevel = (short) (userLevelOnCurrentRegion + 1);
+
+            // mengganti nilai level di region user
+            userData.getLevel().forEach(data -> {
+                if (data.getName().equals(regionWherePlayerPlaying.getName())) {
                     data.setLevel(newLevel);
-                    Log.debug(getClass().getCanonicalName(), "Berhasil menambah level user ke %d", newLevel);
-                    return newLevel;
-                } else {
-                    Log.debug(getClass().getCanonicalName(), "Level user sudah maksimum: %d", currentLevel);
-                    return currentLevel;
                 }
-            }
+            });
+
+            Log.debug(getClass().getCanonicalName(), "Berhasil menambah level user ke %d", newLevel);
+            return newLevel;
+
+        } else if (userLevelOnCurrentRegion==maxLevelRegion){
+            Log.debug(getClass().getCanonicalName(), "Level user sudah maksimum: %d", userLevelOnCurrentRegion);
+            return userLevelOnCurrentRegion;
+
+        }else {
+            // Jika data region tidak ditemukan di userData
+            Log.warn(getClass().getCanonicalName(), "Region %s tidak ditemukan di data user", currentRegionName);
+            return userLevelOnCurrentRegion;
         }
 
-        // Jika data region tidak ditemukan di userData
-        Log.warn(getClass().getCanonicalName(), "Region %s tidak ditemukan di data user", currentRegionName);
-        return 1;
     }
 
-    private void rewardFinish(){
+    private void processingRewardFinishGame(){
         userEnergyManager.energyRewardAfterWinningGame();
     }
 
@@ -97,24 +110,31 @@ public class GamePlayManager {
      *
      */
     public void playerFinishLogic(){
+        // apabila player sudah memiliki kunci
         if(player.isBringKey()){
 
-            short currentUserLevel = levelManager.getUserLevelByRegion(region);
+            short levelUserAtCurrentRegion = levelManager.getUserLevelByRegion(regionWherePlayerPlaying);
+            short levelWhereUserPlayNow = gameLevel.getLevel();
 
-            Log.info(getClass().getName(), "user naik level dari level %s pada region %s",currentUserLevel,region.getName());
+            // pengecekan apabila user bermain di level 1 padahal
+            // ia sudah berada di level 3 maka level tidak bertambah
 
-            short newLevel = unlockUserLevel();
+            if(levelWhereUserPlayNow >= levelUserAtCurrentRegion){
+                Log.info(getClass().getName(), "user naik level dari level %s pada region %s",levelUserAtCurrentRegion, regionWherePlayerPlaying.getName());
 
-            updateLevelUnlockUI(newLevel);
+                short newLevel = unlockingUserLevelAtCurrentRegion();
 
-            rewardFinish();
+                updateToUndisableLevelButton(newLevel);
+
+            }
+
+            processingRewardFinishGame();
 
             userDataManager = new PreferencesUserDataManager();
 
             userDataManager.saveData(userData);
 
-
-            context.pushScreen(new LevelScreen(),null);
+            context.pushScreen(new WinScreen(),null);
         }
     }
 
@@ -123,26 +143,33 @@ public class GamePlayManager {
 
         // ketika player terkena obstacle maka respawn
         if (player.isPlayerNeedRespawn()){
+            // apabila life habis maka berakhir
             if(player.getPlayerLive() < 0){
-                context.pushScreen(new LevelScreen(),null);
+                context.pushScreen(new FailedScreen(),null);
             }
             else {
                 player.respawn();
-                player.setPlayerNeedRespawn(false);
             }
         };
 
     }
 
-    private void updateLevelUnlockUI(short newLevel){
+    /**
+     * membuka button level yang sebelumnya didisable
+     */
+    private void updateToUndisableLevelButton(short newLevel){
         Array<RegionContent> regionContents = context.getRegionContents();
 
         for (RegionContent content : regionContents){
-            if (content.getRegionName().equals(region.getName())){
 
-                Log.info(getClass().getCanonicalName(),"berhasil unlock level %s di region %s",newLevel,region.getName());
+            String contentRegionName = content.getRegion().getName();
+            String currentRegionName = regionWherePlayerPlaying.getName();
 
-                content.unlockLevel(newLevel,userData.getEnergy(),gameLevel,region);
+            if (currentRegionName.equals(contentRegionName)){
+
+                Log.info(getClass().getCanonicalName(),"berhasil unlock level %s di region %s",newLevel, regionWherePlayerPlaying.getName());
+
+                content.unlockLevel(gameLevel);
             }
         }
     }

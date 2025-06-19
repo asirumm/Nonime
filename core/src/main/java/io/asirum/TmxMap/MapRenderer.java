@@ -6,6 +6,7 @@ import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Vector2;
 import io.asirum.Constant;
 import io.asirum.Util.CameraHelper;
 
@@ -23,20 +24,28 @@ public class MapRenderer {
         params.textureMinFilter = Texture.TextureFilter.Nearest;
         params.textureMagFilter = Texture.TextureFilter.Nearest;
 
-        this.map = TmxHelper.getTiledMap(mapPath);
+        this.map = TmxHelper.getTiledMap(mapPath,params);
         this.mapRenderer = new OrthogonalTiledMapRenderer(this.map, 1.0f / Constant.UNIT_SCALE);
     }
 
     public void setBoundaryCamera() {
-        MapProperties props = this.map.getProperties();
-        int width = ((Integer) props.get("width", Integer.class)).intValue();
-        int height = ((Integer) props.get("height", Integer.class)).intValue();
-        int tileWidth = ((Integer) props.get("tilewidth", Integer.class)).intValue();
-        int tileHeight = ((Integer) props.get("tileheight", Integer.class)).intValue();
-        float totalWidth = ((width * tileWidth) * 1.0f) / Constant.UNIT_SCALE;
-        float totalHeight = ((height * tileHeight) * 1.0f) / Constant.UNIT_SCALE;
-        CameraHelper.boundaryCamera(this.camera, totalWidth, totalHeight);
+        Vector2 mapSize = getMapWorldSize();
+        CameraHelper.boundaryCamera(this.camera, mapSize.x, mapSize.y);
     }
+
+    public Vector2 getMapWorldSize() {
+        MapProperties props = this.map.getProperties();
+        int width = props.get("width", Integer.class);
+        int height = props.get("height", Integer.class);
+        int tileWidth = props.get("tilewidth", Integer.class);
+        int tileHeight = props.get("tileheight", Integer.class);
+
+        float totalWidth = (width * tileWidth) / Constant.UNIT_SCALE;
+        float totalHeight = (height * tileHeight) / Constant.UNIT_SCALE;
+
+        return new Vector2(totalWidth, totalHeight);
+    }
+
 
     public void render() {
         this.camera.update();

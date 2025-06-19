@@ -6,6 +6,8 @@ import com.badlogic.gdx.physics.box2d.Body;
 import java.util.ArrayList;
 
 // bergerak mengikuti polyline
+// behavior bergerak mengikuti polyline
+// kasus chrusher
 public class Moveable {
     private ArrayList<Vector2> path;
     private int currentIndex = 0;

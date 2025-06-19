@@ -1,9 +1,5 @@
 package io.asirum.Entity.Player;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
@@ -11,16 +7,12 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.utils.Array;
 import io.asirum.Box2d.*;
-import io.asirum.Entity.Animation.AnimationComponent;
 import io.asirum.Entity.Behavior.Jump;
 import io.asirum.Entity.Behavior.Run;
-import io.asirum.Service.ApplicationContext;
-import io.asirum.Service.GameAssets;
-import io.asirum.Service.Log;
+import io.asirum.Entity.EntityAnimation.PlayerAnimation;
+import io.asirum.Service.*;
 import io.asirum.TmxMap.TmxHelper;
-import io.asirum.Util.SpriteBatchHelper;
 
 public class Player extends BaseBox2d {
 
@@ -30,16 +22,18 @@ public class Player extends BaseBox2d {
 
     private short playerLive = 3;
 
+    // JANGAN DIHAPUS BERGUNA UNTUK ONE WAY
     private float playerHeight;// untuk fixture foot sensor
+    private float playerWidth;
 
     // ======= Parameter Gerakan =======
-    private float runMaxSpeed = 4f;           // Kecepatan maksimum saat berlari
-    private float runAcceleration = 0.8f;     // Waktu untuk mencapai kecepatan maksimum dari diam
-    private float runDecceleration = 0.2f;    // Waktu untuk melambat dari kecepatan maksimum ke diam
+    private float runMaxSpeed = 7f;           // Kecepatan maksimum saat berlari
+    private float runAcceleration = 2f;     // Waktu untuk mencapai kecepatan maksimum dari diam
+    private float runDecceleration = 1f;    // Waktu untuk melambat dari kecepatan maksimum ke diam
 
  // Konstanta lompat
-    private float jumpForce = 1.03f;
-    private float maxJump = 4f;
+    private float jumpForce = 5.2f;
+    private float maxJump = 5.7f;
 
     private boolean onGround = false;          // Status apakah player sedang di tanah
 
@@ -53,7 +47,8 @@ public class Player extends BaseBox2d {
         runBehavior  = new Run(runMaxSpeed,runAcceleration,runDecceleration);
         jumpBehavior = new Jump(jumpForce,maxJump);
 
-        animation = new PlayerAnimation();
+        animation = new PlayerAnimation(this);
+        animation.animationInitialization();
     }
 
     public void jump(){
@@ -64,8 +59,8 @@ public class Player extends BaseBox2d {
         runBehavior.run(moveLeft,moveRight,body,onGround);
     }
 
-    public void drawAnimation(){
-        animation.draw(Gdx.graphics.getDeltaTime(),onGround,body);
+    public void drawAnimation(float delta){
+        animation.draw(body,delta);
     }
 
     @Override
@@ -97,6 +92,7 @@ public class Player extends BaseBox2d {
         fixture.setUserData(Box2dVars.PLAYER_FIXTURE);
         body.setUserData(this);
         playerHeight = size.y;
+        playerWidth = size.x;
 
         shape.dispose();
     }
@@ -116,15 +112,15 @@ public class Player extends BaseBox2d {
     }
 
     public void respawn(){
-        if(lastPosition==null){
-            Log.info(getClass().getName(),"NULL vector respawn");
-        }else {
+        if(animation.isAnimationFinished()){
             body.setTransform(lastPosition,0);
+            playerNeedRespawn =false;
         }
     }
 
-    public void setPlayerNeedRespawn(boolean playerNeedRespawn) {
-        this.playerNeedRespawn = playerNeedRespawn;
+    public void playerNeedRespawnActive() {
+        ApplicationContext.getInstance().getGameAssets().getSoundDie().play();
+        this.playerNeedRespawn = true;
     }
 
     public boolean isPlayerNeedRespawn() {
@@ -142,6 +138,10 @@ public class Player extends BaseBox2d {
 
     public float getPlayerHeight() {
         return playerHeight;
+    }
+
+    public float getPlayerWidth() {
+        return playerWidth;
     }
 
     public boolean isBringKey() {

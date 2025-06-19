@@ -7,6 +7,10 @@ import io.asirum.Entity.Items.Portal;
 import io.asirum.Entity.Player.Player;
 import io.asirum.Entity.Player.PlayerSensor;
 
+/**
+ * Kelas ini sebagai interfacing ke object entitas
+ * jadi pembuatan init entitas ada disini
+ */
 public class EntityBox2d {
     private Player player;
     private PlayerSensor playerSensor;

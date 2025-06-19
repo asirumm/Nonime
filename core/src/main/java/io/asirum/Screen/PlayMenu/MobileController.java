@@ -29,13 +29,14 @@ public class MobileController {
 
         Table leftTable = new Table();
         leftTable.add(leftControl);
-        leftTable.add(rightControl);
+        leftTable.add(rightControl).padLeft(15);
 
         Table rightTable = new Table();
         rightTable.add(upControl);
 
         mobileControllerTable.add(leftTable).expandX().left();
         mobileControllerTable.add(rightTable).expandX().right();
+        mobileControllerTable.padBottom(10);
 
         Log.debug(getClass().getName(),">>> setup mobile controller to input mobile");
         mobileInput.setButton(leftControl,rightControl,upControl);

@@ -1,6 +1,6 @@
 package io.asirum.Screen;
 
-import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Array;
@@ -8,9 +8,7 @@ import de.eskalon.commons.screen.ManagedScreen;
 import io.asirum.SchemaObject.Payload;
 import io.asirum.SchemaObject.Region;
 import io.asirum.SchemaObject.UserData;
-import io.asirum.Screen.LevelMenu.LevelScrollPane;
-import io.asirum.Screen.LevelMenu.RegionContent;
-import io.asirum.Screen.LevelMenu.WidgetController;
+import io.asirum.Screen.LevelMenu.*;
 import io.asirum.Service.*;
 import io.asirum.Util.AudioHelper;
 import io.asirum.Util.CameraHelper;
@@ -23,7 +21,6 @@ public class LevelScreen extends ManagedScreen {
     private Payload payload;
     private UserData userData;
 
-    private LevelScrollPane scrollPane;
     private Array<RegionContent> regionContents;
 
     public LevelScreen(){
@@ -45,24 +42,11 @@ public class LevelScreen extends ManagedScreen {
         // membuat atau menagambil data regionContents dari context
         setupRegionContents(widgetSkin);
 
-        // konsep baca di dokumentasi level menu
-        scrollPane = new LevelScrollPane(widgetSkin, regionContents);
-        scrollPane.build();
+        LevelWindow levelWindow = new LevelWindow(widgetSkin,userData.getEnergy(),regionContents);
 
-        // membuat kontroller home,music etc
-        WidgetController buttonScreen =
-            new WidgetController(
-                widgetSkin, scrollPane.getScrollPane(),userData.getEnergy());
-
-        // menambahkan ke stage
-        StageHelper.addActors(stage,
-            scrollPane.getScrollPane(),
-            buttonScreen.getHome(),
-            buttonScreen.getMusic(),
-            buttonScreen.getUserEnergy(),
-            buttonScreen.getLeftControl(),
-            buttonScreen.getRightControl()
-        );
+        stage.addActor(levelWindow);
+        stage.addActor(levelWindow.getCostTooltip());
+        stage.addActor(levelWindow.getUserEnergyTooltip());
 
 //        StageHelper.debugStage(true,levelScrollPane.getContainer(),levelContentData.getContent());
     }
@@ -81,13 +65,12 @@ public class LevelScreen extends ManagedScreen {
 
             for (Region region : payload.getRegions()) {
 
-                RegionContent content = new RegionContent(skin);
-                content.build(region, userData);
-
+                RegionContent content = new RegionContent(region,userData);
+                content.build(skin);
                 regionContents.add(content);
             }
 
-            // inject data
+//            // inject data
             context.setRegionContents(regionContents);
 
         }else {
@@ -99,10 +82,13 @@ public class LevelScreen extends ManagedScreen {
     public void render(float delta) {
         stage.act(delta);
         stage.draw();
-        System.out.println("FPS : "+Gdx.graphics.getFramesPerSecond());
-
     }
 
+
+    @Override
+    public Color getClearColor() {
+        return Color.valueOf("#9dc2f6");
+    }
 
     @Override
     public void resize(int width, int height) {

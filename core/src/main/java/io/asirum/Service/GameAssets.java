@@ -17,8 +17,11 @@ public class GameAssets {
     private TextureAtlas widgetAtlas;
     private TextureAtlas playerAtlas;
     private TextureAtlas itemsAtlas;
+    private TextureAtlas backgroundAtlas;
     private Skin widgetSkin;
     private Sound soundLevelControl;
+    private Sound soundKey;
+    private Sound soundDie;
     private Music soundMusic;
 
     private AssetManager assetManager;
@@ -34,10 +37,13 @@ public class GameAssets {
         try{
             widgetAtlas         = assetManager.get(Constant.ASSET_WIDGET_ATLAS);
             itemsAtlas          = assetManager.get(Constant.ASSET_ITEMS_ATLAS);
+            backgroundAtlas     = assetManager.get(Constant.BACKGROUND_ATLAS);
             playerAtlas         = assetManager.get(Constant.ASSET_PLAYER_ATLAS);
             widgetSkin      = assetManager.get(Constant.ASSET_WIDGET_SKIN);
             soundLevelControl = assetManager.get(Constant.ASSET_SOUND_CONTROL_ON_CLICK);
             soundMusic      = assetManager.get(Constant.ASSET_SOUND);
+            soundKey        = assetManager.get(Constant.ASSET_KEY);
+            soundDie        = assetManager.get(Constant.ASSET_DIE);
 
         }catch (GdxRuntimeException exception){
             Log.error(getClass().getName(), exception);
@@ -86,7 +92,19 @@ public class GameAssets {
         this.soundMusic = soundMusic;
     }
 
+    public Sound getSoundKey() {
+        return soundKey;
+    }
+
+    public Sound getSoundDie() {
+        return soundDie;
+    }
+
     public TextureAtlas getItemsAtlas() {
         return itemsAtlas;
     }
-  }
+
+    public TextureAtlas getBackgroundAtlas() {
+        return backgroundAtlas;
+    }
+}

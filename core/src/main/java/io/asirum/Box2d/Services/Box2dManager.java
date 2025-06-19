@@ -17,6 +17,10 @@ import io.asirum.Util.CameraHelper;
 
 import java.util.HashMap;
 
+/**
+ * Kelas ini mengelola dari tiled tmx ke box2d
+ * Jadi manajemen box2d ada disini
+ */
 public class Box2dManager {
     private World world;
 
@@ -45,6 +49,10 @@ public class Box2dManager {
 
     }
 
+    /**
+     * membaca layer objects pada tmx
+     * lalu parsing ke box2d dengan tmxObjectReader
+     */
     // Mengurai data dari file TMX menjadi entitas Box2D
     public void parseTmxToBox2dEntities() {
         Log.debug(getClass().getCanonicalName(),"Bersiap parse object tmx ke box2d");
@@ -71,8 +79,8 @@ public class Box2dManager {
     public void render(float delta){
         world.step(1 / 60f, 6, 2);
 
-        entity.getKey().drawAnimation();
-        entity.getPlayer().drawAnimation();
+        entity.getKey().drawAnimation(delta);
+        entity.getPlayer().drawAnimation(delta);
 
         // pergerakan crusher, apabila di map ada
         if(!obstacle.getCrusherBuilder()
@@ -91,6 +99,10 @@ public class Box2dManager {
         CameraHelper.lerpCamera(camera,entity.getPlayer().getBody());
     }
 
+    /**
+     * melakukan pengecekan apakah ada object box2d yang perlu di destroy
+     * apabila ada maka lakukan penghancuran
+     */
     private void checkObjectToDestroy() {
         // apabila pada array object destroy ada isinya
         // maka kita hancurkan
@@ -112,6 +124,9 @@ public class Box2dManager {
         obstacle = new ObstacleBox2d(world);
     }
 
+    /**
+     * init world dengan gravitas -9.8
+     */
     private void box2dInit() {
         world = new World(new Vector2(0,-9.8f),false);
         debugRenderer = new Box2DDebugRenderer();

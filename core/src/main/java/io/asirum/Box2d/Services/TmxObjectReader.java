@@ -1,6 +1,5 @@
 package io.asirum.Box2d.Services;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.PolylineMapObject;
@@ -11,7 +10,7 @@ import io.asirum.Box2d.BaseBox2d;
 import io.asirum.Box2d.Box2dVars;
 import io.asirum.Constant;
 
-import io.asirum.Entity.Behavior.PathMoveable;
+import io.asirum.Entity.Obstacle.PathMoveable;
 import io.asirum.Entity.Obstacle.Crusher;
 import io.asirum.Entity.Obstacle.CrusherBuilder;
 import io.asirum.Service.Log;
@@ -38,6 +37,7 @@ public class TmxObjectReader {
      */
     public void parseToBox2d(HashMap<String, BaseBox2d> entity){
 
+        // apabila layer objects null
         if(mapObjects.get(0)==null){
             Log.warn(getClass().getCanonicalName(),"Layer tidak memiliki data object. Periksa kembali tilemap");
             throw new RuntimeException("Layer tidak memiliki object data, periksa kembali tile map");
@@ -47,6 +47,7 @@ public class TmxObjectReader {
 
             Log.debug(getClass().getName(),"object tmx saat ini : %s",object.getName());
 
+            // pembuat garis jalan untuk crusher
             if (object instanceof PolylineMapObject){
                 Log.debug(getClass().getName(),"object polyline ditemukan ");
 
@@ -63,19 +64,23 @@ public class TmxObjectReader {
             }
         }
 
+        // menambahkan path way ke crsuher
         setPathToCrusher((CrusherBuilder) entity.get(Box2dVars.CRUSHER_OBJECT));
     }
 
+    /**
+     *  crusher sendiri merupakan bagian dari object
+     * dan pathnya menggunakan polyline agar dapat memiliki jalur
+     *  masing masing crusher.
+     *
+     *  Crusher dengan path diberikan variable nama yang sesuai
+     *  pada crusher terdapat props path
+     *  Ex : crusher ada props path = path1
+     */
     public void setPathToCrusher(CrusherBuilder crusherBuilder){
         Log.debug(getClass().getName(),"memulai menambahkan path ke crusher");
 
         ArrayList<Crusher> listCrusher = crusherBuilder.getCrushers();
-
-        ArrayList<String> namePropsCrusher = new ArrayList<>();
-
-        for (Crusher crusher : listCrusher){
-            namePropsCrusher.add(crusher.getPathProps());
-        }
 
        for (int i=0;i<listCrusher.size();i++){
            String pathProps = listCrusher.get(i).getPathProps();
@@ -90,6 +95,10 @@ public class TmxObjectReader {
        }
     }
 
+    /**
+     * membuat path crusher menjadi box2d polyline
+     * path diberi nama Ex : path1, path2 etc
+     */
     public void polyLineShape(MapObject object){
         if (object instanceof PolylineMapObject){
 
@@ -101,8 +110,19 @@ public class TmxObjectReader {
             PathMoveable pathMoveable = new PathMoveable();
             pathMoveable.setName(object.getName());
 
-            for (int i = 0; i < vertices.length; i +=2) {
-                Vector2 point = new Vector2(vertices[i]/Constant.UNIT_SCALE, vertices[i + 1]/Constant.UNIT_SCALE);
+
+            // float[] vertices = {x1, y1, x2, y2, x3, y3, ..., xn, yn};
+            // vertices[0] = x1
+            // vertices[1] = y1
+            for (int i = 0; i < vertices.length; i +=1) {
+
+                // vertices merupakan titik yang membentuk garis
+                Vector2 point =
+                    new Vector2(
+                        // X
+                        vertices[i]/Constant.UNIT_SCALE,
+                        // Y
+                        vertices[i + 1]/Constant.UNIT_SCALE);
                 pathMoveable.addPath(point);
             }
 

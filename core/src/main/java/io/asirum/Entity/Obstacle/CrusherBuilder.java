@@ -22,6 +22,8 @@ public class CrusherBuilder extends BaseBox2d {
 
     @Override
     public void build(MapObject object) {
+        // mendapatkan nilai properti pada crusher untuk
+        // mengetahui path yang sesuai jalur crusher
         String pathProps = object.getProperties().get("path",String.class);
 
         Rectangle rect = TmxHelper.convertRectangleMapObject(object);
