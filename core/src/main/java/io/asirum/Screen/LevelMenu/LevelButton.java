@@ -51,11 +51,14 @@ public class LevelButton {
         levelButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
+               ApplicationContext context = ApplicationContext.getInstance();
+
+               context.getGameAssets().getSoundLevelControl().play();
+
                 // apabila user energy mencukupi
                 if(playerEnergy>=regionCost){
 
-                    ApplicationContext
-                        .getInstance()
+                    context
                         .pushScreen(new PlayScreen(gameLevel,region),null);
 
                 }else {
