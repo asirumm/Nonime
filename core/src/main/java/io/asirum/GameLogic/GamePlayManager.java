@@ -169,7 +169,7 @@ public class GamePlayManager {
 
                 Log.info(getClass().getCanonicalName(),"berhasil unlock level %s di region %s",newLevel, regionWherePlayerPlaying.getName());
 
-                content.unlockLevel(gameLevel);
+                content.unlockLevel();
             }
         }
     }

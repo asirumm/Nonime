@@ -99,7 +99,7 @@
   <object id="10" name="one-way-platform" x="510.334" y="154.75" width="18.3333" height="4.83333"/>
   <object id="12" name="one-way-platform" x="495.833" y="122.167" width="33" height="6.66667"/>
   <object id="13" name="key-sensor" x="434" y="160.333" width="13.3333" height="13"/>
-  <object id="14" name="one-way-platform" x="464.5" y="89.5" width="15" height="6"/>
+  <object id="14" name="one-way-platform" x="464.5" y="91.5" width="15" height="4"/>
   <object id="15" name="checkpoint" x="49.6705" y="159.244" width="15.75" height="15.625"/>
   <object id="16" name="player" x="49.7955" y="149.494" width="15" height="22"/>
   <object id="17" name="foot-sensor" x="50.4489" y="170.05" width="14" height="4"/>

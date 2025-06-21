@@ -44,14 +44,13 @@ public class LevelButton {
 
     private void onClick(short playerEnergy,short regionCost,GameLevel gameLevel,Region region) {
 
-        if (levelButton.isDisabled()){
-            return;
-        }
-
         levelButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-               ApplicationContext context = ApplicationContext.getInstance();
+
+                if (levelButton.isDisabled()) return;
+
+                ApplicationContext context = ApplicationContext.getInstance();
 
                context.getGameAssets().getSoundLevelControl().play();
 
@@ -69,9 +68,8 @@ public class LevelButton {
         });
     }
 
-    public void undisable(short playerEnergy,GameLevel gameLevel,Region region){
+    public void setUndisable(){
         levelButton.setDisabled(false);
-        onClick(playerEnergy,region.getCost(),gameLevel,region);
     }
 
     public short getLevel() {

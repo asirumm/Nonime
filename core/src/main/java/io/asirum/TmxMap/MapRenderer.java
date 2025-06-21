@@ -8,6 +8,7 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import io.asirum.Constant;
+import io.asirum.Service.Log;
 import io.asirum.Util.CameraHelper;
 
 public class MapRenderer {
@@ -54,6 +55,7 @@ public class MapRenderer {
     }
 
     public void dispose() {
+        Log.debug(getClass().getCanonicalName(),"[dispose]");
         this.mapRenderer.dispose();
         this.map.dispose();
     }

@@ -1,64 +1,49 @@
 {
   "regions": [
     {
-      "name":"savana",
+      "name":"forest",
       "cost": 3,
-      "background": "",
+      "background": "forest",
       "levels": [
         {
-          "map": "manifest/map/map.tmx",
+          "map": "manifest/map/forest/map-1.tmx",
           "level": 1
         },
         {
-          "map": "manifest/map/map.tmx",
+          "map": "manifest/map/forest/map-2.tmx",
           "level": 2
         },
         {
-          "map": "manifest/map/map.tmx",
+          "map": "manifest/map/forest/map-3.tmx",
           "level": 3
         },
         {
-          "map": "manifest/map/map.tmx",
+          "map": "manifest/map/forest/map-4.tmx",
           "level": 4
         },
         {
-          "map": "manifest/map/map.tmx",
+          "map": "manifest/map/forest/map-5.tmx",
           "level": 5
         },
         {
-          "map": "manifest/map/map.tmx",
+          "map": "manifest/map/forest/map-6.tmx",
           "level": 6
-        }
-      ]
-    },
-    {
-      "name":"unbounds",
-      "cost": 3,
-      "background": "",
-      "levels": [
-        {
-          "map": "manifest/map/map.tmx",
-          "level": 1
         },
         {
-          "map": "manifest/map/map.tmx",
-          "level": 2
+          "map": "manifest/map/forest/map-7.tmx",
+          "level": 7
         },
         {
-          "map": "manifest/map/map.tmx",
-          "level": 3
+          "map": "manifest/map/forest/map-8.tmx",
+          "level": 8
         },
         {
-          "map": "manifest/map/map.tmx",
-          "level": 4
+          "map": "manifest/map/forest/map-9.tmx",
+          "level": 9
         },
         {
-          "map": "manifest/map/map.tmx",
-          "level": 5
-        },
-        {
-          "map": "manifest/map/map.tmx",
-          "level": 6
+          "map": "manifest/map/forest/map-10.tmx",
+          "level": 10
         }
       ]
     }

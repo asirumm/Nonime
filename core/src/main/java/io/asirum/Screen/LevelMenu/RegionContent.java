@@ -38,15 +38,18 @@ public class RegionContent {
         return tableLevelData;
     }
 
-    public void unlockLevel( GameLevel gameLevel){
+    public void unlockLevel(){
         UserLevelManager userLevelManager = new UserLevelManager(userData);
 
+        // mendapatkan level user berdasarkan region
         short userLevel = userLevelManager.getUserLevelByRegion(region);
 
+        // kita iterasi level button cari yang sesuai level user
+        // dan unlock
         for (LevelButton levelContent : listOfLevel){
 
             if (levelContent.getLevel() == userLevel){
-                levelContent.undisable(userData.getEnergy(),gameLevel,region);
+                levelContent.setUndisable();
             }
         }
     }
