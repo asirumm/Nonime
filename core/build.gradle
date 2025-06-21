@@ -1,6 +1,7 @@
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 eclipse.project.name = appName + '-core'
 
+sourceSets.test.java.srcDirs = [ "src/test/java/" ]
 
 dependencies {
   api "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
@@ -10,6 +11,7 @@ dependencies {
   api "com.github.crykn:libgdx-screenmanager:$screenManagerVersion"
   api "space.earlygrey:shapedrawer:$shapeDrawerVersion"
   testImplementation 'junit:junit:4.13.2'
+  testImplementation "org.mockito:mockito-core:5.2.0"
 testImplementation "com.badlogicgames.gdx:gdx-backend-headless:$gdxVersion"
 testImplementation "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
   if(enableGraalNative == 'true') {
