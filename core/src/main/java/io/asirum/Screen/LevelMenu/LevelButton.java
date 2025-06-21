@@ -26,7 +26,7 @@ public class LevelButton {
             this.skin = skin;
     }
 
-    public void build(short userLevel, short playerEnergy,
+    public void build(short userLevel,
                       Region region, GameLevel gameLevel){
 
         levelContent = gameLevel.getLevel();
@@ -39,10 +39,10 @@ public class LevelButton {
             levelButton.setDisabled(true);
         }
 
-        onClick(playerEnergy,region.getCost(),gameLevel,region);
+        onClick(region.getCost(),gameLevel,region);
     }
 
-    private void onClick(short playerEnergy,short regionCost,GameLevel gameLevel,Region region) {
+    private void onClick(short regionCost,GameLevel gameLevel,Region region) {
 
         levelButton.addListener(new ClickListener(){
             @Override
@@ -52,16 +52,18 @@ public class LevelButton {
 
                 ApplicationContext context = ApplicationContext.getInstance();
 
-               context.getGameAssets().getSoundLevelControl().play();
+                context.getGameAssets().getSoundLevelControl().play();
+
+                short userEnergy = context.getUserData().getEnergy();
 
                 // apabila user energy mencukupi
-                if(playerEnergy>=regionCost){
+                if(userEnergy>=regionCost){
 
                     context
                         .pushScreen(new PlayScreen(gameLevel,region),null);
 
                 }else {
-                    Log.debug(LevelButton.class.getCanonicalName(),"energy user tidak cukup cost %s energi user %s",regionCost,playerEnergy);
+                    Log.debug(LevelButton.class.getCanonicalName(),"energy user tidak cukup cost %s energi user %s",regionCost,userEnergy);
 
                 }
             }

@@ -68,7 +68,6 @@ public class RegionContent {
 
             level.build(
                 userLevelForThisRegion,
-                userData.getEnergy(),
                 region,
                 gameLevel
             );
