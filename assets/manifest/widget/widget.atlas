@@ -1,0 +1,266 @@
+
+widget.png
+size: 512, 512
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+box-energy
+  rotate: false
+  xy: 405, 437
+  size: 86, 40
+  split: 3, 4, 1, 1
+  pad: 9, 9, 5, 6
+  orig: 86, 40
+  offset: 0, 0
+  index: -1
+close
+  rotate: false
+  xy: 355, 40
+  size: 20, 20
+  split: 0, 0, 2, 0
+  pad: 0, 0, 0, 0
+  orig: 20, 20
+  offset: 0, 0
+  index: -1
+control-left
+  rotate: false
+  xy: 365, 204
+  size: 64, 64
+  split: 0, 0, 0, 0
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+control-right
+  rotate: false
+  xy: 405, 305
+  size: 64, 64
+  split: 0, 0, 0, 0
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+control-up
+  rotate: false
+  xy: 405, 371
+  size: 64, 64
+  split: 0, 0, 0, 0
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+credits
+  rotate: false
+  xy: 99, 35
+  size: 83, 22
+  split: 3, 2, 2, 2
+  pad: 0, 0, 0, 0
+  orig: 83, 22
+  offset: 0, 0
+  index: -1
+credits-window
+  rotate: false
+  xy: 1, 351
+  size: 200, 160
+  split: 5, 4, 7, 6
+  pad: 15, 16, 26, 19
+  orig: 200, 160
+  offset: 0, 0
+  index: -1
+dialog-window
+  rotate: false
+  xy: 203, 173
+  size: 160, 95
+  split: 0, 0, 0, 0
+  pad: 20, 18, 36, 45
+  orig: 160, 95
+  offset: 0, 0
+  index: -1
+energy-ico
+  rotate: false
+  xy: 355, 62
+  size: 25, 25
+  split: 0, 0, 0, 0
+  orig: 25, 25
+  offset: 0, 0
+  index: -1
+failed-window
+  rotate: false
+  xy: 203, 270
+  size: 200, 144
+  split: 21, 28, 13, 14
+  pad: 40, 35, 82, 22
+  orig: 200, 144
+  offset: 0, 0
+  index: -1
+home-btn
+  rotate: false
+  xy: 355, 89
+  size: 40, 40
+  split: 0, 0, 2, 0
+  pad: 0, 0, 0, 0
+  orig: 40, 40
+  offset: 0, 0
+  index: -1
+key-ico
+  rotate: false
+  xy: 433, 278
+  size: 25, 25
+  split: 0, 0, 0, 0
+  orig: 25, 25
+  offset: 0, 0
+  index: -1
+level-off
+  rotate: false
+  xy: 471, 395
+  size: 40, 40
+  split: 0, 0, 0, 0
+  pad: 7, 8, 6, 8
+  orig: 40, 40
+  offset: 0, 0
+  index: -1
+level-on
+  rotate: false
+  xy: 471, 353
+  size: 40, 40
+  split: 0, 0, 0, 0
+  pad: 8, 8, 6, 8
+  orig: 40, 40
+  offset: 0, 0
+  index: -1
+level-window
+  rotate: false
+  xy: 1, 205
+  size: 200, 144
+  split: 10, 11, 6, 4
+  pad: 25, 26, 17, 14
+  orig: 200, 144
+  offset: 0, 0
+  index: -1
+life-ico
+  rotate: false
+  xy: 405, 278
+  size: 26, 25
+  split: 0, 0, 0, 0
+  orig: 26, 25
+  offset: 0, 0
+  index: -1
+music-off
+  rotate: false
+  xy: 355, 131
+  size: 40, 40
+  split: 0, 0, 2, 0
+  pad: 0, 0, 0, 0
+  orig: 40, 40
+  offset: 0, 0
+  index: -1
+music-on
+  rotate: false
+  xy: 471, 269
+  size: 40, 40
+  split: 0, 0, 2, 0
+  pad: 0, 0, 0, 0
+  orig: 40, 40
+  offset: 0, 0
+  index: -1
+no
+  rotate: false
+  xy: 33, 1
+  size: 20, 12
+  split: 0, 0, 0, 0
+  orig: 20, 12
+  offset: 0, 0
+  index: -1
+pause-btn
+  rotate: false
+  xy: 471, 311
+  size: 40, 40
+  split: 0, 0, 2, 0
+  pad: 0, 0, 0, 0
+  orig: 40, 40
+  offset: 0, 0
+  index: -1
+pause-window
+  rotate: false
+  xy: 203, 416
+  size: 200, 95
+  split: 9, 9, 8, 6
+  pad: 13, 13, 45, 10
+  orig: 200, 95
+  offset: 0, 0
+  index: -1
+play
+  rotate: false
+  xy: 1, 15
+  size: 96, 42
+  split: 6, 7, 5, 2
+  pad: 0, 0, 0, 0
+  orig: 96, 42
+  offset: 0, 0
+  index: -1
+tooltip-window
+  rotate: false
+  xy: 405, 479
+  size: 100, 32
+  split: 0, 4, 2, 2
+  pad: 9, 12, 7, 4
+  orig: 100, 32
+  offset: 0, 0
+  index: -1
+underline
+  rotate: false
+  xy: 1, 7
+  size: 30, 6
+  split: 2, 2, 2, 3
+  pad: 0, 0, 2, 3
+  orig: 30, 6
+  offset: 0, 0
+  index: -1
+win-window
+  rotate: false
+  xy: 1, 59
+  size: 200, 144
+  split: 20, 23, 14, 15
+  pad: 53, 56, 91, 34
+  orig: 200, 144
+  offset: 0, 0
+  index: -1
+yes
+  rotate: false
+  xy: 99, 17
+  size: 26, 16
+  split: 0, 0, 0, 0
+  orig: 26, 16
+  offset: 0, 0
+  index: -1
+font
+  rotate: false
+  xy: 203, 21
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: -1
+left
+  rotate: false
+  xy: 127, 17
+  size: 16, 16
+  split: 2, 3, 0, 0
+  pad: 0, 0, 0, 0
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+right
+  rotate: false
+  xy: 184, 41
+  size: 16, 16
+  split: 3, 2, 0, 0
+  pad: 0, 0, 0, 0
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+transparant
+  rotate: false
+  xy: 365, 180
+  size: 63, 22
+  split: 1, 1, 1, 1
+  pad: 25, 29, 3, 3
+  orig: 63, 22
+  offset: 0, 0
+  index: -1

@@ -1,34 +1,45 @@
 package io.asirum;
 
-import com.badlogic.gdx.ApplicationAdapter;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.utils.ScreenUtils;
+import de.eskalon.commons.core.ManagedGame;
+import de.eskalon.commons.screen.ManagedScreen;
+import de.eskalon.commons.screen.transition.ScreenTransition;
+import io.asirum.Screen.HomeScreen;
+import io.asirum.Screen.SplashScreen;
+import io.asirum.Service.ApplicationContext;
+import io.asirum.Service.AssetLoader;
+import io.asirum.Service.Log;
 
 /** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
-public class Main extends ApplicationAdapter {
-    private SpriteBatch batch;
-    private Texture image;
+public class Main extends ManagedGame<ManagedScreen, ScreenTransition> {
+
 
     @Override
     public void create() {
-        batch = new SpriteBatch();
-        image = new Texture("libgdx.png");
-    }
+        super.create();
 
-    @Override
-    public void render() {
-        ScreenUtils.clear(0.15f, 0.15f, 0.2f, 1f);
-        batch.begin();
-        batch.draw(image, 140, 210);
-        batch.end();
+        // selalu clear log file
+        // TODO : mengganti toFile = true jika production
+        Log.clear();
+        Log.configure(true,false, Log.LogLevel.DEBUG);
+
+        // auto dispose screen yang sudah tidak digunakan
+        // dari screen x ke screen y, maka auto dispose screen x
+        // https://github.com/crykn/libgdx-screenmanager/wiki/Config-Options#automatic-disposal-of-screens--transitions
+        getScreenManager().setAutoDispose(true,true);
+
+        // set screen manager untuk switch screen
+        ApplicationContext
+            .getInstance()
+            .setScreenManager(getScreenManager());
+
+
+        getScreenManager().pushScreen(new SplashScreen(),null);
     }
 
     @Override
     public void dispose() {
-        batch.dispose();
-        image.dispose();
+        ApplicationContext.getInstance().dispose();
+
+        Log.debug(getClass().getName(),"[dispose]");
     }
 }

@@ -1,0 +1,97 @@
+
+player.png
+size: 512, 64
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+die1
+  rotate: false
+  xy: 37, 2
+  size: 33, 32
+  orig: 33, 32
+  offset: 0, 0
+  index: -1
+die2
+  rotate: false
+  xy: 352, 2
+  size: 33, 32
+  orig: 33, 32
+  offset: 0, 0
+  index: -1
+idle1
+  rotate: false
+  xy: 177, 2
+  size: 33, 32
+  orig: 33, 32
+  offset: 0, 0
+  index: -1
+idle2
+  rotate: false
+  xy: 2, 2
+  size: 33, 32
+  orig: 33, 32
+  offset: 0, 0
+  index: -1
+idle3
+  rotate: false
+  xy: 317, 2
+  size: 33, 32
+  orig: 33, 32
+  offset: 0, 0
+  index: -1
+idle4
+  rotate: false
+  xy: 142, 2
+  size: 33, 32
+  orig: 33, 32
+  offset: 0, 0
+  index: -1
+jump
+  rotate: false
+  xy: 247, 2
+  size: 33, 32
+  orig: 33, 32
+  offset: 0, 0
+  index: -1
+run1
+  rotate: false
+  xy: 282, 2
+  size: 33, 32
+  orig: 33, 32
+  offset: 0, 0
+  index: -1
+run2
+  rotate: false
+  xy: 107, 2
+  size: 33, 32
+  orig: 33, 32
+  offset: 0, 0
+  index: -1
+run3
+  rotate: false
+  xy: 422, 2
+  size: 33, 32
+  orig: 33, 32
+  offset: 0, 0
+  index: -1
+run4
+  rotate: false
+  xy: 212, 2
+  size: 33, 32
+  orig: 33, 32
+  offset: 0, 0
+  index: -1
+run5
+  rotate: false
+  xy: 72, 2
+  size: 33, 32
+  orig: 33, 32
+  offset: 0, 0
+  index: -1
+run6
+  rotate: false
+  xy: 387, 2
+  size: 33, 32
+  orig: 33, 32
+  offset: 0, 0
+  index: -1

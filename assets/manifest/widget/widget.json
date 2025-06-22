@@ -1,0 +1,157 @@
+{
+"com.badlogic.gdx.graphics.g2d.BitmapFont": {
+	"alagard-16": {
+		"file": "alagard-16.fnt",
+		"scaledSize": -1,
+		"markupEnabled": false,
+		"flip": false
+	}
+},
+"com.badlogic.gdx.graphics.Color": {
+	"secondary": {
+		"r": 0,
+		"g": 0,
+		"b": 0,
+		"a": 1
+	},
+	"main": {
+		"r": 0.9098039,
+		"g": 0.74509805,
+		"b": 0.20784314,
+		"a": 1
+	}
+},
+"com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle": {
+	"default": {
+		"up": "play"
+	},
+	"home": {
+		"up": "home-btn"
+	},
+	"music": {
+		"up": "music-on",
+		"disabled": "music-off"
+	},
+	"credits": {
+		"up": "credits"
+	},
+	"left": {
+		"up": "left"
+	},
+	"right": {
+		"up": "right"
+	},
+	"control-left": {
+		"up": "control-left"
+	},
+	"control-right": {
+		"up": "control-right"
+	},
+	"control-up": {
+		"up": "control-up"
+	},
+	"close": {
+		"up": "close"
+	},
+	"yes": {
+		"up": "yes"
+	},
+	"no": {
+		"up": "no"
+	},
+	"pause": {
+		"up": "pause-btn"
+	}
+},
+"com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle": {
+	"default": {
+		"imageUp": "key-ico"
+	}
+},
+"com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton$ImageTextButtonStyle": {
+	"default": {
+		"imageUp": "energy-ico",
+		"font": "alagard-16",
+		"fontColor": "main",
+		"up": "box-energy"
+	},
+	"cost": {
+		"imageUp": "energy-ico",
+		"font": "alagard-16",
+		"fontColor": "main"
+	},
+	"life": {
+		"imageUp": "life-ico",
+		"font": "alagard-16",
+		"fontColor": "main"
+	}
+},
+"com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle": {
+	"default": {
+		"font": "alagard-16",
+		"fontColor": "main"
+	},
+	"underline-title": {
+		"font": "alagard-16",
+		"fontColor": "main",
+		"background": "underline"
+	},
+	"dialog": {
+		"font": "alagard-16",
+		"fontColor": "secondary"
+	}
+},
+"com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle": {
+	"default": {
+		"font": "alagard-16"
+	},
+	"level": {
+		"font": "alagard-16",
+		"fontColor": "main",
+		"up": "level-on",
+		"disabled": "level-off"
+	}
+},
+"com.badlogic.gdx.scenes.scene2d.ui.TextTooltip$TextTooltipStyle": {
+	"default": {
+		"label": "default"
+	}
+},
+"com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle": {
+	"default": {
+		"background": "credits-window",
+		"titleFont": "alagard-16",
+		"titleFontColor": "main"
+	},
+	"level": {
+		"background": "level-window",
+		"titleFont": "alagard-16",
+		"titleFontColor": "main"
+	},
+	"pause": {
+		"background": "pause-window",
+		"titleFont": "alagard-16",
+		"titleFontColor": "main"
+	},
+	"dialog": {
+		"background": "dialog-window",
+		"titleFont": "alagard-16",
+		"titleFontColor": "main"
+	},
+	"success": {
+		"background": "win-window",
+		"titleFont": "alagard-16",
+		"titleFontColor": "main"
+	},
+	"failed": {
+		"background": "failed-window",
+		"titleFont": "alagard-16",
+		"titleFontColor": "main"
+	},
+	"tooltip": {
+		"background": "tooltip-window",
+		"titleFont": "alagard-16",
+		"titleFontColor": "secondary"
+	}
+}
+}
