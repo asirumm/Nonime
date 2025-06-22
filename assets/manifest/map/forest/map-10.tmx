@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="39" height="18" tilewidth="16" tileheight="16" infinite="0" nextlayerid="6" nextobjectid="18">
+<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="39" height="18" tilewidth="16" tileheight="16" infinite="0" nextlayerid="6" nextobjectid="19">
  <tileset firstgid="1" source="tileset.tsx"/>
  <tileset firstgid="341" source="enviroment.tsx"/>
  <layer id="1" name="deep" width="39" height="18">
@@ -108,5 +108,6 @@
   <object id="15" name="one-way-platform" x="288.5" y="152" width="30.5" height="8"/>
   <object id="16" name="one-way-platform" x="336.5" y="154" width="31.5" height="5"/>
   <object id="17" name="obstacle" x="441.5" y="209.5" width="42.5" height="8"/>
+  <object id="18" name="portal-sensor" x="420.5" y="199.5" width="19" height="20"/>
  </objectgroup>
 </map>

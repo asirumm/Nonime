@@ -42,8 +42,8 @@ public class LevelWindow extends BaseWindow {
         // kosong dahulu nanti diberikan pada method update
         costButton = new ImageTextButton("",skin,StyleVars.COST_TEXT_BUTTON);
 
-        tooltipUserEnergy = new TooltipWindow("energy yang kamu miliki",skin);
-        tooltipCost = new TooltipWindow("energy yang dibutuhkan untuk bermain",skin);
+        tooltipUserEnergy = new TooltipWindow("Energi dipulihkan 3 poin setiap 2 jam offline",skin);
+        tooltipCost = new TooltipWindow("Energi yang diperlukan untuk bermain",skin);
 
         tooltipListener(tooltipCost,costButton);
         tooltipListener(tooltipUserEnergy,widgetFooter.getUserEnergyTextButton());
@@ -64,7 +64,7 @@ public class LevelWindow extends BaseWindow {
                 if (Gdx.app.getType() == Application.ApplicationType.Android) {
                     // Android behavior
                     tooltip.setVisible(true);
-                    tooltip.setPosition(event.getStageX(), event.getStageY());
+                    tooltip.setPosition(event.getStageX(), event.getStageY()+20);
                 } else {
                     // Desktop behavior
                     tooltip.setVisible(true);

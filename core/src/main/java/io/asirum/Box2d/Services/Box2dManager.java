@@ -90,7 +90,7 @@ public class Box2dManager {
                 .getCrushers().forEach(Crusher::runBehavior);
         }
 
-        debugRenderer.render(world,camera.combined);
+//        debugRenderer.render(world,camera.combined);
 
         // menghancurkan object yang perlu dihancurkan
         checkObjectToDestroy();
