@@ -28,7 +28,7 @@ public class LevelWindow extends BaseWindow {
 
     public ImageTextButton info;
 
-    public LevelWindow(Skin skin, short userEnergy,
+    public LevelWindow(Skin skin, int userEnergy,
                        Array<RegionContent> regionContents) {
 
         super(skin,StyleVars.LEVEL_WINDOW);

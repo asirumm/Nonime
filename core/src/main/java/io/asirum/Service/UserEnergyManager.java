@@ -7,10 +7,10 @@ public class UserEnergyManager {
     public static final short ENERGY_GAIN_PER_INTERVAL = 3;
     // energi maks yang dapat diberikan dari off ke on
     // semisalnya user off 24 jam maka (24 : 2) x 3. Ini dibatasi
-    public static final short MAX_ENERGY_INTERVAL_HOURS = 30;
+    public static final short MAX_ENERGY_INTERVAL = 30;
     // rentan waktu interval untuk user diberikan reward dari
     // off
-    public static final short ENERGY_INTERVAL_HOURS = 3;
+    public static final short INTERVAL_HOURS = 2;
     // reward setelah menang
     public static final short ENERGY_REWARD_FOR_WIN = 1;
     // maks energy user yang dapat ditampung
@@ -35,15 +35,15 @@ public class UserEnergyManager {
         boolean status = timeService
             .isUserEligibleToGetReward(
                 dateUser,
-                ENERGY_INTERVAL_HOURS);
+                INTERVAL_HOURS);
 
         if(status){
             // mendapatkan total energi yang perlu ditambaah ke user
             short energyReward = timeService
-                .calculateEnergy(dateUser,MAX_ENERGY_INTERVAL_HOURS,ENERGY_GAIN_PER_INTERVAL);
+                .calculateEnergy(dateUser, MAX_ENERGY_INTERVAL,ENERGY_GAIN_PER_INTERVAL);
 
-            short currentEnergy = userData.getEnergy();
-            short totalEnergy   = (short) (currentEnergy + energyReward);
+            int currentEnergy = userData.getEnergy();
+            int totalEnergy   =  currentEnergy + energyReward;
 
             Log.info(getClass().getName(),"user berhak mendapatkan energy sebesar "+energyReward );
 
@@ -55,8 +55,8 @@ public class UserEnergyManager {
     }
 
     public void energyRewardAfterWinningGame(){
-        short lastEnergy = userData.getEnergy();
-        short amount = (short) (lastEnergy+ENERGY_REWARD_FOR_WIN);
+        int lastEnergy = userData.getEnergy();
+        int amount =  (lastEnergy+ENERGY_REWARD_FOR_WIN);
         userData.setEnergy(amount);
         Log.info(getClass().getName(),"user mendapatkan penambahan energi, reward kemenangan sejumlah %s",ENERGY_REWARD_FOR_WIN);
     }

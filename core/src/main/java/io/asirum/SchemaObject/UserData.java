@@ -7,7 +7,7 @@ import java.util.ArrayList;
  */
 public class UserData {
     private ArrayList<UserLevel> level=new ArrayList<>();
-    private short energy;
+    private int energy;
     private String lastPlayedTime;
 
     public ArrayList<UserLevel> getLevel() {
@@ -22,7 +22,7 @@ public class UserData {
         this.level.add(userLevel);
     }
 
-    public short getEnergy() {
+    public int getEnergy() {
         return energy;
     }
 
@@ -34,7 +34,7 @@ public class UserData {
         this.lastPlayedTime = lastPlayedTime;
     }
 
-    public void setEnergy(short energy) {
+    public void setEnergy(int energy) {
         this.energy = energy;
     }
 
