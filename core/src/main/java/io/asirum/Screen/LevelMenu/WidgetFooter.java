@@ -22,7 +22,7 @@ public class WidgetFooter {
     private ImageTextButton userEnergyTextButton;
     private HorizontalGroup group;
 
-    public WidgetFooter(Skin skin,  short userEnergy){
+    public WidgetFooter(Skin skin,  int userEnergy){
         this.skin = skin;
 
         group = new HorizontalGroup();

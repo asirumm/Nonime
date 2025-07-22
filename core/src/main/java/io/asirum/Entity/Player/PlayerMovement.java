@@ -20,6 +20,7 @@ public class PlayerMovement {
     public void run(){
         inputManager.handleInput();
 
+        // player bergerak
         player.run(inputState.isMoveLeft(),inputState.isMoveRight());
 
         // Jika pemain berada di tanah dan tombol lompat ditekan

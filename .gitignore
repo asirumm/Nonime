@@ -1,4 +1,5 @@
 ## Gradle:
+android/signed.properties
 .gradle/
 gradle-app.setting
 /gradle/gradle-daemon-jvm.properties

@@ -43,7 +43,6 @@ public class LevelButton {
     }
 
     private void onClick(short regionCost,GameLevel gameLevel,Region region) {
-
         levelButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -54,7 +53,7 @@ public class LevelButton {
 
                 context.getGameAssets().getSoundLevelControl().play();
 
-                short userEnergy = context.getUserData().getEnergy();
+                int userEnergy = context.getUserData().getEnergy();
 
                 // apabila user energy mencukupi
                 if(userEnergy>=regionCost){

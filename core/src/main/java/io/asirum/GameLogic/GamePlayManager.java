@@ -56,9 +56,9 @@ public class GamePlayManager {
     private void decreaseUserEnergy(short costEnergy){
         Log.info(getClass().getName(),"user energi berkurang karena bermain sejumlah %s",costEnergy);
 
-        short currentUserEnergy = userData.getEnergy();
+        int currentUserEnergy = userData.getEnergy();
 
-        userData.setEnergy((short) (currentUserEnergy-costEnergy));
+        userData.setEnergy(currentUserEnergy-costEnergy);
 
         userDataManager.saveData(userData);
     }
